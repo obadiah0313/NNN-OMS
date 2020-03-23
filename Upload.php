@@ -1,14 +1,14 @@
 <?php
 	require 'Database.php';
-	
+		
 	if (isset($_POST['data'])) {
-		$existsData = $collection->findOne(['date' => date('Y-m-d')]);
-		if ($existsData != null) {
-			$updateStock = $collection->replaceOne(['date' => date('Y-m-d')],
-												   ['date' => date('Y-m-d'), 'products' => $_POST['data']]);
+		$db = new MongodbDatabase();
+		var_dump($db->checkExists);
+		if ($db->checkExists != null) {
+			$db->replaceStock(date('Y-m-d'),$_POST['data']);
 		}
 		else{
-			$insertOneResult = $collection->insertOne(['date' => date("Y-m-d"), 'products' => $_POST['data']]);
+			$db->insertStock(date("Y-m-d"),$_POST['data']);
 		}
 	}
 ?>
@@ -98,14 +98,20 @@
 
 		//Read all rows from First Sheet into an JSON array.
 		var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
+		var newObj = [];
+		$.each(excelRows, function (index, value) {
+			if (value.hasOwnProperty("Product Code")) {
+				newObj.push(value);
+			}
+		})
 
 		console.log('-----');
-		console.log(excelRows);
+		console.log(newObj);
 
 		$.ajax({
 			method: 'POST',
 			data: {
-				data: excelRows
+				data: newObj
 			},
 			url: './Upload.php',
 			success: function(response) {
@@ -114,59 +120,6 @@
 			}
 		})
 		console.log('-----');
-
-		//Create a HTML Table element.
-		var table = $("<table />");
-		table[0].border = "1";
-
-		//Add the header row.
-		var row = $(table[0].insertRow(-1));
-
-		//Add the header cells.
-		var headerCell = $("<th />");
-		headerCell.html("Product Code");
-		row.append(headerCell);
-
-		var headerCell = $("<th />");
-		headerCell.html("Description");
-		row.append(headerCell);
-
-		var headerCell = $("<th />");
-		headerCell.html("RSL");
-		row.append(headerCell);
-		var ObjHeader = [];
-		var Obj = [];
-
-		//Add the data rows from Excel file.
-		for (var i = 0; i < excelRows.length; i++) {
-
-			Obj.push({
-				"product_code": excelRows[i]["Product Code"],
-				"description": excelRows[i]["Description"],
-				"country": excelRows[i]["RSL"]
-			});
-			//Add the data row.
-			var row = $(table[0].insertRow(-1));
-
-			//Add the data cells.
-			var cell = $("<td />");
-			cell.html(excelRows[i]["Product Code"]);
-			row.append(cell);
-
-			cell = $("<td />");
-			cell.html(excelRows[i].Description);
-			row.append(cell);
-
-			cell = $("<td />");
-			cell.html(excelRows[i].Country);
-			row.append(cell);
-		}
-
-		//console.log(Obj);
-
-		var dvExcel = $("#dvExcel");
-		dvExcel.html("");
-		dvExcel.append(table);
 	};
 
 </script>
