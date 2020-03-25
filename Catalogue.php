@@ -1,18 +1,17 @@
-<?php
-	include 'NavBar.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css" />
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<title>Document</title>
 </head>
 
 <body>
+<?php
+	include './NavBar.php';
+?>
 	<div class="page-container">
 			<div class="row mt-5 mb-3 align-items-center">
 				<div class="col-md-5">
@@ -29,10 +28,10 @@
 				<div class="col-md-2">
 					<div class="d-flex justify-content-end">
 						<select class="custom-select" name="rowsPerPage" id="changeRows">
-							<option value="1">1</option>
 							<option value="5">5</option>
 							<option value="10" selected>10</option>
 							<option value="15">15</option>
+							<option value="20">20</option>
 						</select>
 					</div>
 				</div>
@@ -53,7 +52,7 @@
 				race: 'Race',
 				type: 'Prodcut Type',
 				country: 'Country of Origin',
-				button: 'Button'
+				qtyOrder: 'Quantity Order',
 			}
 
 			$.ajax({
@@ -71,6 +70,7 @@
 									code: 'Product Code',
 									desp: 'Description',
 									mrp: 'Retail Price',
+									qtyOrder: 'Quantity Order',
 								},
 							},
 						},

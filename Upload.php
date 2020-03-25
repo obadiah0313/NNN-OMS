@@ -23,7 +23,7 @@
 
 <body>
 	<?php
-		include("NavBar.php");
+		include "NavBar.php";
 	?>
 	<div class="container mt-5">
 		<form>
@@ -94,10 +94,13 @@
 		});
 
 		//Fetch the name of First Sheet.
-		var firstSheet = workbook.SheetNames[2];
+		var SheetList = workbook.SheetNames;
+		for(var i = 0 ; i < SheetList.length; i ++){
+			if(SheetList[i] == "GBD_Asia") var worksheet = SheetList[i];
+		}
 
 		//Read all rows from First Sheet into an JSON array.
-		var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet]);
+		var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[worksheet]);
 		var newObj = [];
 		$.each(excelRows, function (index, value) {
 			if (value.hasOwnProperty("Product Code")) {
