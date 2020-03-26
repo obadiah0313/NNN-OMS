@@ -22,14 +22,14 @@
 			</div>
 
 			<div class="mb-3">
-				<label for="username">Username</label>
+				<label for="phone">Phone</label>
 				<div class="input-group">
 					<div class="input-group-prepend">
-						<span class="input-group-text">@</span>
+						<span class="input-group-text">+60</span>
 					</div>
-					<input type="text" class="form-control" id="username" placeholder="Username" required>
+					<input type="text" class="form-control" id="username" placeholder="123456789" required onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" >
 					<div class="invalid-feedback" style="width: 100%;">
-						Your username is required.
+						Your phone number is required.
 					</div>
 				</div>
 			</div>
@@ -37,7 +37,6 @@
 			<div class="mb-3">
 				<label for="email">Email</label>
 				<input type="email" class="form-control" id="email" placeholder="you@example.com" required>
-				<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
 				<div class="invalid-feedback">
 					Please enter a valid email address.
 				</div>
@@ -66,6 +65,7 @@
 			</div>
 
 			<hr class="mb-4">
+			<small id="emailHelp" class="form-text text-muted"><strong class="text-danger"> * </strong>We'll never share your personal information with anyone else.</small>
 			<button class="btn btn-primary btn-lg btn-block" type="submit">Sign Up</button>
 		</form>
 	</div>
@@ -86,6 +86,9 @@
 						if (form.checkValidity() === false) {
 							event.preventDefault();
 							event.stopPropagation();
+						}
+						else {
+							
 						}
 						form.classList.add('was-validated');
 					}, false);

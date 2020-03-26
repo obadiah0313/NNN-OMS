@@ -13,6 +13,7 @@
 	include './NavBar.php';
 ?>
 	<div class="page-container">
+		<h3 class="text-center">Unavailable Stock</h3>
 			<div class="row mt-5 mb-3 align-items-center">
 				<div class="col-md-5">
 					<button class="btn btn-primary btn-sm" id="rerender">Re-Render</button>
@@ -45,19 +46,16 @@
 	<script>
 		$(document).ready(function() {
 			var columns = {
-				code: 'Product Code',
+				code: 'Code',
+				shortcode: 'Short Sales Code',
 				desp: 'Description',
-				mrp: 'Retail Price',
-				sys: 'System',
-				race: 'Race',
-				type: 'Prodcut Type',
-				country: 'Country of Origin',
-				qtyOrder: 'Quantity Order',
+				datechange: 'Date of Change',
+				comment: 'Comment (correct at time of removal)',
 			}
 
 			$.ajax({
 				method: 'GET',
-				url: 'ProcessingData.php',
+				url: 'ProcessingData.php?stock=no',
 				data: {},
 				success: function(response) {
 					var table = $('#root').tableSortable({
@@ -67,10 +65,10 @@
 						responsive: {
 							1100: {
 								columns: {
-									code: 'Product Code',
+									code: 'Code',
 									desp: 'Description',
-									mrp: 'Retail Price',
-									qtyOrder: 'Quantity Order',
+									datechange: 'Date of Change',
+									comment: 'Comment (correct at time of removal)',
 								},
 							},
 						},

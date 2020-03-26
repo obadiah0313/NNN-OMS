@@ -1,14 +1,14 @@
 <?php
-	require 'Database.php';
-		
-	if (isset($_POST['data'])) {
-		$db = new MongodbDatabase();
-		var_dump($db->checkExists);
-		if ($db->checkExists != null) {
-			$db->replaceStock(date('Y-m-d'),$_POST['data']);
+	error_reporting(0);
+	require './Database.php';	
+	$db = new MongodbDatabase();
+	if (isset($_POST['data'])) {	
+		if ($db->checkExists() != null) {
+			$db->replaceStock(date("Y-m-d"),$_POST['data']);
 		}
 		else{
 			$db->insertStock(date("Y-m-d"),$_POST['data']);
+			$db->insertDeletion(date("Y-m-d"),$_POST['data2']);
 		}
 	}
 ?>
@@ -95,26 +95,37 @@
 
 		//Fetch the name of First Sheet.
 		var SheetList = workbook.SheetNames;
-		for(var i = 0 ; i < SheetList.length; i ++){
-			if(SheetList[i] == "GBD_Asia") var worksheet = SheetList[i];
+		for (var i = 0; i < SheetList.length; i++) {
+			if (SheetList[i] == "GBD_Asia") var worksheet = SheetList[i];
+			if (SheetList[i] == "Deletions") var worksheet2 = SheetList[i];
 		}
 
 		//Read all rows from First Sheet into an JSON array.
 		var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[worksheet]);
 		var newObj = [];
-		$.each(excelRows, function (index, value) {
+		$.each(excelRows, function(index, value) {
 			if (value.hasOwnProperty("Product Code")) {
 				newObj.push(value);
+			}
+		})
+		
+		var excelRows2 = XLSX.utils.sheet_to_json(workbook.Sheets[worksheet2],{range:3});
+		var newObj2 = [];
+		$.each(excelRows2, function(index, value) {
+			if (value.hasOwnProperty("Code")) {
+				newObj2.push(value);
 			}
 		})
 
 		console.log('-----');
 		console.log(newObj);
+		console.log(newObj2);
 
 		$.ajax({
 			method: 'POST',
 			data: {
-				data: newObj
+				data: newObj,
+				data2: newObj2
 			},
 			url: './Upload.php',
 			success: function(response) {
