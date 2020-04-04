@@ -12,6 +12,7 @@
 			$this->db = $this->client->NNNdb;
 			$this->collect = $this->db->selectCollection('stock');
 			$this->deletion = $this->db->selectCollection('deletion');
+			$this->user = $this->db->selectCollection('user');
 		}
 		
 		public function fetchProduct(){
@@ -39,23 +40,31 @@
 		public function replaceStock($date, $product){
 			$this->collect->replaceOne(['date' => $date],
 										['date' => $date, 'products' => $product]);
-			var_dump("Replace product done...");
 		}
 		
 		public function replaceDeletion($date, $deletion){
 			$this->deletion->replaceOne(['date' => $date],
 										['date' => $date, 'products' => $deletion]);
-			var_dump("Replace deletion done...");
 		}
 		
 		public function insertStock($date, $product){
 			$this->collect->insertOne(['date' => $date, 'products' =>$product]);
-			var_dump("Insert product done...");
 		}
 		
 		public function insertDeletion($date, $deletion){
 			$this->deletion->insertOne(['date' => $date, 'deletions' =>$deletion]);
-			var_dump("Insert deletion done...");
+		}
+		
+		public function getSystem(){
+			return $this->collect->distinct('products.System');
+		}
+		
+		public function getType(){
+			return $this->collect->distinct('products.Product Type');
+		}
+		
+		public function getCountry(){
+			return $this->collect->distinct('products.Country of Origin');
 		}
 	}
 	

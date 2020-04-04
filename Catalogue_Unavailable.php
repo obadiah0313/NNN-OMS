@@ -13,13 +13,16 @@
 	include './NavBar.php';
 ?>
 	<div class="page-container">
-		<h3 class="text-center">Unavailable Stock</h3>
+		<h3 class="text-center">Deletion Stock</h3>
+		<h6 class="text-center text-danger">Please note that these deletions are correct for the main GW business in UK. Some local warehouses may still carry stock of these items until they have sold through</h6>
+		<h6 class="text-center text-danger">Also, some items will come back into the Trade Range if the sales warrant bringing them back due to their popularity</h6>
+		<h6 class="text-center text-danger">Products that are repackaged or change from hard cover to soft cover - the new stock will be sent to you once the old stock has sold through </h6>
 			<div class="row mt-5 mb-3 align-items-center">
-				<div class="col-md-5">
+				<!--<div class="col-md-5">
 					<button class="btn btn-primary btn-sm" id="rerender">Re-Render</button>
 					<button class="btn btn-primary btn-sm" id="distory">Distory</button>
 					<button class="btn btn-primary btn-sm" id="refresh">Refresh</button>
-				</div>
+				</div>-->
 				<div class="col-md-3">
 					<input type="text" class="form-control" placeholder="Search in table..." id="searchField">
 				</div>

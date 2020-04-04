@@ -16,14 +16,9 @@ html {
   outline: 1px solid slategrey;
 }
 
-.container-fluid {
-  padding-left: 32px;
-  padding-right: 32px;
-}
-
 .page-container {
-  padding-left: 50px;
-  padding-right: 50px;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 .story-container > .sidebar {

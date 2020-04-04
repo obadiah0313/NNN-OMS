@@ -1,23 +1,10 @@
-<?php
-	error_reporting(0);
-	require './Database.php';	
-	$db = new MongodbDatabase();
-	if (isset($_POST['data'])) {	
-		if ($db->checkExists() != null) {
-			$db->replaceStock(date("Y-m-d"),$_POST['data']);
-		}
-		else{
-			$db->insertStock(date("Y-m-d"),$_POST['data']);
-			$db->insertDeletion(date("Y-m-d"),$_POST['data2']);
-		}
-	}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/overhang.min.css">
 	<title>Neko Neko Nyaa</title>
 </head>
 
@@ -25,7 +12,12 @@
 	<?php
 		include "NavBar.php";
 	?>
-	<div class="container mt-5">
+	<div class="container mt-3">
+		<?php
+			/*if(isset($_SESSION['upload'])){
+				echo "<div>File Upload</div>";
+			}*/
+		?>
 		<form>
 			<div class="custom-file mb-3">
 				<input type="file" class="custom-file-input" id="fileUpload" name="filename">
@@ -34,11 +26,17 @@
 			<div class="mt-3">
 				<button type="button" value="Upload" id="upload" class="btn btn-primary">Upload</button>
 			</div>
+			<?php
+			if(isset($_SESSION['upload'])){
+				echo "<div>File Upload</div>";
+			}
+		?>
 		</form>
 	</div>
-	<!--	<div id="dvExcel"></div>-->
 </body>
 <script src="js/jquery.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/overhang.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/xlsx.full.min.js"></script>
 <script src="js/jszip.js"></script>
@@ -127,10 +125,15 @@
 				data: newObj,
 				data2: newObj2
 			},
-			url: './Upload.php',
+			url: './ubackend.php',
 			success: function(response) {
-				console.log('success');
-				console.log(response);
+				response = JSON.parse(response);
+				$("body").overhang({
+  type: response.type,
+  message: response.msg
+});
+				
+				
 			}
 		})
 		console.log('-----');
