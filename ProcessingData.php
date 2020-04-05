@@ -8,6 +8,7 @@
 			foreach($db->fetchProduct() as $cl) {
 				for($i = 0; $i < sizeof($cl['products']); $i++){
 					$datas = array(
+						"module" => $cl['products'][$i]['Module'],
 						"desp" => $cl['products'][$i]['Description'],
 						"mrp" => "RM ".number_format($cl['products'][$i]['MRP'],2),
 						/*"qtyOrder" => '<input type="number" min="1" max="3" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />  <button class"btn btn-link"><image src="cart.png"></button>'*/
@@ -33,10 +34,19 @@
 				for($i = 0; $i < sizeof($cl['products']); $i++){
 					$flag = 0;
 					$count = 0;
+					if(isset($_POST["module"]))
+ 					{
+						$count++;
+						foreach($_POST["module"] as $mod){
+							if($cl['products'][$i]['Module'] == $mod){
+								$flag ++;
+							}
+						}
+					}
 					if(isset($_POST["minimum_price"], $_POST["maximum_price"]) && !empty($_POST["minimum_price"]) && !empty($_POST["maximum_price"]))
 					{
 						$count ++;
-						if($cl['products'][$i]['MRP'] < $_POST["minimum_price"] || $cl['products'][$i]['MRP'] > $_POST["maximum_price"] )
+						if($cl['products'][$i]['MRP'] >= $_POST["minimum_price"] && $cl['products'][$i]['MRP'] <= $_POST["maximum_price"] )
 							$flag ++;
 					}
 					if(isset($_POST["system"]))
@@ -71,8 +81,9 @@
 					}
 					if($flag == $count){ 
 						$datas = array(
-						"desp" => $cl['products'][$i]['Description'],
-						"mrp" => "RM ".number_format($cl['products'][$i]['MRP'],2)
+							"module" => $cl['products'][$i]['Module'],
+							"desp" => $cl['products'][$i]['Description'],
+							"mrp" => "RM ".number_format($cl['products'][$i]['MRP'],2)
 						);
 						array_push($data, $datas);
 					}

@@ -28,7 +28,7 @@
 					</div>
 				</li>
 			</ul>
-			<button id="btnLogin" class="btn btn-primary justify-content-between ml-auto" onclick="document.location.href = 'Login.php';">Login</button>
+			<button id="btnLogin" class="btn btn-warning justify-content-between ml-auto" onclick="document.location.href = 'Login.php';">Login</button>
 		</div>
 	</div>
 

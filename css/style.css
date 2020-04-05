@@ -1,7 +1,3 @@
-html {
-  scroll-behavior: smooth;
-}
-
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -19,90 +15,15 @@ html {
 .page-container {
   margin-left: 10%;
   margin-right: 10%;
+  margin-bottom: 1%;
 }
 
-.story-container > .sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 250px;
-  z-index: 100;
-  overflow: auto;
-  border-right: solid 1px #f1f1f1;
-  background-color: #F5F7F9;
+.filter{
+	padding-left: 0%;
+	padding-right: 0;
 }
 
-.story-container .story-logo {
-  font-size: 1rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  padding: 15px;
-  text-align: center;
+.bg {
+	background-color:white;
 }
 
-.story-menu {
-  list-style: none;
-  margin-left: 0;
-  margin-top: 30px;
-  padding-left: 0;
-}
-
-.story-menu > li > a {
-  display: block;
-  text-decoration: none;
-  padding: 8px 15px;
-  border-bottom: solid 1px #f1f1f1;
-}
-
-.story-menu > li > .heading {
-  display: block;
-  text-decoration: none;
-  padding: 8px 15px;
-  margin-top: 20px;
-}
-
-.story-container > .contents {
-  position: relative;
-  margin-left: 250px;
-}
-
-@media (max-width: 767px) {
-  .story-container > .sidebar {
-    position: initial;
-    width: 100%;
-  }
-
-  .story-container > .contents {
-    margin-left: 0;
-  }
-}
-
-section {
-  padding-top: 50px;
-  padding-bottom: 50px;
-}
-
-section#intro {
-  padding-top: 100px;
-  padding-bottom: 100px;
-}
-
-pre > code {
-  padding: 32px !important;
-  background-color: #F5F7F9 !important;
-}
-
-code {
-  border-radius: 4px;
-}
-
-footer {
-  text-align: center;
-  padding: 30px;
-  border-top: solid 1px #f1f1f1;
-}
-
-.fs-12 {
-  font-size: 12px;
-}

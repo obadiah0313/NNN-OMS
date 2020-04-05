@@ -66,6 +66,21 @@
 		public function getCountry(){
 			return $this->collect->distinct('products.Country of Origin');
 		}
+	
+		public function getModule(){
+			return $this->collect->distinct('products.Module');
+		}
+		
+		public function getDate(){
+			$data = $this->collect->find(
+				[],
+				[
+					'limit' => 1, 
+					'sort' => ['date'=> -1]
+				]);
+			foreach($data as $d)
+				return $d['date'];
+		}
 	}
 	
 ?>
