@@ -18,11 +18,6 @@
 		<h6 class="text-center text-danger">Also, some items will come back into the Trade Range if the sales warrant bringing them back due to their popularity</h6>
 		<h6 class="text-center text-danger">Products that are repackaged or change from hard cover to soft cover - the new stock will be sent to you once the old stock has sold through </h6>
 			<div class="row mt-5 mb-3 align-items-center">
-				<!--<div class="col-md-5">
-					<button class="btn btn-primary btn-sm" id="rerender">Re-Render</button>
-					<button class="btn btn-primary btn-sm" id="distory">Distory</button>
-					<button class="btn btn-primary btn-sm" id="refresh">Refresh</button>
-				</div>-->
 				<div class="col-md-3">
 					<input type="text" class="form-control" placeholder="Search in table..." id="searchField">
 				</div>
@@ -49,8 +44,6 @@
 	<script>
 		$(document).ready(function() {
 			var columns = {
-				code: 'Code',
-				shortcode: 'Short Sales Code',
 				desp: 'Description',
 				datechange: 'Date of Change',
 				comment: 'Comment (correct at time of removal)',
@@ -58,7 +51,7 @@
 
 			$.ajax({
 				method: 'GET',
-				url: 'ProcessingData.php?stock=no',
+				url: 'ProcessingData.php?stock=no&init=true',
 				data: {},
 				success: function(response) {
 					var table = $('#root').tableSortable({

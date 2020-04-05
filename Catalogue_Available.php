@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/jquery-ui.css">
-	<title>Document</title>
+	<title>Neko Neko Nyaa</title>
 </head>
 
 <body class="bg">
@@ -178,6 +178,7 @@
 				module: 'Module',
 				desp: 'Description',
 				mrp: 'Retail Price',
+				qty: 'Quantity Order'
 			}
 
 			function load_data() {

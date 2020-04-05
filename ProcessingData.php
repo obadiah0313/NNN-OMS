@@ -11,7 +11,7 @@
 						"module" => $cl['products'][$i]['Module'],
 						"desp" => $cl['products'][$i]['Description'],
 						"mrp" => "RM ".number_format($cl['products'][$i]['MRP'],2),
-						/*"qtyOrder" => '<input type="number" min="1" max="3" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />  <button class"btn btn-link"><image src="cart.png"></button>'*/
+						"qty" => '<input type="number" min="1" max="3" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />  <button class"btn btn-link"><image src="cart.png"></button>'
 					);
 					array_push($data, $datas);
 				}

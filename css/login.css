@@ -19,13 +19,15 @@
 		pointer-events: auto;
 		background-color: #fff;
 		background-clip: padding-box;
-		border: 1px solid rgba(0,0,0,.2);
+		border: 1px solid #f0ad4e;
 		border-radius: 1.1rem;
 		outline: 0;
 		max-width: 500px;
 		 }
          .tx-tfm{
          text-transform:uppercase;
+			color: white;
+			 font-weight: bold;
          }
          .mybtn{
          border-radius:50px;
@@ -53,14 +55,6 @@
          height: 1px;
          margin-top: 0px !important;
          margin-bottom: 0px !important;
-         }
-         .google {
-         color:#666;
-         width:100%;
-         height:40px;
-         text-align:center;
-         outline:none;
-         border: 1px solid lightgrey;
          }
           form .error {
          color: #ff0000;
