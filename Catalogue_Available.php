@@ -12,24 +12,60 @@
 	<title>Neko Neko Nyaa</title>
 </head>
 
+<div class="modal fade" id="productDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalCenterTitle">Product Detail</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<label class="font-weight-bold">Release Date:</label>
+				<p id="release"></p>
+				<label class="font-weight-bold">Module:</label>
+				<p id="module"></p>
+				<label class="font-weight-bold">Product Code:</label>
+				<p id="code"></p>
+				<label class="font-weight-bold">Price:</label>
+				<p id="price"></p>
+				<label class="font-weight-bold">System:</label>
+				<p id="system"></p>
+				<label class="font-weight-bold">Race:</label>
+				<p id="race"></p>
+				<label class="font-weight-bold">Product Type:</label>
+				<p id="type"></p>
+				<label class="font-weight-bold">Quantity in pack:</label>
+				<p id="qtyPack"></p>
+				<label class="font-weight-bold">Country of Origin:</label>
+				<p id="country"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <body class="bg">
 	<?php
 		include './NavBar.php';
 	?>
 	<div class="page-container">
-		<div class="row">
-			<div class="col-12 mx-auto mt-3">
-				<div class="jumbotron py-1">
-					<h1 class="display-4 text-warning">Available Stock</h1>
+		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
+			<div class="col-12 py-3">
+				<div class="text-center">
+					<h1>Available Stock</h1>
 					<p class="lead">Latest updated on <?php echo $db->getDate()?></p>
 				</div>
 			</div>
 		</div>
 
-		<div class="row">
+		<div class="row py-5" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 			<div class="col-md-12 col-lg-3">
 				<div class="card border-warning filter">
-					<h4 class="card-header bg-warning">Filter:</h4>
+					<h4 class="card-header" style="background:#ffff99">Filter:</h4>
 					<div class="card-body">
 						<form id="filterForm" method="GET" action="">
 							<div class="list-group">
@@ -145,7 +181,7 @@
 				});
 				$('#changeRows').on('change', function() {
 					table.updateRowsPerPage(parseInt($(this).val(), 10));
-				})
+				});
 			}
 
 			function filter_data() {
@@ -170,6 +206,31 @@
 					},
 					success: function(data) {
 						showTable(data);
+						$("th:last-child, td:last-child").css({
+							display: "none"
+						});
+						$(document).on('click', 'tr', function() {
+							var arr = $(this).text().split(' ');
+							var id = arr[arr.length - 1];
+
+							$.each(JSON.parse(response), function(index, value) {
+								if (value.id === id) {
+									$('#productDetail').modal('show');
+									$('#release').text(value.release);
+									$('#module').text(value.module);
+									$('#code').text(value.id);
+									$('#description').text(value.mrp);
+									$('#system').text(value.system);
+									$('#race').text(value.race);
+									$('#type').text(value.type);
+									$('#qtyPack').text(value.qtyPack);
+									$('#country').text(value.country);
+								}
+									
+							});
+
+						});
+
 					}
 				});
 			}
@@ -178,7 +239,8 @@
 				module: 'Module',
 				desp: 'Description',
 				mrp: 'Retail Price',
-				qty: 'Quantity Order'
+				qty: 'Quantity Order',
+				id: 'id'
 			}
 
 			function load_data() {
@@ -188,8 +250,37 @@
 					data: {},
 					success: function(response) {
 						showTable(response);
+						$("th:last-child, td:last-child").css({
+							display: "none"
+						});
+						$(document).on('click', 'tr', function() {
+							var arr = $(this).text().split(' ');
+							var id = arr[arr.length - 1];
+
+							$.each(JSON.parse(response), function(index, value) {
+								if (value.id === id) {
+									$('#productDetail').modal('show');
+									$('#release').text(value.release);
+									$('#module').text(value.module);
+									$('#code').text(value.id);
+									$('#description').text(value.mrp);
+									$('#system').text(value.system);
+									$('#race').text(value.race);
+									$('#type').text(value.type);
+									$('#qtyPack').text(value.qtyPack);
+									$('#country').text(value.country);
+								}
+									
+							});
+
+						});
+
 					}
 				});
+			}
+			
+			function showModal() {
+				
 			}
 
 			$(function() {
@@ -228,10 +319,12 @@
 					" - RM" + $("#slider-range").slider("values", 1));
 			});
 
+			$(function() {
+				$('[data-toggle="tooltip"]').tooltip()
+			})
 		});
 
 	</script>
 </body>
-
 
 </html>

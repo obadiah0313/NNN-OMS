@@ -8,6 +8,13 @@
 			foreach($db->fetchProduct() as $cl) {
 				for($i = 0; $i < sizeof($cl['products']); $i++){
 					$datas = array(
+						"id" => $cl['products'][$i]['Product Code'],
+						"release" => date("Y-m-d",($cl['products'][$i]['Release Date (Last 3 Months)']- (25567 + 2))*86400),
+						"country" => $cl['products'][$i]['Country of Origin'],
+						"qtyPack" => $cl['products'][$i]['Qty in Pack'],
+						"system" => $cl['products'][$i]['System'],
+						"race" => $cl['products'][$i]['Race'],
+						"type" => $cl['products'][$i]['Product Type'],
 						"module" => $cl['products'][$i]['Module'],
 						"desp" => $cl['products'][$i]['Description'],
 						"mrp" => "RM ".number_format($cl['products'][$i]['MRP'],2),
@@ -81,9 +88,17 @@
 					}
 					if($flag == $count){ 
 						$datas = array(
+							"id" => $cl['products'][$i]['Product Code'],
+							"release" => date("Y-m-d",($cl['products'][$i]['Release Date (Last 3 Months)']- (25567 + 2))*86400),
+							"country" => $cl['products'][$i]['Country of Origin'],
+							"qtyPack" => $cl['products'][$i]['Qty in Pack'],
+							"system" => $cl['products'][$i]['System'],
+							"race" => $cl['products'][$i]['Race'],
+							"type" => $cl['products'][$i]['Product Type'],
 							"module" => $cl['products'][$i]['Module'],
 							"desp" => $cl['products'][$i]['Description'],
-							"mrp" => "RM ".number_format($cl['products'][$i]['MRP'],2)
+							"mrp" => "RM ".number_format($cl['products'][$i]['MRP'],2),
+							"qty" => '<input type="number" min="1" max="3" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />  <button class"btn btn-link"><image src="cart.png"></button>'
 						);
 						array_push($data, $datas);
 					}
