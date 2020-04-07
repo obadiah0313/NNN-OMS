@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="css/nav.css">
+<link rel="stylesheet" href="fontawesome/css/all.css">
 <div style="background:orange">
 	<div class="d-none d-lg-block bg-dark">
 		<div class="container">
