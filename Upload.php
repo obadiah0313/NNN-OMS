@@ -13,30 +13,20 @@
 		include "NavBar.php";
 	?>
 	<div class="container mt-3">
-		<?php
-			/*if(isset($_SESSION['upload'])){
-				echo "<div>File Upload</div>";
-			}*/
-		?>
 		<form>
 			<div class="custom-file mb-3">
-				<input type="file" class="custom-file-input" id="fileUpload" name="filename">
+				<input  type="file" class="custom-file-input" id="fileUpload" name="filename">
 				<label class="custom-file-label" for="customFile">Choose file</label>
 			</div>
 			<div class="mt-3">
-				<button type="button" value="Upload" id="upload" class="btn btn-primary">Upload</button>
+				<button type="button" value="Upload" id="upload" class="button allBtn">Upload</button>
 			</div>
-			<?php
-			if(isset($_SESSION['upload'])){
-				echo "<div>File Upload</div>";
-			}
-		?>
 		</form>
 	</div>
 </body>
 <script src="js/jquery.min.js"></script>
-	<script src="js/jquery-ui.min.js"></script>
-	<script src="js/overhang.min.js"></script>
+<script src="js/jquery-ui.min.js"></script>
+<script src="js/overhang.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/xlsx.full.min.js"></script>
 <script src="js/jszip.js"></script>
@@ -106,8 +96,10 @@
 				newObj.push(value);
 			}
 		})
-		
-		var excelRows2 = XLSX.utils.sheet_to_json(workbook.Sheets[worksheet2],{range:3});
+
+		var excelRows2 = XLSX.utils.sheet_to_json(workbook.Sheets[worksheet2], {
+			range: 3
+		});
 		var newObj2 = [];
 		$.each(excelRows2, function(index, value) {
 			if (value.hasOwnProperty("Code")) {
@@ -129,11 +121,11 @@
 			success: function(response) {
 				response = JSON.parse(response);
 				$("body").overhang({
-  type: response.type,
-  message: response.msg
-});
-				
-				
+					type: response.type,
+					message: response.msg
+				});
+
+
 			}
 		})
 		console.log('-----');

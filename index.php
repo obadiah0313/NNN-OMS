@@ -6,47 +6,45 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body class="bg">
 	
 	<?php include './NavBar.php'; ?>
-	<div class="container">
+	<div class="page-container">
 		<br>
 		<div class="row">
-			<div class="center" style="width:100%;">
+			<div class="col-12">
 				<div id="myCarousel" class="carousel slide" data-ride="carousel">
 					<!-- Indicators -->
-					<ol class="carousel-indicators">
+					<ul class="carousel-indicators">
 						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 						<li data-target="#myCarousel" data-slide-to="1"></li>
 						<li data-target="#myCarousel" data-slide-to="2"></li>
-					</ol>
+					</ul>
 
 					<!-- Wrapper for slides -->
 					<div class="carousel-inner">
-						<div class="item active">
-							<img src="img/ahsha.png" alt="ahsha" class="center" style="width:100%;">
+						<div class="carousel-item active">
+							<img src="img/ahsha.png" alt="ahsha" class="d-block w-100">
 						</div>
 
-						<div class="item">
-							<img src="img/ahsha%202.png" alt="asha2" class="center" style="width:100%;">
+						<div class="carousel-item">
+							<img src="img/ahsha%202.png" alt="asha2" class="d-block w-100">
 						</div>
 
-						<div class="item">
-							<img src="img/ahsha%203.png" alt="asha3" class="center" style="width:100%;">
+						<div class="carousel-item">
+							<img src="img/ahsha%203.png" alt="asha3" class="d-block w-100">
 						</div>
 					</div>
 
 					<!-- Left and right controls -->
-					<a class="left carousel-control" href="#myCarousel" data-slide="prev">
-						<span class="glyphicon glyphicon-chevron-left"></span>
+					<a class="carousel-control-prev" href="#myCarousel" data-slide="prev" role="button">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
 						<span class="sr-only">Previous</span>
 					</a>
-					<a class="right carousel-control" href="#myCarousel" data-slide="next">
-						<span class="glyphicon glyphicon-chevron-right"></span>
+					<a class="carousel-control-next" href="#myCarousel" data-slide="next" role="button">
+						<span class="carousel-control-next-icon text-dark" aria-hidden="true"></span>
 						<span class="sr-only">Next</span>
 					</a>
 				</div>
@@ -122,6 +120,9 @@
 	<?php
 		include './Footer.php';
 	?>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.bundle.min.js"></script>
 
 </body>
 

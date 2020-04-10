@@ -33,7 +33,7 @@
 								<p class="text-center">By signing up you accept our <a href="#">Terms Of Use</a></p>
 							</div>
 							<div class="col-md-12 text-center ">
-								<button type="submit" class=" btn btn-block mybtn btn-warning tx-tfm">Login</button>
+								<button type="submit" class=" button btn-block allBtn btn-outline-warning tx-tfm">Login</button>
 							</div>
 							<div class="col-md-12 ">
 								<div class="login-or">
@@ -73,7 +73,7 @@
 								<input type="password" name="password" id="password" class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
 							</div>
 							<div class="col-md-12 text-center mb-3">
-								<button type="submit" class=" btn btn-block mybtn btn-warning tx-tfm">Get Started For Free</button>
+								<button type="submit" class="button allBtn btn-block btn-outline-warning tx-tfm">Get Started For Free</button>
 							</div>
 							<div class="col-md-12 ">
 								<div class="form-group">
@@ -86,6 +86,7 @@
 			</div>
 		</div>
 	</div>
+	<?php include './Footer.php'; ?>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery.validate.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>

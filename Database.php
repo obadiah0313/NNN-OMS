@@ -13,6 +13,7 @@
 			$this->collect = $this->db->selectCollection('stock');
 			$this->deletion = $this->db->selectCollection('deletion');
 			$this->user = $this->db->selectCollection('user');
+			$this->cart = $this->db->selectCollection('cart');
 		}
 		
 		public function fetchProduct(){
@@ -33,6 +34,9 @@
 				]);
 		}
 		
+		/*********************************/
+		/*Upload Data -- Stock & Deletion*/
+		/*********************************/
 		public function checkExists(){
 			return $this->collect->countDocuments(['date' => date("Y-m-d")]);
 		}
@@ -44,7 +48,7 @@
 		
 		public function replaceDeletion($date, $deletion){
 			$this->deletion->replaceOne(['date' => $date],
-										['date' => $date, 'products' => $deletion]);
+										['date' => $date, 'deletions' => $deletion]);
 		}
 		
 		public function insertStock($date, $product){
@@ -54,6 +58,37 @@
 		public function insertDeletion($date, $deletion){
 			$this->deletion->insertOne(['date' => $date, 'deletions' =>$deletion]);
 		}
+		
+		/*****************/
+		/*Cart Management*/
+		/*****************/
+		public function insertCart($oid, $date, $cart, $uid){
+			$this->cart->insertOne(['oid' => $oid, 'date' => $date, 'carts' => $cart, 'uid' => $uid, 'status' => "pending"]);
+		}
+		
+		public function checkCartExists($oid){
+			return $this->cart->countDocuments(['oid' => $oid, 'status' => "pending"]);
+		}
+		
+		public function updateCart($oid, $cart){
+			$this->cart->updateOne(['oid' => $oid],
+									['$set' => ['carts' => $cart]]);
+		}
+		
+		public function countOrder($uid){
+			if($this->cart->countDocuments(['uid' => $uid, 'status' => "pending"]) == null)
+				return 0;
+			else
+				return $this->cart->countDocuments(['uid' => $uid, 'status' => "completed"]);
+		}
+		
+		public function loadCart($uid){
+			return $this->cart->find(['uid' => $uid, 'status' => "pending"]);
+		}
+		
+		/******************/
+		/*Get Filter value*/
+		/******************/
 		
 		public function getSystem(){
 			return $this->collect->distinct('products.System');

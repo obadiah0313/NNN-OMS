@@ -1,5 +1,7 @@
-<?php require './Database.php';
-		$db = new MongodbDatabase();
+<?php 
+	session_start();
+	require './Database.php';
+	$db = new MongodbDatabase();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +11,7 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/jquery-ui.css">
+	<link rel="stylesheet" href="css/overhang.min.css">
 	<title>Neko Neko Nyaa</title>
 </head>
 
@@ -28,6 +31,8 @@
 				<p id="module"></p>
 				<label class="font-weight-bold">Product Code:</label>
 				<p id="code"></p>
+				<label class="font-weight-bold">Description:</label>
+				<p id="description"></p>
 				<label class="font-weight-bold">Price:</label>
 				<p id="price"></p>
 				<label class="font-weight-bold">System:</label>
@@ -56,7 +61,7 @@
 		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 			<div class="col-12 py-3">
 				<div class="text-center">
-					<h1>Available Stock</h1>
+					<h2>Available Stock</h2>
 					<p class="lead">Latest updated on <?php echo $db->getDate()?></p>
 				</div>
 			</div>
@@ -68,7 +73,7 @@
 					<h4 class="card-header" style="background:#ffff99">Filter:</h4>
 					<div class="card-body">
 						<form id="filterForm" method="GET" action="">
-							<div class="list-group">
+							<div class="list-group mb-3">
 								<h5>Module</h5>
 								<div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
 									<div class="list-group-item checkbox ">
@@ -83,6 +88,14 @@
 							</div>
 
 							<div class="list-group mb-3">
+								<h5>Sort by Price:</h5>
+								<div class="list-group-item checkbox">
+									<label><input type="radio" name="price" class="common_selector price" value="asc"> Low to High</label><br>
+									<label><input type="radio" name="price" class="common_selector price" value="desc"> High to Low</label>
+								</div>
+							</div>
+
+							<!--<div class="list-group mb-3">
 								<input type="hidden" id="hidden_minimum_price" value="0" />
 								<input type="hidden" id="hidden_maximum_price" value="1300" />
 								<h5 class="card-title">Price range</h5>
@@ -90,7 +103,7 @@
 									<input type="text" id="amount" class="text-warning" readonly size="12" style="border:0; font-weight:bold;">
 								</p>
 								<div id="slider-range"></div>
-							</div>
+							</div>-->
 
 							<div class="list-group">
 								<h5>System</h5>
@@ -131,7 +144,7 @@
 							</div>
 						</form>
 						<div class="mt-3">
-							<button class="btn btn-warning reset-btn" type="button">Clear All Filter</button>
+							<button class="button allBtn reset-btn" type="button">Clear All Filter</button>
 						</div>
 					</div>
 				</div>
@@ -161,22 +174,31 @@
 			</div>
 		</div>
 	</div>
+	<?php include './Footer.php'; ?>
 
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-ui.js"></script>
+	<script src="js/overhang.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="Table-Sortable/table-sortable.js"></script>
+	<!--<script type="text/javascript" src="js/loadTable.js"></script>-->
 
 	<script>
+		$(document).on('click', 'button', function() {
+			$("th:last-child, td:last-child").css({
+			 	display: "none"
+			});
+		})
 		$(document).ready(function() {
 			load_data();
 
 			function showTable(response) {
 				var table = $('#root').tableSortable({
 					data: JSON.parse(response),
-					columns,
+					columns: columns,
 					searchField: '#searchField',
 					rowsPerPage: 15,
+					sorting: false,
 					pagination: true
 				});
 				$('#changeRows').on('change', function() {
@@ -188,15 +210,17 @@
 				var action = 'fetch_data';
 				var minimum_price = $('#hidden_minimum_price').val();
 				var maximum_price = $('#hidden_maximum_price').val();
+				var price = get_filter('price');
 				var module = get_filter('module');
 				var system = get_filter('system');
 				var type = get_filter('type');
 				var country = get_filter('country');
 				$.ajax({
-					url: "ProcessingData.php?init=false",
+					url: "./ProcessingData.php?init=false",
 					method: "POST",
 					data: {
 						action: action,
+						price: price,
 						minimum_price: minimum_price,
 						maximum_price: maximum_price,
 						module: module,
@@ -219,18 +243,16 @@
 									$('#release').text(value.release);
 									$('#module').text(value.module);
 									$('#code').text(value.id);
-									$('#description').text(value.mrp);
+									$('#description').text(value.desp);
+									$('#price').text(value.mrp);
 									$('#system').text(value.system);
 									$('#race').text(value.race);
 									$('#type').text(value.type);
 									$('#qtyPack').text(value.qtyPack);
 									$('#country').text(value.country);
 								}
-									
 							});
-
 						});
-
 					}
 				});
 			}
@@ -238,8 +260,8 @@
 			var columns = {
 				module: 'Module',
 				desp: 'Description',
-				mrp: 'Retail Price',
-				qty: 'Quantity Order',
+				mrp: 'Price(RM)',
+				qty: '',
 				id: 'id'
 			}
 
@@ -253,7 +275,7 @@
 						$("th:last-child, td:last-child").css({
 							display: "none"
 						});
-						$(document).on('click', 'tr', function() {
+						$(document).on('dblclick', 'tr', function() {
 							var arr = $(this).text().split(' ');
 							var id = arr[arr.length - 1];
 
@@ -263,24 +285,18 @@
 									$('#release').text(value.release);
 									$('#module').text(value.module);
 									$('#code').text(value.id);
-									$('#description').text(value.mrp);
+									$('#description').text(value.desp);
+									$('#price').text(value.mrp);
 									$('#system').text(value.system);
 									$('#race').text(value.race);
 									$('#type').text(value.type);
 									$('#qtyPack').text(value.qtyPack);
 									$('#country').text(value.country);
 								}
-									
 							});
-
 						});
-
 					}
 				});
-			}
-			
-			function showModal() {
-				
 			}
 
 			$(function() {
@@ -319,9 +335,36 @@
 					" - RM" + $("#slider-range").slider("values", 1));
 			});
 
-			$(function() {
-				$('[data-toggle="tooltip"]').tooltip()
-			})
+			
+			$(document).on('click', '#btnAdd', function() {
+				var item = [];
+				item.push($(this).val());
+				var action1 = 'add_cart';
+				var action2 = 'cart_count';
+				$.ajax({
+					url: "./countCart.php",
+					method: "POST",
+					data: {
+						action: action2,
+						item: item,
+					},
+					success: function(data) {
+						data = JSON.parse(data);
+						$("body").overhang({
+							type: data.type,
+							message: data.msg
+						});
+					}
+				});
+				$.ajax({
+					url: "./addCart.php",
+					method: "POST",
+					data: {
+						action: action1,
+						item: item,
+					}
+				});
+			});
 		});
 
 	</script>

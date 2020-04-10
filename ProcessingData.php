@@ -16,10 +16,12 @@
 						"race" => $cl['products'][$i]['Race'],
 						"type" => $cl['products'][$i]['Product Type'],
 						"module" => $cl['products'][$i]['Module'],
-						"desp" => $cl['products'][$i]['Description'],
-						"mrp" => "RM ".number_format($cl['products'][$i]['MRP'],2),
-						"qty" => '<input type="number" min="1" max="3" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />  <button class"btn btn-link"><image src="cart.png"></button>'
+						"desp" => '<span>'.$cl['products'][$i]['Description'].'</span>',
+						"mrp" => $cl['products'][$i]['MRP'],
+						"qty" => '<button class="button allBtn item" id="btnAdd" value="'.$cl['products'][$i]['Product Code'].'">Add to Cart <i class="fas fa-cart-plus"></i></button>'
 					);
+					if($datas["release"] == "1899-12-30")
+							$datas["release"] = "Unknown";
 					array_push($data, $datas);
 				}
 			}	
@@ -50,18 +52,17 @@
 							}
 						}
 					}
-					if(isset($_POST["minimum_price"], $_POST["maximum_price"]) && !empty($_POST["minimum_price"]) && !empty($_POST["maximum_price"]))
+					/*if(isset($_POST["minimum_price"], $_POST["maximum_price"]) && !empty($_POST["minimum_price"]) && !empty($_POST["maximum_price"]))
 					{
 						$count ++;
 						if($cl['products'][$i]['MRP'] >= $_POST["minimum_price"] && $cl['products'][$i]['MRP'] <= $_POST["maximum_price"] )
 							$flag ++;
-					}
+					}*/
 					if(isset($_POST["system"]))
  					{
 						$count++;
 						foreach($_POST["system"] as $sys){
 							if($cl['products'][$i]['System'] == $sys){
-								//var_dump($cl['products'][$i]['System']);
 								$flag ++;
 							}
 						}
@@ -97,15 +98,31 @@
 							"type" => $cl['products'][$i]['Product Type'],
 							"module" => $cl['products'][$i]['Module'],
 							"desp" => $cl['products'][$i]['Description'],
-							"mrp" => "RM ".number_format($cl['products'][$i]['MRP'],2),
-							"qty" => '<input type="number" min="1" max="3" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))" />  <button class"btn btn-link"><image src="cart.png"></button>'
+							"mrp" => $cl['products'][$i]['MRP'],
+							"qty" => '<button class="button allBtn item" id="btnAdd" value="'.$cl['products'][$i]['Product Code'].'">Add to Cart <i class="fas fa-cart-plus"></i></button>'
 						);
-						array_push($data, $datas);
+						if($datas["release"] == "1899-12-30")
+							$datas["release"] = "Unknown";
+						array_push($data, $datas);						
 					}
+					
 				}
 			}	
-			
+			if(isset($_POST["price"]))
+			{
+				$columns = array_column($data,'mrp');
+				foreach($_POST["price"] as $sort){
+					if($sort == "asc")
+						array_multisort($columns, SORT_ASC, $data);
+					else
+						array_multisort($columns, SORT_DESC, $data);
+				}
+			}
 		}
+	}
+	foreach($data as &$key)
+	{
+		$key['mrp'] = "RM ".number_format($key['mrp'],2);
 	}
 	echo json_encode($data);
 ?>

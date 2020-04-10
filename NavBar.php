@@ -1,8 +1,9 @@
 <link rel="stylesheet" href="css/nav.css">
+<link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="fontawesome/css/all.css">
-<div style="background:orange">
+<div style="background:rgba(255, 165, 0, 0.85)">
 	<div class="d-none d-lg-block bg-dark">
-		<div class="container">
+		<div class="page-container">
 			<div class="row text-white">
 				<div class="d-inline col-auto mr-auto">
 					<i class="fab fa-whatsapp"></i> WhatsApp : <a class="text-white" href="https://wa.me/60138183616">013-818 3616</a>
@@ -17,7 +18,7 @@
 		</div>
 	</div>
 	<div class="d-lg-none bg-dark">
-		<div class="container">
+		<div class="page-container mb-0">
 			<div class="row text-white">
 				<div class="d-inline col-auto mr-auto"><a class="center text-white"><i class="fab fa-whatsapp"></i> 013-818 3616</a>
 				</div>
@@ -31,27 +32,28 @@
 		</div>
 	</div>
 	<div class="d-none d-lg-block">
-		<div class="container">
+		<div class="page-container">
 			<div class="row">
-				<div class="col-auto mx-auto my-1">
+				<div class="col-auto mr-auto">
 					<a href="./index.php"><img src="img/neko.png" alt="logo" style="width:40% ;"></a>
 				</div>
-				<div class="col-auto mx-auto">
-					<h3 class="display-4">
-						<i>Neko Neko Nyaa</i><br>
-						<small class="text-muted">Ordering System</small>
+				<div class="col-auto my-auto">
+					<h3>
+						<i class="display-4">Neko Neko Nyaa</i><br>
+						<small class="text-muted"> Ordering System</small>
 					</h3>
 				</div>
 			</div>
 		</div>
 	</div>
 	<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark" role="navigation">
-		<div class="container">
+		<div class="container-fluid" style="margin-left: 10%;
+	margin-right: 10%;">
 			<a class="navbar-brand text-warning" href="index.php">Neko Neko Nyaa</a>
 			<button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
 				&#9776;
 			</button>
-			<div class="collapse navbar-collapse" id="exCollapsingNavbar">
+			<div class="collapse navbar-collapse order-0" id="exCollapsingNavbar">
 				<ul class="nav navbar-nav">
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -62,7 +64,6 @@
 							<a class="dropdown-item" href="Catalogue_Unavailable.php">Unavailable</a>
 						</div>
 					</li>
-					<li class="nav-item"><a href="#" class="nav-link">Cart</a></li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Management
@@ -74,8 +75,14 @@
 						</div>
 					</li>
 				</ul>
-				<button id="btnLogin" class="btn btn-warning justify-content-between ml-auto" onclick="document.location.href = 'Login.php';">Login</button>
 			</div>
+			<div class="collapse navbar-collapse order-1" id="exCollapsingNavbar">
+				<ul class="nav navbar-nav ml-auto mr-2">
+					<li class="nav-item"><a href="./Cart.php" class="nav-link">Cart<i class="fas fa-shopping-cart"></i></a></li>
+				</ul>
+				<button id="btnLogin" class="button allBtn justify-content-between " onclick="document.location.href = 'Login.php';"><b>Login</b></button>
+			</div>
+			
 		</div>
 
 	</nav>
