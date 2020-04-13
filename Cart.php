@@ -38,7 +38,7 @@
 				<h2>Your Cart</h2>
 			</div>
 		</div>
-		<div class="row" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
+		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 			<div class="col-9 px-auto">
 				<div id="root"></div>
 			</div>

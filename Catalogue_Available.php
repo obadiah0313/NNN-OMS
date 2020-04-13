@@ -68,7 +68,94 @@
 		</div>
 
 		<div class="row py-5" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
-			<div class="col-md-12 col-lg-3">
+			<div class="col-12 d-lg-none mb-4" id="accordion">
+				<div class="card border-warning filter">
+					<div class="card-header p-0">
+						<a class="card-link " data-toggle="collapse" href="#collapseOne">
+							<h5 class="card-header" style="background:#ffff99; color:black">Filter:<small class="text-secondary">(Click to show)</small></h5>
+						</a>
+					</div>
+					<div id="collapseOne" class="collapse" data-parent="#accordion">
+						<div class="card-body p-2">
+							<form id="filterForm" method="GET" action="">
+							<div class="list-group mb-3">
+								<h5>Module</h5>
+								<div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
+									<div class="list-group-item checkbox ">
+										<?php
+							foreach($db->getModule() as $mod){?>
+										<label><input type="checkbox" class="common_selector module" value="<?php echo $mod; ?>"> <?php echo $mod; ?></label><br>
+										<?php	
+							}
+						?>
+									</div>
+								</div>
+							</div>
+
+							<div class="list-group mb-3">
+								<h5>Sort by Price:</h5>
+								<div class="list-group-item checkbox">
+									<label><input type="radio" name="price" class="common_selector price" value="asc"> Low to High</label><br>
+									<label><input type="radio" name="price" class="common_selector price" value="desc"> High to Low</label>
+								</div>
+							</div>
+
+							<!--<div class="list-group mb-3">
+								<input type="hidden" id="hidden_minimum_price" value="0" />
+								<input type="hidden" id="hidden_maximum_price" value="1300" />
+								<h5 class="card-title">Price range</h5>
+								<p>
+									<input type="text" id="amount" class="text-warning" readonly size="12" style="border:0; font-weight:bold;">
+								</p>
+								<div id="slider-range"></div>
+							</div>-->
+
+							<div class="list-group">
+								<h5>System</h5>
+								<div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
+									<div class="list-group-item checkbox ">
+										<?php
+							foreach($db->getSystem() as $sys){?>
+										<label><input type="checkbox" class="common_selector system" value="<?php echo $sys; ?>"> <?php echo $sys; ?></label><br>
+										<?php	
+							}
+						?>
+									</div>
+								</div>
+							</div>
+
+							<div class="list-group">
+								<h5>Product Type</h5>
+								<div class="list-group-item checkbox">
+									<?php
+							foreach($db->getType() as $type){?>
+									<label><input type="checkbox" class="common_selector type" value="<?php echo $type; ?>"> <?php echo $type; ?></label><br>
+									<?php	
+							}
+						?>
+								</div>
+							</div>
+
+							<div class="list-group">
+								<h5>Country of Origin</h5>
+								<div class="list-group-item checkbox">
+									<?php
+							foreach($db->getCountry() as $cty){?>
+									<label><input type="checkbox" class="common_selector country" value="<?php echo $cty; ?>"> <?php if($cty == "CN") echo "China"; else echo "United Kingdom" ; ?></label><br>
+									<?php	
+							}
+						?>
+								</div>
+							</div>
+						</form>
+						<div class="mt-3 text-right">
+							<button class="button allBtn reset-btn" type="button">Clear All Filter</button>
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="d-none d-lg-block col-lg-3">
 				<div class="card border-warning filter">
 					<h4 class="card-header" style="background:#ffff99">Filter:</h4>
 					<div class="card-body">
@@ -143,7 +230,7 @@
 								</div>
 							</div>
 						</form>
-						<div class="mt-3">
+						<div class="mt-3 text-right">
 							<button class="button allBtn reset-btn" type="button">Clear All Filter</button>
 						</div>
 					</div>
@@ -186,7 +273,7 @@
 	<script>
 		$(document).on('click', 'button', function() {
 			$("th:last-child, td:last-child").css({
-			 	display: "none"
+				display: "none"
 			});
 		})
 		$(document).ready(function() {
@@ -335,7 +422,7 @@
 					" - RM" + $("#slider-range").slider("values", 1));
 			});
 
-			
+
 			$(document).on('click', '#btnAdd', function() {
 				var item = [];
 				item.push($(this).val());
