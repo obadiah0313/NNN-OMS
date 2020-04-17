@@ -56,7 +56,7 @@
 
 		<div class="row">
 			<div class="col-md-6 col-xs-12">
-				<div class="row"><img src="img/digi.JPG" alt="digi" style="width: 100%; height: 100%; padding:10px "></div>
+				<div class="row"><img src="img/digi.jpg" alt="digi" style="width: 100%; height: 100%; padding:10px "></div>
 			</div>
 			<div class="col-md-6 col-xs-12">
 				<div class="row"><img src="img/magic.jpg" alt="magic" style="width: 100%; height: 100%; padding:10px "></div>
