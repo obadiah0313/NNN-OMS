@@ -1,7 +1,7 @@
 <?php
 	require 'Database.php';
 	$db = new MongodbDatabase();
-	$uid="001";
+	/* $uid="001";
 	$count = 0;
 	$total = 0;
 	$empty = true;
@@ -23,10 +23,10 @@
 				}				
 			}
 		}
-	}
-	foreach($db->getSetting() as $stt){
+	} */
+	/* foreach($db->getSetting() as $stt){
 		$ch = iterator_to_array($stt['cart_Header']);
-	}
+	} */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -116,12 +116,7 @@
 			}
 
 			var columns = {
-				<?php
-				foreach($ch as $h)
-					echo "'".$h."' : '".$h."',";
-				?>
-				count: 'Order Quantity',
-				price: 'Price',
+				count: 'Order Quantity'
 				remove: ''
 			}
 
