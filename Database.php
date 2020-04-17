@@ -9,7 +9,7 @@
 			}catch (MongoConnectionException $e) {
 				die('Error connecting to MongoDB server');
 			}
-			$this->db = $this->client->NNNdb;
+			$this->db = $this->client->heroku_0g0g5g6c;
 			$this->collect = $this->db->selectCollection('stock');
 			$this->deletion = $this->db->selectCollection('deletion');
 			$this->user = $this->db->selectCollection('user');
