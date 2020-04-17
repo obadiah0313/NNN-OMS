@@ -55,23 +55,17 @@
 			</button>
 			<div class="collapse navbar-collapse order-0" id="exCollapsingNavbar">
 				<ul class="nav navbar-nav">
+					<li class="nav-item"><a href="./Catalogue_Available.php" class="nav-link">Catalogue Available</a></li>
+					<li class="nav-item"><a href="./Catalogue_Unavailable.php" class="nav-link">Deletions</a></li>
+
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Catalogue
+							Setting
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="Catalogue_Available.php">Available</a>
-							<a class="dropdown-item" href="Catalogue_Unavailable.php">Unavailable</a>
-						</div>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Management
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="#">Customer</a>
-							<a class="dropdown-item" href="#">Order</a>
-							<a class="dropdown-item" href="./Upload.php">Stock</a>
+							<a class="dropdown-item" href="#">User Management</a>
+							<a class="dropdown-item" href="#">Order Management</a>
+							<a class="dropdown-item" href="./Upload.php">Catalogue Management</a>
 						</div>
 					</li>
 				</ul>
@@ -82,7 +76,7 @@
 				</ul>
 				<button id="btnLogin" class="button allBtn justify-content-between " onclick="document.location.href = 'Login.php';"><b>Login</b></button>
 			</div>
-			
+
 		</div>
 
 	</nav>

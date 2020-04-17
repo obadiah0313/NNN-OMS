@@ -1,0 +1,56 @@
+input,
+textarea {
+	border: 1px solid rgba(255, 165, 0, 0.85);
+	box-sizing: border-box;
+	outline: none;
+	border-radius: 10px;
+}
+
+input[type="button"] {
+	-webkit-appearance: button;
+	cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
+.input-group {
+	clear: both;
+	position: relative;
+}
+
+.input-group input[type='button'] {
+	min-width: 38px;
+	width: auto;
+}
+
+.input-group .button-minus,
+.input-group .button-plus {
+	font-weight: bold;
+	font-size: 16px;
+	height: 30px;
+	padding: 0;
+	position: relative;
+}
+
+.input-group .quantity-field {
+	position: relative;
+	height: 30px;
+	text-align: center;
+	width: 30px;
+	display: inline-block;
+	font-size: 15px;
+	margin: 0 0 5px;
+	resize: vertical;
+	border: 0;
+	font-weight: bold;
+	color: rgba(255, 165, 0, 0.85);
+}
+
+
+input[type="number"] {
+	-moz-appearance: textfield;
+	-webkit-appearance: none;
+}

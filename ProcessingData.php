@@ -1,28 +1,21 @@
 <?php
-	error_reporting(0);
+	//error_reporting(0);
 	require 'Database.php';
 	$db = new MongodbDatabase();
+	foreach($db->getSetting() as $stt){
+		$cCatHeader = iterator_to_array($stt['cCat_Header']);
+		$cCatFilter = iterator_to_array($stt['cCat_Filter']);
+	}
 	$data = [];
+	
 	if ($_GET['init'] == 'true') {
 		if ($_GET['stock'] === "yes") {
 			foreach($db->fetchProduct() as $cl) {
-				for($i = 0; $i < sizeof($cl['products']); $i++){
-					$datas = array(
-						"id" => $cl['products'][$i]['Product Code'],
-						"release" => date("Y-m-d",($cl['products'][$i]['Release Date (Last 3 Months)']- (25567 + 2))*86400),
-						"country" => $cl['products'][$i]['Country of Origin'],
-						"qtyPack" => $cl['products'][$i]['Qty in Pack'],
-						"system" => $cl['products'][$i]['System'],
-						"race" => $cl['products'][$i]['Race'],
-						"type" => $cl['products'][$i]['Product Type'],
-						"module" => $cl['products'][$i]['Module'],
-						"desp" => '<span>'.$cl['products'][$i]['Description'].'</span>',
-						"mrp" => $cl['products'][$i]['MRP'],
-						"qty" => '<button class="button allBtn item" id="btnAdd" value="'.$cl['products'][$i]['Product Code'].'">Add to Cart <i class="fas fa-cart-plus"></i></button>'
-					);
-					if($datas["release"] == "1899-12-30")
-							$datas["release"] = "Unknown";
-					array_push($data, $datas);
+				foreach($cl['products'] as $k=>$v)
+				{
+					$temp = iterator_to_array($v);
+					$temp = array_merge($temp, array('btnAdd' => '<button class="button allBtn item" id="btnAdd" value="'.$k.'">Add to Cart <i class="fas fa-cart-plus"></i></button>', 'id' => '<span style="display:none">'.$k.'</span>'));
+					$data[$k] = $temp;
 				}
 			}	
 		} else if ($_GET['stock'] === "no") {
@@ -40,89 +33,44 @@
 	} else if ($_GET['init'] == 'false') {
 		if(isset($_POST["action"])){
 			foreach($db->fetchProduct() as $cl) {
-				for($i = 0; $i < sizeof($cl['products']); $i++){
-					$flag = 0;
+				foreach($cl['products'] as $k=>$v){
 					$count = 0;
-					if(isset($_POST["module"]))
- 					{
-						$count++;
-						foreach($_POST["module"] as $mod){
-							if($cl['products'][$i]['Module'] == $mod){
-								$flag ++;
+					foreach($cCatFilter as $ccf){		
+						if(isset($_POST[substr(str_replace([' ','(',')'], '',$ccf), 0 ,13)]))
+						{
+							$count++;
+							foreach($_POST[substr(str_replace([' ','(',')'], '',$ccf), 0 ,13)] as $filter){
+								if($v[$ccf] == $filter){
+									$count--;
+								}
 							}
 						}
 					}
-					/*if(isset($_POST["minimum_price"], $_POST["maximum_price"]) && !empty($_POST["minimum_price"]) && !empty($_POST["maximum_price"]))
-					{
-						$count ++;
-						if($cl['products'][$i]['MRP'] >= $_POST["minimum_price"] && $cl['products'][$i]['MRP'] <= $_POST["maximum_price"] )
-							$flag ++;
-					}*/
-					if(isset($_POST["system"]))
- 					{
-						$count++;
-						foreach($_POST["system"] as $sys){
-							if($cl['products'][$i]['System'] == $sys){
-								$flag ++;
-							}
-						}
-					}
-					
-					if(isset($_POST["type"]))
- 					{
-						$count++;
-						foreach($_POST["type"] as $type){
-							if($cl['products'][$i]['Product Type'] == $type){
-								$flag ++;
-							}
-						}
-					}
-					
-					if(isset($_POST["country"]))
- 					{
-						$count++;
-						foreach($_POST["country"] as $cty){
-							if($cl['products'][$i]['Country of Origin'] == $cty){
-								$flag ++;
-							}
-						}
-					}
-					if($flag == $count){ 
-						$datas = array(
-							"id" => $cl['products'][$i]['Product Code'],
-							"release" => date("Y-m-d",($cl['products'][$i]['Release Date (Last 3 Months)']- (25567 + 2))*86400),
-							"country" => $cl['products'][$i]['Country of Origin'],
-							"qtyPack" => $cl['products'][$i]['Qty in Pack'],
-							"system" => $cl['products'][$i]['System'],
-							"race" => $cl['products'][$i]['Race'],
-							"type" => $cl['products'][$i]['Product Type'],
-							"module" => $cl['products'][$i]['Module'],
-							"desp" => $cl['products'][$i]['Description'],
-							"mrp" => $cl['products'][$i]['MRP'],
-							"qty" => '<button class="button allBtn item" id="btnAdd" value="'.$cl['products'][$i]['Product Code'].'">Add to Cart <i class="fas fa-cart-plus"></i></button>'
-						);
-						if($datas["release"] == "1899-12-30")
-							$datas["release"] = "Unknown";
-						array_push($data, $datas);						
+					if($count == 0){ 
+						$temp = iterator_to_array($v);
+						$temp = array_merge($temp, array('btnAdd' => '<button class="button allBtn item" id="btnAdd" value="'.$k.'">Add to Cart <i class="fas fa-cart-plus"></i></button>', 'id' => '<span style="display:none">'.$k.'</span>'));
+						array_push($data,$temp);						
 					}
 					
 				}
 			}	
 			if(isset($_POST["price"]))
 			{
-				$columns = array_column($data,'mrp');
-				foreach($_POST["price"] as $sort){
-					if($sort == "asc")
-						array_multisort($columns, SORT_ASC, $data);
-					else
-						array_multisort($columns, SORT_DESC, $data);
+				foreach($data as $d){
+					foreach($d as $k=>$v){
+						$aa = substr($v, -3);
+						if($aa === ".00")
+							$columnname = $k;
+					}
+					break;
 				}
+				if($_POST["price"][0] == "asc")
+					usort($data, function($a,$b){return strnatcmp(str_replace(',','',$a['MRP']), str_replace(',','',$b['MRP']));});
+				else
+					usort($data, function($a,$b){return strnatcmp(str_replace(',','',$b['MRP']), str_replace(',','',$a['MRP']));});
+				
 			}
 		}
-	}
-	foreach($data as &$key)
-	{
-		$key['mrp'] = "RM ".number_format($key['mrp'],2);
 	}
 	echo json_encode($data);
 ?>

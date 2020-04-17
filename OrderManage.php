@@ -15,7 +15,6 @@
 			}
 			foreach($db->loadCart($uid) as $citem){
 				if ($citem['carts'] != null) $empty = false;
-				$remarks = $citem['remarks'];
 				foreach($citem['carts'] as $key => $value){
 					if($k == $key){
 						$count += $value;
@@ -36,10 +35,10 @@
 	<meta charset="UTF-8">
 	<title>Neko Neko Nyaa</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="icon" href="img/neko.png">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/cart.css">
 	<link rel="stylesheet" href="css/jquery-ui.css">
-	<link rel="stylesheet" href="css/overhang.min.css">
 </head>
 
 <body class="bg">
@@ -49,12 +48,18 @@
 	<div class="page-container">
 		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 			<div class="text-center col-12 py-3">
-				<h2>Your Cart</h2>
+				<h2>Orders Management</h2>
+			</div>
+		</div>
+		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
+			<div class="text-center col-12 py-3">
+				<h2>Load Excel</h2>
 			</div>
 		</div>
 		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 			<div class="col px-auto">
 				<div id="root"></div>
+				
 			</div>
 			<div class="col-auto my-3 ml-auto">
 				<div class="row">
@@ -79,14 +84,8 @@
 											<h6>MYR <?php echo number_format($total,2); ?></h6>
 										</div>
 									</div>
-									<div class="row mx-auto my-2">
-										<div class="col-12">
-											<h5>Remarks:</h5>
-											<textarea id="remarks" class="w-100"><?php if(isset($remarks))echo $remarks; ?></textarea>
-										</div>
-									</div>
 									<div class="mt-3 text-center">
-										<button class="button allBtn chkout-btn" type="button">Checkout >></button>
+										<button class="button allBtn reset-btn" type="button">Checkout >></button>
 									</div>
 								</div>
 							</div>
@@ -101,7 +100,6 @@
 	<?php include './Footer.php'; ?>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-ui.js"></script>
-	<script src="js/overhang.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="Table-Sortable/table-sortable.js"></script>
 	<script>
@@ -217,30 +215,6 @@
 
 			$(document).on('click', '#button-minus', function(e) {
 				decrementValue(e);
-			});
-			
-			$(document).on('click', '.chkout-btn', function() {
-				var remarks = $('#remarks').val();
-				var action = 'checkout';
-				var oid = "o-<?php echo $uid; ?>-<?php echo $db->countOrder($uid)?>";
-				$.ajax({
-					url: './checkout.php',
-					method: "POST",
-					data: {
-						action: action,
-						remark: remarks,
-						oid : oid
-					},
-					success: function(data) {
-						data = JSON.parse(data);
-						$("body").overhang({
-							type: data.type,
-							message: data.msg
-						});
-						load_cart();
-						if(data.type == "success")$('#remarks').val('');
-					}
-				});
 			});
 		});
 

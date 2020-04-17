@@ -14,6 +14,7 @@
 			$this->deletion = $this->db->selectCollection('deletion');
 			$this->user = $this->db->selectCollection('user');
 			$this->cart = $this->db->selectCollection('cart');
+			$this->setting = $this->db->selectCollection('setting');
 		}
 		
 		public function fetchProduct(){
@@ -34,6 +35,12 @@
 				]);
 		}
 		
+		public function getProduct(){
+			foreach($this->fetchProduct() as $i){
+				return iterator_to_array($i['products']);
+			}
+		}
+		
 		/*********************************/
 		/*Upload Data -- Stock & Deletion*/
 		/*********************************/
@@ -41,9 +48,9 @@
 			return $this->collect->countDocuments(['date' => date("Y-m-d")]);
 		}
 		
-		public function replaceStock($date, $product){
+		public function replaceStock($date, $product, $header){
 			$this->collect->replaceOne(['date' => $date],
-										['date' => $date, 'products' => $product]);
+										['date' => $date, 'products' => $product, 'header' => $header]);
 		}
 		
 		public function replaceDeletion($date, $deletion){
@@ -51,23 +58,49 @@
 										['date' => $date, 'deletions' => $deletion]);
 		}
 		
-		public function insertStock($date, $product){
-			$this->collect->insertOne(['date' => $date, 'products' =>$product]);
+		public function insertStock($date, $product, $header){
+			$this->collect->insertOne(['date' => $date, 'products' =>$product, 'header' => $header]);
 		}
 		
 		public function insertDeletion($date, $deletion){
 			$this->deletion->insertOne(['date' => $date, 'deletions' =>$deletion]);
 		}
 		
+		public function getHeaders(){
+			foreach($this->fetchProduct() as $i){
+				return iterator_to_array($i['header']);
+			}
+		}
+		
+		/******************/
+		/*Table Management*/
+		/******************/
+		public function insertSetting($cCatheader, $cCatfilter, $pCatheader, $pCatfilter, $cartHeader){
+			$this->setting->insertOne(['cCat_Header' => $cCatheader, 'cCat_Filter' => $cCatfilter, 'pCat_Header' => $pCatheader, 'pCat_Filter' => $pCatfilter, 'cart_Header'=>$cartHeader,'active'=>'yes']);
+		}
+		
+		public function updateSetting($cCatheader, $cCatfilter, $pCatheader, $pCatfilter, $cartHeader){
+			$this->setting->updateOne(['active' => 'yes'],
+									  ['$set' => ['cCat_Header' => $cCatheader, 'cCat_Filter' => $cCatfilter, 'pCat_Header' => $pCatheader, 'pCat_Filter' => $pCatfilter, 'cart_Header'=>$cartHeader]]);
+		}
+		
+		public function findSetting() {
+			return $this->setting->countDocuments(['active' => 'yes']);
+		}
+		
+		public function getSetting() {
+			return $this->setting->find();
+		}
+		
 		/*****************/
 		/*Cart Management*/
 		/*****************/
 		public function insertCart($oid, $date, $cart, $uid){
-			$this->cart->insertOne(['oid' => $oid, 'date' => $date, 'carts' => $cart, 'uid' => $uid, 'status' => "pending"]);
+			$this->cart->insertOne(['oid' => $oid, 'date' => $date, 'carts' => $cart, 'uid' => $uid,'remarks' => "", 'status' => "active"]);
 		}
 		
 		public function checkCartExists($oid){
-			return $this->cart->countDocuments(['oid' => $oid, 'status' => "pending"]);
+			return $this->cart->countDocuments(['oid' => $oid, 'status' => "active"]);
 		}
 		
 		public function updateCart($oid, $cart){
@@ -75,35 +108,28 @@
 									['$set' => ['carts' => $cart]]);
 		}
 		
+		public function updateStatus($oid, $remarks){
+			$this->cart->updateOne(['oid' => $oid],
+									['$set' => ['remarks' => $remarks, 'status' => "pending"]]);
+		}
+		
 		public function countOrder($uid){
-			if($this->cart->countDocuments(['uid' => $uid, 'status' => "pending"]) == null)
+			if($this->cart->countDocuments(['uid' => $uid, 'status' => "active"]) == null)
 				return 0;
 			else
 				return $this->cart->countDocuments(['uid' => $uid, 'status' => "completed"]);
 		}
 		
 		public function loadCart($uid){
-			return $this->cart->find(['uid' => $uid, 'status' => "pending"]);
+			return $this->cart->find(['uid' => $uid, 'status' => "active"]);
 		}
 		
 		/******************/
 		/*Get Filter value*/
 		/******************/
 		
-		public function getSystem(){
-			return $this->collect->distinct('products.System');
-		}
-		
-		public function getType(){
-			return $this->collect->distinct('products.Product Type');
-		}
-		
-		public function getCountry(){
-			return $this->collect->distinct('products.Country of Origin');
-		}
-	
-		public function getModule(){
-			return $this->collect->distinct('products.Module');
+		public function getFilter($filter){
+			return $this->collect->distinct('products.'.$filter);
 		}
 		
 		public function getDate(){

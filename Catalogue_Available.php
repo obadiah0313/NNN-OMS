@@ -2,6 +2,12 @@
 	session_start();
 	require './Database.php';
 	$db = new MongodbDatabase();
+	foreach($db->getSetting() as $stt){
+		$cCatHeader = iterator_to_array($stt['cCat_Header']);
+		$cCatFilter = iterator_to_array($stt['cCat_Filter']);
+	}
+	$header = $db->getHeaders();
+	$product = $db->getProduct();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +15,7 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="icon" href="img/neko.png">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/jquery-ui.css">
 	<link rel="stylesheet" href="css/overhang.min.css">
@@ -25,26 +32,12 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<label class="font-weight-bold">Release Date:</label>
-				<p id="release"></p>
-				<label class="font-weight-bold">Module:</label>
-				<p id="module"></p>
-				<label class="font-weight-bold">Product Code:</label>
-				<p id="code"></p>
-				<label class="font-weight-bold">Description:</label>
-				<p id="description"></p>
-				<label class="font-weight-bold">Price:</label>
-				<p id="price"></p>
-				<label class="font-weight-bold">System:</label>
-				<p id="system"></p>
-				<label class="font-weight-bold">Race:</label>
-				<p id="race"></p>
-				<label class="font-weight-bold">Product Type:</label>
-				<p id="type"></p>
-				<label class="font-weight-bold">Quantity in pack:</label>
-				<p id="qtyPack"></p>
-				<label class="font-weight-bold">Country of Origin:</label>
-				<p id="country"></p>
+				<?php 
+					foreach($header as $v){
+						echo '<label class="font-weight-bold">'.$v.'</label>';
+						echo '<p id="'.substr(str_replace([' ','(',')'], '',$v), 0 ,13).'"></p>';
+					}
+				?>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -78,79 +71,30 @@
 					<div id="collapseOne" class="collapse" data-parent="#accordion">
 						<div class="card-body p-2">
 							<form id="filterForm" method="GET" action="">
+								<div class="list-group mb-3">
+									<h5>Sort by Price:</h5>
+									<div class="list-group-item checkbox">
+										<label><input type="radio" name="price" class="common_selector price" value="asc"> Low to High</label><br>
+										<label><input type="radio" name="price" class="common_selector price" value="desc"> High to Low</label>
+									</div>
+								</div>
+								<?php foreach($cCatFilter as $f) { ?>
 							<div class="list-group mb-3">
-								<h5>Module</h5>
-								<div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
+								<h5><?php echo $f; ?></h5>
+								<div style="height: 150px; overflow-y: auto; overflow-x: hidden;">
 									<div class="list-group-item checkbox ">
-										<?php
-							foreach($db->getModule() as $mod){?>
-										<label><input type="checkbox" class="common_selector module" value="<?php echo $mod; ?>"> <?php echo $mod; ?></label><br>
-										<?php	
-							}
-						?>
+										<?php foreach($db->getFilter($f) as $filter) {?>
+										<label><input type="checkbox" class="common_selector <?php echo substr(str_replace([' ','(',')'], '',$f), 0 ,13) ?>" value="<?php echo $filter; ?>"> <?php echo $filter; ?></label><br>
+										<?php } ?>
 									</div>
 								</div>
 							</div>
+							<?php } ?>
 
-							<div class="list-group mb-3">
-								<h5>Sort by Price:</h5>
-								<div class="list-group-item checkbox">
-									<label><input type="radio" name="price" class="common_selector price" value="asc"> Low to High</label><br>
-									<label><input type="radio" name="price" class="common_selector price" value="desc"> High to Low</label>
-								</div>
+							</form>
+							<div class="mt-3 text-right">
+								<button class="button allBtn reset-btn" type="button">Clear All Filter</button>
 							</div>
-
-							<!--<div class="list-group mb-3">
-								<input type="hidden" id="hidden_minimum_price" value="0" />
-								<input type="hidden" id="hidden_maximum_price" value="1300" />
-								<h5 class="card-title">Price range</h5>
-								<p>
-									<input type="text" id="amount" class="text-warning" readonly size="12" style="border:0; font-weight:bold;">
-								</p>
-								<div id="slider-range"></div>
-							</div>-->
-
-							<div class="list-group">
-								<h5>System</h5>
-								<div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
-									<div class="list-group-item checkbox ">
-										<?php
-							foreach($db->getSystem() as $sys){?>
-										<label><input type="checkbox" class="common_selector system" value="<?php echo $sys; ?>"> <?php echo $sys; ?></label><br>
-										<?php	
-							}
-						?>
-									</div>
-								</div>
-							</div>
-
-							<div class="list-group">
-								<h5>Product Type</h5>
-								<div class="list-group-item checkbox">
-									<?php
-							foreach($db->getType() as $type){?>
-									<label><input type="checkbox" class="common_selector type" value="<?php echo $type; ?>"> <?php echo $type; ?></label><br>
-									<?php	
-							}
-						?>
-								</div>
-							</div>
-
-							<div class="list-group">
-								<h5>Country of Origin</h5>
-								<div class="list-group-item checkbox">
-									<?php
-							foreach($db->getCountry() as $cty){?>
-									<label><input type="checkbox" class="common_selector country" value="<?php echo $cty; ?>"> <?php if($cty == "CN") echo "China"; else echo "United Kingdom" ; ?></label><br>
-									<?php	
-							}
-						?>
-								</div>
-							</div>
-						</form>
-						<div class="mt-3 text-right">
-							<button class="button allBtn reset-btn" type="button">Clear All Filter</button>
-						</div>
 						</div>
 					</div>
 				</div>
@@ -159,21 +103,7 @@
 				<div class="card border-warning filter">
 					<h4 class="card-header" style="background:#ffff99">Filter:</h4>
 					<div class="card-body">
-						<form id="filterForm" method="GET" action="">
-							<div class="list-group mb-3">
-								<h5>Module</h5>
-								<div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
-									<div class="list-group-item checkbox ">
-										<?php
-							foreach($db->getModule() as $mod){?>
-										<label><input type="checkbox" class="common_selector module" value="<?php echo $mod; ?>"> <?php echo $mod; ?></label><br>
-										<?php	
-							}
-						?>
-									</div>
-								</div>
-							</div>
-
+						<form id="filterForm2" method="GET" action="">
 							<div class="list-group mb-3">
 								<h5>Sort by Price:</h5>
 								<div class="list-group-item checkbox">
@@ -181,54 +111,19 @@
 									<label><input type="radio" name="price" class="common_selector price" value="desc"> High to Low</label>
 								</div>
 							</div>
-
-							<!--<div class="list-group mb-3">
-								<input type="hidden" id="hidden_minimum_price" value="0" />
-								<input type="hidden" id="hidden_maximum_price" value="1300" />
-								<h5 class="card-title">Price range</h5>
-								<p>
-									<input type="text" id="amount" class="text-warning" readonly size="12" style="border:0; font-weight:bold;">
-								</p>
-								<div id="slider-range"></div>
-							</div>-->
-
-							<div class="list-group">
-								<h5>System</h5>
-								<div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
+							<?php foreach($cCatFilter as $f) { ?>
+							<div class="list-group mb-3">
+								<h5><?php echo $f; ?></h5>
+								<div style="height: 150px; overflow-y: auto; overflow-x: hidden;">
 									<div class="list-group-item checkbox ">
-										<?php
-							foreach($db->getSystem() as $sys){?>
-										<label><input type="checkbox" class="common_selector system" value="<?php echo $sys; ?>"> <?php echo $sys; ?></label><br>
-										<?php	
-							}
-						?>
+										<?php foreach($db->getFilter($f) as $filter) {?>
+										<label><input type="checkbox" class="common_selector <?php echo substr(str_replace([' ','(',')'], '',$f), 0 ,13) ?>" value="<?php echo $filter; ?>"> <?php echo $filter; ?></label><br>
+										<?php } ?>
 									</div>
 								</div>
 							</div>
+							<?php } ?>
 
-							<div class="list-group">
-								<h5>Product Type</h5>
-								<div class="list-group-item checkbox">
-									<?php
-							foreach($db->getType() as $type){?>
-									<label><input type="checkbox" class="common_selector type" value="<?php echo $type; ?>"> <?php echo $type; ?></label><br>
-									<?php	
-							}
-						?>
-								</div>
-							</div>
-
-							<div class="list-group">
-								<h5>Country of Origin</h5>
-								<div class="list-group-item checkbox">
-									<?php
-							foreach($db->getCountry() as $cty){?>
-									<label><input type="checkbox" class="common_selector country" value="<?php echo $cty; ?>"> <?php if($cty == "CN") echo "China"; else echo "United Kingdom" ; ?></label><br>
-									<?php	
-							}
-						?>
-								</div>
-							</div>
 						</form>
 						<div class="mt-3 text-right">
 							<button class="button allBtn reset-btn" type="button">Clear All Filter</button>
@@ -271,11 +166,6 @@
 	<!--<script type="text/javascript" src="js/loadTable.js"></script>-->
 
 	<script>
-		$(document).on('click', 'button', function() {
-			$("th:last-child, td:last-child").css({
-				display: "none"
-			});
-		})
 		$(document).ready(function() {
 			load_data();
 
@@ -295,48 +185,41 @@
 
 			function filter_data() {
 				var action = 'fetch_data';
-				var minimum_price = $('#hidden_minimum_price').val();
-				var maximum_price = $('#hidden_maximum_price').val();
 				var price = get_filter('price');
-				var module = get_filter('module');
-				var system = get_filter('system');
-				var type = get_filter('type');
-				var country = get_filter('country');
+				<?php
+					foreach($cCatFilter as $ccatfilter)
+					{
+						echo 'var '.substr(str_replace([' ','(',')'], '',$ccatfilter), 0 ,13).' = get_filter("'.substr(str_replace([' ','(',')'], '',$ccatfilter), 0 ,13).'");' ;
+					}
+				?>
 				$.ajax({
 					url: "./ProcessingData.php?init=false",
 					method: "POST",
 					data: {
 						action: action,
-						price: price,
-						minimum_price: minimum_price,
-						maximum_price: maximum_price,
-						module: module,
-						system: system,
-						type: type,
-						country: country
+						<?php
+							foreach($cCatFilter as $ccatfilter)
+							{
+								echo substr(str_replace([' ','(',')'], '',$ccatfilter), 0 ,13).' : '.substr(str_replace([' ','(',')'], '',$ccatfilter), 0 ,13).',' ;
+							}
+						?>
+						price: price
 					},
-					success: function(data) {
-						showTable(data);
-						$("th:last-child, td:last-child").css({
-							display: "none"
-						});
-						$(document).on('click', 'tr', function() {
+					success: function(response) {
+						showTable(response);
+						$(document).on('dblclick', 'tr', function() {
 							var arr = $(this).text().split(' ');
 							var id = arr[arr.length - 1];
-
 							$.each(JSON.parse(response), function(index, value) {
-								if (value.id === id) {
+								var regex = />(.*)</;
+								var rid = value.id.match(regex);
+								if (rid[1] === id) {
 									$('#productDetail').modal('show');
-									$('#release').text(value.release);
-									$('#module').text(value.module);
-									$('#code').text(value.id);
-									$('#description').text(value.desp);
-									$('#price').text(value.mrp);
-									$('#system').text(value.system);
-									$('#race').text(value.race);
-									$('#type').text(value.type);
-									$('#qtyPack').text(value.qtyPack);
-									$('#country').text(value.country);
+									<?php 
+									foreach ($header as $head) {
+										echo 'console.log(value["SS Code"]);';
+										echo '$("#'.substr(str_replace([' ','(',')'], '',$head),0,13).'").text(value["'.$head.'"]);';
+									}?>
 								}
 							});
 						});
@@ -345,11 +228,11 @@
 			}
 
 			var columns = {
-				module: 'Module',
-				desp: 'Description',
-				mrp: 'Price(RM)',
-				qty: '',
-				id: 'id'
+				<?php foreach($cCatHeader as $cch){
+					echo "'".$cch."':'".$cch."',";
+				} ?>
+				btnAdd: '',
+				id: ''
 			}
 
 			function load_data() {
@@ -359,49 +242,27 @@
 					data: {},
 					success: function(response) {
 						showTable(response);
-						$("th:last-child, td:last-child").css({
-							display: "none"
-						});
 						$(document).on('dblclick', 'tr', function() {
 							var arr = $(this).text().split(' ');
 							var id = arr[arr.length - 1];
-
 							$.each(JSON.parse(response), function(index, value) {
-								if (value.id === id) {
+								var regex = />(.*)</;
+								var rid = value.id.match(regex);
+								if (rid[1] === id) {
 									$('#productDetail').modal('show');
-									$('#release').text(value.release);
-									$('#module').text(value.module);
-									$('#code').text(value.id);
-									$('#description').text(value.desp);
-									$('#price').text(value.mrp);
-									$('#system').text(value.system);
-									$('#race').text(value.race);
-									$('#type').text(value.type);
-									$('#qtyPack').text(value.qtyPack);
-									$('#country').text(value.country);
+
+									<?php 
+												foreach ($header as $head) {
+													echo 'console.log(value["SS Code"]);';
+													echo '$("#'.substr(str_replace([' ','(',')'], '',$head),0,13).'").text(value["'.$head.'"]);';
+												}?>
 								}
+
 							});
 						});
 					}
 				});
 			}
-
-			$(function() {
-				$("#slider-range").slider({
-					range: true,
-					min: 0,
-					max: 1300,
-					values: [10, 800],
-					slide: function(event, ui) {
-						$("#amount").val("RM" + ui.values[0] + " - RM" + ui.values[1]);
-						$('#hidden_minimum_price').val(ui.values[0]);
-						$('#hidden_maximum_price').val(ui.values[1]);
-						filter_data();
-					}
-				});
-				$("#amount").val("RM" + $("#slider-range").slider("values", 0) +
-					" - RM" + $("#slider-range").slider("values", 1));
-			});
 
 			function get_filter(class_name) {
 				var filter = [];
@@ -417,22 +278,19 @@
 
 			$(".reset-btn").click(function() {
 				$("#filterForm").trigger("reset");
+				$("#filterForm2").trigger("reset");
 				load_data();
-				$("#amount").val("RM" + $("#slider-range").slider("values", 0) +
-					" - RM" + $("#slider-range").slider("values", 1));
 			});
-
 
 			$(document).on('click', '#btnAdd', function() {
 				var item = [];
 				item.push($(this).val());
 				var action1 = 'add_cart';
-				var action2 = 'cart_count';
 				$.ajax({
-					url: "./countCart.php",
+					url: "./addCart.php",
 					method: "POST",
 					data: {
-						action: action2,
+						action: action1,
 						item: item,
 					},
 					success: function(data) {
@@ -443,14 +301,7 @@
 						});
 					}
 				});
-				$.ajax({
-					url: "./addCart.php",
-					method: "POST",
-					data: {
-						action: action1,
-						item: item,
-					}
-				});
+
 			});
 		});
 
