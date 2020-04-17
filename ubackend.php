@@ -18,16 +18,16 @@
 				if(!array_key_exists($header[$i], $p)){
 					$new[$header[$i]] = '-';
 				}
-			}	
+			}
 			array_push($all, $new);
 		}
 		
 		if ($db->checkExists() != null) {
-			$db->replaceStock(date("Y-m-d"),$all,$header);
+			$db->replaceStock(date("Y-m-d"),$all,$header,$primary_key);
 			echo json_encode(["type" => "success", "msg" => "Replaced successfully!"]);
 		}
 		else{
-			$db->insertStock(date("Y-m-d"),$all,$header);
+			$db->insertStock(date("Y-m-d"),$all,$header,$primary_key);
 			$db->insertDeletion(date("Y-m-d"),$_POST['data2']);
 			echo json_encode(["type" => "success", "msg" => "Insert successfully!"]);
 		}

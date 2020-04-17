@@ -16,7 +16,10 @@
 			$this->cart = $this->db->selectCollection('cart');
 			$this->setting = $this->db->selectCollection('setting');
 		}
-		
+
+		/************/
+		/*Fetch Data*/
+		/************/		
 		public function fetchProduct(){
 			return $this->collect->find(
 				[],
@@ -39,6 +42,10 @@
 			foreach($this->fetchProduct() as $i){
 				return iterator_to_array($i['products']);
 			}
+		}
+		
+		public function getProductList(){
+			return $this->collect->find();
 		}
 		
 		/*********************************/
@@ -124,6 +131,13 @@
 			return $this->cart->find(['uid' => $uid, 'status' => "active"]);
 		}
 		
+		/******************/
+		/*Order Management*/
+		/******************/
+		public function loadOrder(){
+			return $this->cart->find(['status' => "pending"]);
+		}
+
 		/******************/
 		/*Get Filter value*/
 		/******************/

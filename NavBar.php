@@ -63,9 +63,9 @@
 							Setting
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="#">User Management</a>
-							<a class="dropdown-item" href="#">Order Management</a>
-							<a class="dropdown-item" href="./Upload.php">Catalogue Management</a>
+							<a class="dropdown-item" href="./UserManage.php">User Management</a>
+							<a class="dropdown-item" href="./OrderManage.php">Order Management</a>
+							<a class="dropdown-item" href="./CatalogueManage.php">Catalogue Management</a>
 						</div>
 					</li>
 				</ul>
