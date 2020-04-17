@@ -52,7 +52,7 @@
 		</div>
 
 		<br>
-		<h1 style="font-weight: bold;" align="center"> AVAILABLE PRODUCTS</h1>
+		<h1 style="font-weight: bold;" class="text-center"> AVAILABLE PRODUCTS</h1>
 
 		<div class="row">
 			<div class="col-md-6 col-xs-12">
@@ -87,7 +87,7 @@
 		<div class="jumbotron bg-dark text-warning">
 			<div class="row">
 				<div class="col-md-12 col-xs-12">
-					<h2 align="center" style="font-weight: bold;">JOIN US NOW</h2>
+					<h2 class="text-center" style="font-weight: bold;">JOIN US NOW</h2>
 				</div>
 
 			</div>
