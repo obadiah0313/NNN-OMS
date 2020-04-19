@@ -42,7 +42,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="row py-3" id="setPrimary" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
+		<div class="row py-3" id="setPrimary" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white; display:none">
 			<div class="col-12 py-4">
 				<div class="card border-warning filter">
 					<h4 class="card-header" style="background:#ffff99">Primary Key: <small class="text-danger">Select the Product Code/ID for the products.</small></h4>
@@ -292,8 +292,8 @@
 					for(var i = 0 ; i < response.header.length ; i++){
 						var li = $('<label><input type="radio" name="key" value="'+response.header[i]+'"/>' + response.header[i] + '</label><br>');
 						  $('#headerlist').append(li);
-						  $('#setPrimary').show();
-						  $('#setHeaders').hide();
+						  $('#setPrimary').css("display", "block");
+						  $('#setHeaders').css("display", "none");;
 					};
 					product = response.product;
 					deletion = response.deletion;
