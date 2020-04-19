@@ -5,11 +5,11 @@
 		//Constructor
 		public function __construct(){
 			try {
-				$this->client = new MongoDB\Client('mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c');
+				$this->client = new MongoDB\Client();
 			}catch (MongoConnectionException $e) {
 				die('Error connecting to MongoDB server');
 			}
-			$this->db = $this->client->heroku_0g0g5g6c;
+			$this->db = $this->client->NNNdb;
 			$this->collect = $this->db->selectCollection('stock');
 			$this->deletion = $this->db->selectCollection('deletion');
 			$this->user = $this->db->selectCollection('user');
@@ -48,6 +48,18 @@
 			return $this->collect->find();
 		}
 		
+		public function getPrimaryKey(){
+			foreach($this->fetchProduct() as $i){
+				return $i['primaryKey'];
+			}
+		}
+
+		public function getHeaders(){
+			foreach($this->fetchProduct() as $i){
+				return iterator_to_array($i['header']);
+			}
+		}
+		
 		/*********************************/
 		/*Upload Data -- Stock & Deletion*/
 		/*********************************/
@@ -55,9 +67,9 @@
 			return $this->collect->countDocuments(['date' => date("Y-m-d")]);
 		}
 		
-		public function replaceStock($date, $product, $header){
+		public function replaceStock($date, $product, $header, $primarykey){
 			$this->collect->replaceOne(['date' => $date],
-										['date' => $date, 'products' => $product, 'header' => $header]);
+										['date' => $date, 'products' => $product, 'header' => $header, 'primaryKey' => $primarykey]);
 		}
 		
 		public function replaceDeletion($date, $deletion){
@@ -65,18 +77,12 @@
 										['date' => $date, 'deletions' => $deletion]);
 		}
 		
-		public function insertStock($date, $product, $header){
-			$this->collect->insertOne(['date' => $date, 'products' =>$product, 'header' => $header]);
+		public function insertStock($date, $product, $header, $primarykey){
+			$this->collect->insertOne(['date' => $date, 'products' =>$product, 'header' => $header, 'primaryKey' => $primarykey]);
 		}
 		
 		public function insertDeletion($date, $deletion){
 			$this->deletion->insertOne(['date' => $date, 'deletions' =>$deletion]);
-		}
-		
-		public function getHeaders(){
-			foreach($this->fetchProduct() as $i){
-				return iterator_to_array($i['header']);
-			}
 		}
 		
 		/******************/
@@ -102,8 +108,8 @@
 		/*****************/
 		/*Cart Management*/
 		/*****************/
-		public function insertCart($oid, $date, $cart, $uid){
-			$this->cart->insertOne(['oid' => $oid, 'date' => $date, 'carts' => $cart, 'uid' => $uid,'remarks' => "", 'status' => "active"]);
+		public function insertCart($oid, $cart, $uid){
+			$this->cart->insertOne(['oid' => $oid, 'date' => '', 'carts' => $cart, 'uid' => $uid,'remarks' => "", 'status' => "active"]);
 		}
 		
 		public function checkCartExists($oid){
@@ -117,7 +123,7 @@
 		
 		public function updateStatus($oid, $remarks){
 			$this->cart->updateOne(['oid' => $oid],
-									['$set' => ['remarks' => $remarks, 'status' => "pending"]]);
+									['$set' => ['remarks' => $remarks, 'date'=> date("Y-m-d"),'status' => "pending"]]);
 		}
 		
 		public function countOrder($uid){

@@ -2,6 +2,7 @@
 	error_reporting(0);
 	require 'Database.php';
 	$db = new MongodbDatabase();
+	$pk = $db->getPrimaryKey();
 	$cart = [];
 	if($_GET['update'] === 'remove'){ 
 		if(isset($_POST['action'])){
@@ -64,14 +65,15 @@
 					
 					if($aa === ".00"){
 						$columnname = $ke;
+						break;
 					}
 				}
 				foreach($db->loadCart($uid) as $citem){
 					foreach($citem['carts'] as $key => $value){
-						if($k == $key){
+						if($v[$pk] == $key){
 							
 							$temp = iterator_to_array($v);
-							$temp = array_merge($temp, array("count" => '<div class="input-group"><input type="button" id="button-minus" value="-" class="button-minus button allBtn" data-field="quantity"><input type="number" id="'.$k.'" step="1" max="" value="'.$value.'" min="1" name="quantity" class="quantity-field"><input type="button" value="+" class="button-plus button allBtn" data-field="quantity"></div>', "price" => (int)substr($v[$columnname],4, -3) * $value, "remove" => '<button class="button allBtn item" id="btnRemove" value="'.$k.'">Remove <i class="far fa-times-circle"></i></button>'));
+							$temp = array_merge($temp, array("count" => '<div class="input-group"><input type="button" id="button-minus" value="-" class="button-minus button allBtn" data-field="quantity"><input type="number" id="'.$v[$pk].'" step="1" max="" value="'.$value.'" min="1" name="quantity" class="quantity-field"><input type="button" value="+" class="button-plus button allBtn" data-field="quantity"></div>', "price" => (int)substr($v[$columnname],4, -3) * $value, "remove" => '<button class="button allBtn item" id="btnRemove" value="'.$v[$pk].'">Remove <i class="far fa-times-circle"></i></button>'));
 							array_push($cart,$temp);
 						}	
 					}				

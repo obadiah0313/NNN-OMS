@@ -21,7 +21,7 @@
 			}
 			array_push($all, $new);
 		}
-		
+		$primary_key = $_POST['primarykey'];
 		if ($db->checkExists() != null) {
 			$db->replaceStock(date("Y-m-d"),$all,$header,$primary_key);
 			echo json_encode(["type" => "success", "msg" => "Replaced successfully!"]);

@@ -35,20 +35,21 @@
 		<div class="page-container">
 			<div class="row">
 				<div class="col-auto mr-auto">
-					<a href="./index.php"><img src="img/neko.png" alt="logo" style="width:40% ;"></a>
+					<a href="./index.php"><img src="img/neko.png" alt="logo" style="position:absolute; z-index:2;width:500%;"></a>
 				</div>
 				<div class="col-auto my-auto">
 					<h3>
-						<i class="display-4">Neko Neko Nyaa</i><br>
+						<i class="display-4">Neko Neko Nyaa</i>
 						<small class="text-muted"> Ordering System</small>
 					</h3>
 				</div>
 			</div>
 		</div>
 	</div>
-	<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark" role="navigation">
+	<nav style="z-index:1" class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark" role="navigation">
 		<div class="container-fluid" style="margin-left: 10%;
 	margin-right: 10%;">
+			<div class="d-none d-lg-block" style="margin-left:6%"></div>
 			<a class="navbar-brand text-warning" href="index.php">Neko Neko Nyaa</a>
 			<button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
 				&#9776;

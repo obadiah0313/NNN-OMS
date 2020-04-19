@@ -1,11 +1,12 @@
 <?php
-	//error_reporting(0);
+	error_reporting(0);
 	require 'Database.php';
 	$db = new MongodbDatabase();
 	foreach($db->getSetting() as $stt){
 		$cCatHeader = iterator_to_array($stt['cCat_Header']);
 		$cCatFilter = iterator_to_array($stt['cCat_Filter']);
 	}
+	$pk = $db->getPrimaryKey();
 	$data = [];
 	
 	if ($_GET['init'] == 'true') {
@@ -14,7 +15,7 @@
 				foreach($cl['products'] as $k=>$v)
 				{
 					$temp = iterator_to_array($v);
-					$temp = array_merge($temp, array('btnAdd' => '<button class="button allBtn item" id="btnAdd" value="'.$k.'">Add to Cart <i class="fas fa-cart-plus"></i></button>', 'id' => '<span style="display:none">'.$k.'</span>'));
+					$temp = array_merge($temp, array('btnAdd' => '<button class="button allBtn item" id="btnAdd" value="'.$v[$pk].'">Add to Cart <i class="fas fa-cart-plus"></i></button>', 'id' => '<span style="display:none">'.$v[$pk].'</span>'));
 					$data[$k] = $temp;
 				}
 			}	
@@ -48,7 +49,7 @@
 					}
 					if($count == 0){ 
 						$temp = iterator_to_array($v);
-						$temp = array_merge($temp, array('btnAdd' => '<button class="button allBtn item" id="btnAdd" value="'.$k.'">Add to Cart <i class="fas fa-cart-plus"></i></button>', 'id' => '<span style="display:none">'.$k.'</span>'));
+						$temp = array_merge($temp, array('btnAdd' => '<button class="button allBtn item" id="btnAdd" value="'.$v[$pk].'">Add to Cart <i class="fas fa-cart-plus"></i></button>', 'id' => '<span style="display:none">'.$v[$pk].'</span>'));
 						array_push($data,$temp);						
 					}
 					
@@ -59,15 +60,17 @@
 				foreach($data as $d){
 					foreach($d as $k=>$v){
 						$aa = substr($v, -3);
-						if($aa === ".00")
+						if($aa === ".00") {
 							$columnname = $k;
+							break;
+						}						
 					}
-					break;
+					if($columnname!= null) break;
 				}
 				if($_POST["price"][0] == "asc")
-					usort($data, function($a,$b){return strnatcmp(str_replace(',','',$a['MRP']), str_replace(',','',$b['MRP']));});
+					usort($data, function($a,$b) use ($columnname){return strnatcmp(str_replace(',','',$a[$columnname]), str_replace(',','',$b[$columnname]));});
 				else
-					usort($data, function($a,$b){return strnatcmp(str_replace(',','',$b['MRP']), str_replace(',','',$a['MRP']));});
+					usort($data, function($a,$b) use ($columnname){return strnatcmp(str_replace(',','',$b[$columnname]), str_replace(',','',$a[$columnname]));});
 				
 			}
 		}

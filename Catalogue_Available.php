@@ -283,8 +283,7 @@
 			});
 
 			$(document).on('click', '#btnAdd', function() {
-				var item = [];
-				item.push($(this).val());
+				var item = $(this).val();
 				var action1 = 'add_cart';
 				$.ajax({
 					url: "./addCart.php",

@@ -1,6 +1,7 @@
 <?php
 	require 'Database.php';
 	$db = new MongodbDatabase();
+	$pk = $db->getPrimaryKey();
 	$uid="001";
 	$count = 0;
 	$total = 0;
@@ -11,13 +12,14 @@
 				$aa = substr($val, -3);
 				if($aa === ".00"){
 					$columnname = $ke;
+					break;
 				}
 			}
 			foreach($db->loadCart($uid) as $citem){
 				if ($citem['carts'] != null) $empty = false;
 				$remarks = $citem['remarks'];
 				foreach($citem['carts'] as $key => $value){
-					if($k == $key){
+					if($v[$pk] == $key){
 						$count += $value;
 						$total += (int)substr($v[$columnname],4,-3) * $value;
 					}	
@@ -42,7 +44,7 @@
 	<link rel="stylesheet" href="css/overhang.min.css">
 </head>
 
-<body class="bg">
+<body class="bg" style="height:100%">
 	<?php
 		include './NavBar.php';
 	?>
@@ -68,7 +70,7 @@
 											<h5>Number of Item(s)</h5>
 										</div>
 										<div class="col-6 pt-3 bg-secondary text-white text-center" style="border-radius: 0px 30px 0px 0px">
-											<h5>Sub-total</h5>
+											<h5>Total</h5>
 										</div>
 									</div>
 									<div class="row mx-3">
@@ -123,7 +125,7 @@
 					echo "'".$h."' : '".$h."',";
 				?>
 				count: 'Order Quantity',
-				price: 'Price',
+				price: 'Sub-total',
 				remove: ''
 			}
 
@@ -239,6 +241,7 @@
 						});
 						load_cart();
 						if(data.type == "success")$('#remarks').val('');
+						$('#wrapper').load('Cart.php' + ' #summary');
 					}
 				});
 			});

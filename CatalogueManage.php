@@ -42,29 +42,25 @@
 				</form>
 			</div>
 		</div>
-		<div class="row" id="setPrimary">
+		<div class="row py-3" id="setPrimary" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 			<div class="col-12 py-4">
-				<form>
-					<div class="list-group mb-3">
-						<h5>Headers:</h5>
-							<div style="height: 180px; overflow-y: auto; overflow-x: hidden;">
-								<div class="list-group-item checkbox ">
-									<?php
-										foreach($db->fetchProduct() as $header){
-											for($i = 0; $i < sizeof($header['header']); $i++){
-									?>
-								<label><input type="checkbox" class="common_selector primarykey" value="<?php echo $header['header'][$i]; ?>" > <?php echo $header['header'][$i]; ?></label><br>
-								<?php	
-									}}
-								?>
+				<div class="card border-warning filter">
+					<h4 class="card-header" style="background:#ffff99">Primary Key: <small class="text-danger">Select the Product Code/ID for the products.</small></h4>
+					<div class="card-body">
+						<form method="GET" action="">
+							<div class="list-group mb-3">
+								<div style="overflow-y: auto; overflow-x: hidden;">
+									<div id="headerlist" class="list-group-item radiobutton ">
+									</div>
 								</div>
 							</div>
-							<button class="button allBtn" value="Select"></button>
+						</form>
+						<button class="button allBtn my-3 text-center" id="btnConfirm">Save</button>
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>
-		<div class="row py-5" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
+		<div id="setHeaders" class="row py-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 			<div class="col">
 				<div class="card border-warning filter">
 					<h4 class="card-header" style="background:#ffff99">Catalogue (Customers)</h4>
@@ -191,6 +187,7 @@
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('#setPrimary').hide();
 		$("body").on("click", "#upload", function() {
 			//Reference the FileUpload element.
 			var fileUpload = $("#fileUpload")[0];
@@ -227,7 +224,7 @@
 			}
 
 		});
-
+		var product,deletion,head;
 		function ProcessExcel(data) {
 			//Read the Excel File data.
 			var workbook = XLSX.read(data, {
@@ -289,42 +286,43 @@
 					data2: newObj2,
 					data3: headers,
 				},
-				url: './ubackend.php',
+				url: './upload.php',
 				success: function(response) {
 					response = JSON.parse(response);
-					$("body").overhang({
-						type: response.type,
-						message: response.msg
-					});
-					/*setTimeout(function() {
-						document.location.reload()
-					}, 1500);*/
-					
+					for(var i = 0 ; i < response.header.length ; i++){
+						var li = $('<label><input type="radio" name="key" value="'+response.header[i]+'"/>' + response.header[i] + '</label><br>');
+						  $('#headerlist').append(li);
+						  $('#setPrimary').show();
+						  $('#setHeaders').hide();
+					};
+					product = response.product;
+					deletion = response.deletion;
+					head = response.header;
 				}
 			})
 			console.log('-----');
 		};
 		
 		function save_setting() {
-				var action = 'save_setting';
-				var cCatheader = get_setting('cCatheader');
-				var cCatfilter = get_setting('cCatfilter');
-				var pCatheader = get_setting('pCatheader');
-				var pCatfilter = get_setting('pCatfilter');
-				var cartHeader = get_setting('cartHeader');
-				$.ajax({
-					url: "./SaveSetting.php",
-					method: "POST",
-					data: {
-						action: action,
-						cCatheader: cCatheader,
-						cCatfilter: cCatfilter,
-						pCatheader: pCatheader,
-						pCatfilter: pCatfilter,
-						cartHeader: cartHeader,
-					}
-				});
-			}
+			var action = 'save_setting';
+			var cCatheader = get_setting('cCatheader');
+			var cCatfilter = get_setting('cCatfilter');
+			var pCatheader = get_setting('pCatheader');
+			var pCatfilter = get_setting('pCatfilter');
+			var cartHeader = get_setting('cartHeader');
+			$.ajax({
+				url: "./SaveSetting.php",
+				method: "POST",
+				data: {
+					action: action,
+					cCatheader: cCatheader,
+					cCatfilter: cCatfilter,
+					pCatheader: pCatheader,
+					pCatfilter: pCatfilter,
+					cartHeader: cartHeader,
+				}
+			});
+		}
 
 		function get_setting(class_name) {
 			var setting = [];
@@ -336,6 +334,30 @@
 
 		$('.common_selector').click(function() {
 			save_setting();
+		});
+
+		$('body').on("click","#btnConfirm", function() {
+			var pk = $("input[name='key']:checked").val();
+			$.ajax({
+				method: 'POST',
+				data: {
+					data: product,
+					data2: deletion,
+					data3: head,
+					primarykey: pk,
+				},
+				url: './ubackend.php',
+				success: function(response) {
+					response = JSON.parse(response);
+					$("body").overhang({
+						type: response.type,
+						message: response.msg,
+						callback: function() {
+							document.location.reload();
+						}
+					});
+				}
+			});
 		});
 	});
 

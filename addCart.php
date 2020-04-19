@@ -4,11 +4,12 @@
 	$db = new MongodbDatabase();
 
 		if($_POST['action'] == 'add_cart'){
-			$result = array_count_values($_POST['item']);
+			$result = $_POST['item'];
 			$uid = "001";
 			$oid = "o-".$uid."-".$db->countOrder($uid);
 			if($db->checkCartExists($oid) == null){
-				$db->insertCart($oid, date("Y-m-d"), $result, $uid);
+				$item = array($result => 1);
+				$db->insertCart($oid, $item, $uid);
 			}
 			else{
 				$new=[];
@@ -18,11 +19,8 @@
 					}
 					break;
 				}
-				foreach ($result as $key => $value)
-				{
-					if (isset($new[$key])) $new[$key] += $value;
-					else $new[$key] = $value;
-				}
+				if (isset($new[$result])) $new[$result] ++;
+				else $new[$result] = 1;
 				$db->updateCart($oid, $new);
 			}
 			$count = 0;
