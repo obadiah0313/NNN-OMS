@@ -283,7 +283,8 @@
 				method: 'POST',
 				timeout: 1000000,
 				data: {
-					data: newObj,
+					//data: newObj,
+					data: headers,
 					data2: newObj2,
 					data3: headers,
 				},
