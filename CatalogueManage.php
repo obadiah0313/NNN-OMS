@@ -299,13 +299,6 @@
 					product = response.product;
 					deletion = response.deletion;
 					head = response.header;
-				},
-				error: function(x, t, m) {
-					if(t==="timeout") {
-						alert("got timeout");
-					} else {
-						alert(t);
-					}
 				}
 			})
 			console.log('-----');
