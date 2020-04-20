@@ -1,1 +1,1 @@
-web: vendor/bin/heroku-php-apache2 NNN-OMS/
+web: vendor/bin/heroku-php-apache2 web/
