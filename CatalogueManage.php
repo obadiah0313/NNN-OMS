@@ -281,10 +281,9 @@
 
 			$.ajax({
 				method: 'POST',
-				timeout: 1000000,
+				timeout: 5000000,
 				data: {
-					//data: newObj,
-					data: headers,
+					data: newObj,
 					data2: newObj2,
 					data3: headers,
 				},
