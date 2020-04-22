@@ -6,9 +6,10 @@
 	<title>Neko Neko Nyaa</title>
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="bg">
 	<?php include './NavBar.php'; ?>
 	<div class="container loginform">
 		<div class="row">
