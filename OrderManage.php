@@ -61,7 +61,7 @@
 										</div>
 									</div>
 									<div class="mt-3 text-center">
-										<button class="button allBtn reset-btn" type="button">Export >></button>
+										<button class="button allBtn export-btn" id="btnExport" type="button">Export >></button>
 									</div>
 								</div>
 							</div>
@@ -76,6 +76,7 @@
 	<?php include './Footer.php'; ?>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-ui.js"></script>
+	<script src="js/xlsx.full.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="Table-Sortable/table-sortable.js"></script>
 	<script>
@@ -124,6 +125,24 @@
 					}
 				});
 				$('#wrapper').load('Cart.php' + ' #summary');
+			});
+
+			$(document).on('click', '#btnExport', function() {
+				var Heading = [
+					["Normal Orders"],[],["Date : 24/04/2020"],["Games Workshop"],
+					["Order By", "Product Code", "Item Name", "Quantity"]
+				];
+				var Data = [
+					{name:"xyz", sal:1000},
+					{name:"abc", sal:2000}
+				];
+				var ws = XLSX.utils.aoa_to_sheet(Heading);
+				XLSX.utils.sheet_add_json(ws, Data, { header:["name", "sal"], skipHeader:true, origin:-1});
+
+				var wb = XLSX.utils.book_new();
+				XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
+				var wbout = XLSX.writeFile(wb, "try.xlsx");
+				//saveAs(new Blob([wbout],{type:"application/octet-stream"}), "issue946.xlsx");
 			});
 		});
 
