@@ -88,7 +88,7 @@
 										</div>
 									</div>
 									<div class="mt-3 text-center">
-										<button class="button allBtn chkout-btn" type="button">Checkout >></button>
+										<button class="button allBtn chkout-btn" type="button">Checkout <i class="fas fa-angle-double-right"></i></button>
 									</div>
 								</div>
 							</div>

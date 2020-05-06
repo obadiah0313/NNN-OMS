@@ -27,6 +27,9 @@
 	<?php
 		include './NavBar.php';
 	?>
+	<div style="display:none">
+		<input type="file" id="productList">
+	</div>
 	<div class="page-container">
 		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 			<div class="text-center col-12 py-3">
@@ -35,13 +38,13 @@
 		</div>
 		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 			<div class="col px-auto">
-				<div id="root"></div>			
+				<div id="root"></div>
 			</div>
 			<div class="col-auto my-3 ml-auto">
 				<div class="row">
 					<div class="col-12">
 						<div class="card border-warning filter">
-							<h3 class="card-header" style="background:#ffff99">Export Order List <small class="text-secondary">(Excel)</small></h3>
+							<h3 class="card-header" style="background:#ffff99">Export Order List</h3>
 							<div id="wrapper">
 								<div id="summary" class="card-body">
 									<div class="row mx-3">
@@ -61,7 +64,7 @@
 										</div>
 									</div>
 									<div class="mt-3 text-center">
-										<button class="button allBtn export-btn" id="btnExport" type="button">Export >></button>
+										<button class="button allBtn export-btn" id="btnExport" type="button">Export <i class="fas fa-file-export"></i></button>
 									</div>
 								</div>
 							</div>
@@ -70,13 +73,14 @@
 				</div>
 			</div>
 		</div>
-	
+
 	</div>
-	
+
 	<?php include './Footer.php'; ?>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-ui.js"></script>
 	<script src="js/xlsx.full.min.js"></script>
+	<script src="js/jszip.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="Table-Sortable/table-sortable.js"></script>
 	<script>
@@ -96,7 +100,7 @@
 				oid: 'Order(s)',
 				user: 'Order By',
 				date: 'Order Date',
-				remove: ''
+				edit: ''
 			}
 
 			function load_order() {
@@ -121,28 +125,31 @@
 						item: item,
 					},
 					success: function(response) {
-						load_cart();
+						load_order();
 					}
 				});
 				$('#wrapper').load('Cart.php' + ' #summary');
 			});
 
 			$(document).on('click', '#btnExport', function() {
-				var Heading = [
-					["Normal Orders"],[],["Date : 24/04/2020"],["Games Workshop"],
-					["Order By", "Product Code", "Item Name", "Quantity"]
-				];
-				var Data = [
-					{name:"xyz", sal:1000},
-					{name:"abc", sal:2000}
-				];
-				var ws = XLSX.utils.aoa_to_sheet(Heading);
-				XLSX.utils.sheet_add_json(ws, Data, { header:["name", "sal"], skipHeader:true, origin:-1});
-
-				var wb = XLSX.utils.book_new();
-				XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
-				var wbout = XLSX.writeFile(wb, "try.xlsx");
-				//saveAs(new Blob([wbout],{type:"application/octet-stream"}), "issue946.xlsx");
+				var files = <?php $out = array();
+				foreach (glob('./Product_List/*.xlsm') as $filename) {
+					$p = pathinfo($filename);
+					$out[] = $p['filename'];
+				}
+				echo json_encode($out); ?>;
+				var action ="write"
+				$.ajax({
+					url: './writeOrder.php',
+					method: "POST",
+					data: {
+						action: action,
+						file: './Product_List/'+files[files.length-1],
+					},
+					success: function(response) {
+					}
+				});
+				//window.location = './Product_List/'+files[files.length-1] + '.xlsm';
 			});
 		});
 

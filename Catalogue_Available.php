@@ -34,8 +34,10 @@
 			<div class="modal-body">
 				<?php 
 					foreach($header as $v){
-						echo '<label class="font-weight-bold">'.$v.'</label>';
-						echo '<p id="'.substr(str_replace([' ','(',')'], '',$v), 0 ,13).'"></p>';
+						if(strpos($v, "Order") === false){
+							echo '<label class="font-weight-bold">'.$v.'</label>';
+							echo '<p id="'.substr(str_replace([' ','(',')'], '',$v), 0 ,13).'"></p>';
+						}					
 					}
 				?>
 			</div>
@@ -79,17 +81,17 @@
 									</div>
 								</div>
 								<?php foreach($cCatFilter as $f) { ?>
-							<div class="list-group mb-3">
-								<h5><?php echo $f; ?></h5>
-								<div style="height: 150px; overflow-y: auto; overflow-x: hidden;">
-									<div class="list-group-item checkbox ">
-										<?php foreach($db->getFilter($f) as $filter) {?>
-										<label><input type="checkbox" class="common_selector <?php echo substr(str_replace([' ','(',')'], '',$f), 0 ,13) ?>" value="<?php echo $filter; ?>"> <?php echo $filter; ?></label><br>
-										<?php } ?>
+								<div class="list-group mb-3">
+									<h5><?php echo $f; ?></h5>
+									<div style="height: 150px; overflow-y: auto; overflow-x: hidden;">
+										<div class="list-group-item checkbox ">
+											<?php foreach($db->getFilter($f) as $filter) {?>
+											<label><input type="checkbox" class="common_selector <?php echo substr(str_replace([' ','(',')'], '',$f), 0 ,13) ?>" value="<?php echo $filter; ?>"> <?php echo $filter; ?></label><br>
+											<?php } ?>
+										</div>
 									</div>
 								</div>
-							</div>
-							<?php } ?>
+								<?php } ?>
 
 							</form>
 							<div class="mt-3 text-right">
@@ -217,8 +219,9 @@
 									$('#productDetail').modal('show');
 									<?php 
 									foreach ($header as $head) {
-										echo 'console.log(value["SS Code"]);';
-										echo '$("#'.substr(str_replace([' ','(',')'], '',$head),0,13).'").text(value["'.$head.'"]);';
+										if(strpos($head, "Order") === false){
+														echo '$("#'.substr(str_replace([' ','(',')'], '',$head),0,13).'").text(value["'.$head.'"]);';
+													}
 									}?>
 								}
 							});
@@ -242,9 +245,8 @@
 					data: {},
 					success: function(response) {
 						showTable(response);
-						$(document).on('dblclick', 'tr', function() {
-							var arr = $(this).text().split(' ');
-							var id = arr[arr.length - 1];
+						$(document).on('click','#btnDetails', function() {
+							var id = $(this).val();
 							$.each(JSON.parse(response), function(index, value) {
 								var regex = />(.*)</;
 								var rid = value.id.match(regex);
@@ -253,8 +255,9 @@
 
 									<?php 
 												foreach ($header as $head) {
-													echo 'console.log(value["SS Code"]);';
-													echo '$("#'.substr(str_replace([' ','(',')'], '',$head),0,13).'").text(value["'.$head.'"]);';
+													if(strpos($head, "Order") === false){
+														echo '$("#'.substr(str_replace([' ','(',')'], '',$head),0,13).'").text(value["'.$head.'"]);';
+													}
 												}?>
 								}
 

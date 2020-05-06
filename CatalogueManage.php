@@ -204,6 +204,20 @@
 							ProcessExcel(e.target.result);
 						};
 						reader.readAsBinaryString(fileUpload.files[0]);
+						var form_data = new FormData();
+						form_data.append("file", fileUpload.files[0]);
+						$.ajax({
+							url:'./saveExcel.php',
+							method:'POST',
+							data:form_data,
+							contentType:false,
+							cache:false,
+							processData:false,
+							success:function(data)
+							{
+								alert(data);
+							}
+						});
 					} else {
 						//For IE Browser.
 						reader.onload = function(e) {
@@ -272,7 +286,10 @@
 
 				headers.push(hdr);
 			}
-
+			var ws = XLSX.utils.json_to_sheet(newObj);
+			var wb = XLSX.utils.book_new();
+			XLSX.utils.book_append_sheet(wb,ws, "GBD_Asia");
+			XLSX.writeFile(wb, "test.xlsx");
 
 			console.log('-----');
 			console.log(newObj);

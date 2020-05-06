@@ -15,7 +15,7 @@
 				foreach($cl['products'] as $k=>$v)
 				{
 					$temp = iterator_to_array($v);
-					$temp = array_merge($temp, array('btnAdd' => '<button class="button allBtn item" id="btnAdd" value="'.$v[$pk].'">Add to Cart <i class="fas fa-cart-plus"></i></button>', 'id' => '<span style="display:none">'.$v[$pk].'</span>'));
+					$temp = array_merge($temp, array('btnAdd' => '<div class="text-center"><button class="button allBtn mb-1" id="btnDetails" value="'.$v[$pk].'">Details <i class="fas fa-info-circle"></i></button> <button class="button allBtn item" id="btnAdd" value="'.$v[$pk].'">Add to Cart <i class="fas fa-cart-plus"></i></button></div>', 'id' => '<span style="display:none">'.$v[$pk].'</span>'));
 					$data[$k] = $temp;
 				}
 			}	
