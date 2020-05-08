@@ -15,7 +15,7 @@
 .page-container {
 	margin-left: 10%;
 	margin-right: 10%;
-	margin-bottom: 1%;
+	margin-bottom: 2%;
 }
 
 .filter {
@@ -26,8 +26,8 @@
 .bg {
 	background-color: #f1f1f1;
 	position: relative;
-	  min-height: 100vh;
-	  padding-bottom: 5%;
+	min-height: 110vh;
+	padding-bottom: 10%;
 }
 
 h1,

@@ -224,14 +224,14 @@
 			$(document).on('click', '.chkout-btn', function() {
 				var remarks = $('#remarks').val();
 				var action = 'checkout';
-				var oid = "o-<?php echo $uid; ?>-<?php echo $db->countOrder($uid)?>";
+				var uid = "<?php echo $uid; ?>";
 				$.ajax({
 					url: './checkout.php',
 					method: "POST",
 					data: {
 						action: action,
 						remark: remarks,
-						oid : oid
+						uid : uid
 					},
 					success: function(data) {
 						data = JSON.parse(data);

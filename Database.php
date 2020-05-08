@@ -110,31 +110,24 @@
 		/*****************/
 		/*Cart Management*/
 		/*****************/
-		public function insertCart($oid, $cart, $uid){
-			$this->cart->insertOne(['oid' => $oid, 'date' => '', 'carts' => $cart, 'uid' => $uid,'remarks' => "", 'status' => "active"]);
+		public function insertCart($cart, $uid){
+			$this->cart->insertOne(['date' => '', 'carts' => $cart, 'uid' => $uid,'remarks' => "", 'status' => "active"]);
 		}
 		
-		public function checkCartExists($oid){
-			return $this->cart->countDocuments(['oid' => $oid, 'status' => "active"]);
+		public function checkCartExists($uid){
+			return $this->cart->countDocuments(['uid' => $uid, 'status' => "active"]);
 		}
 		
-		public function updateCart($oid, $cart){
-			$this->cart->updateOne(['oid' => $oid],
+		public function updateCart($uid, $cart){
+			$this->cart->updateOne(['uid' => $uid, 'status' => 'active'],
 									['$set' => ['carts' => $cart]]);
 		}
 		
-		public function updateStatus($oid, $remarks){
-			$this->cart->updateOne(['oid' => $oid],
+		public function updateStatus($uid, $remarks){
+			$this->cart->updateOne(['uid' => $oid, 'status' => 'active'],
 									['$set' => ['remarks' => $remarks, 'date'=> date("Y-m-d"),'status' => "pending"]]);
 		}
-		
-		public function countOrder($uid){
-			if($this->cart->countDocuments(['uid' => $uid, 'status' => "active"]) == null)
-				return 0;
-			else
-				return $this->cart->countDocuments(['uid' => $uid, 'status' => "completed"]);
-		}
-		
+				
 		public function loadCart($uid){
 			return $this->cart->find(['uid' => $uid, 'status' => "active"]);
 		}
@@ -143,9 +136,22 @@
 		/*Order Management*/
 		/******************/
 		public function loadOrder(){
-			return $this->cart->find(['status' => "pending"]);
+			return $this->cart->find([
+				'$or' => [
+					['status' => "pending"],
+					['status' => "processing"]
+				]
+			]);
 		}
-
+		
+		public function updateOrder($oid, $status){
+			$this->cart->updateOne(['oid' => $oid],
+									['$set' => ['status' => $status]]);
+		}
+		
+		public function removeOrder($oid) {
+			$this->cart->deleteOne(['oid' => $oid]);
+		}
 		/******************/
 		/*Get Filter value*/
 		/******************/
@@ -164,6 +170,7 @@
 			foreach($data as $d)
 				return $d['date'];
 		}
+		
         /*************/
 		/*Create User*/
 		/*************/

@@ -6,10 +6,9 @@
 		if($_POST['action'] == 'add_cart'){
 			$result = $_POST['item'];
 			$uid = "001";
-			$oid = "o-".$uid."-".$db->countOrder($uid);
-			if($db->checkCartExists($oid) == null){
+			if($db->checkCartExists($uid) == null){
 				$item = array($result => 1);
-				$db->insertCart($oid, $item, $uid);
+				$db->insertCart($item, $uid);
 			}
 			else{
 				$new=[];
@@ -21,7 +20,7 @@
 				}
 				if (isset($new[$result])) $new[$result] ++;
 				else $new[$result] = 1;
-				$db->updateCart($oid, $new);
+				$db->updateCart($uid, $new);
 			}
 			$count = 0;
 			foreach($db->loadCart($uid) as $cart) {

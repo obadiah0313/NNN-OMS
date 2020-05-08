@@ -3,8 +3,8 @@
 	require './Database.php';	
 	$db = new MongodbDatabase();
 	if (isset($_POST['action'])) {
-		if($db->checkCartExists($_POST['oid']) != null){
-			$db->updateStatus($_POST['oid'], $_POST['remark']);
+		if($db->checkCartExists($_POST['uid']) != null){
+			$db->updateStatus($_POST['uid'], $_POST['remark']);
 			echo json_encode(["type" => "success", "msg" => "Checkout Successfully"]);
 		}
 		else

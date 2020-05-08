@@ -1,12 +1,16 @@
 <?php
+	error_reporting(0);
 	require 'Database.php';
 	$db = new MongodbDatabase();
 	$countOrder = 0;
 	$countItems = 0;
-	foreach($db->loadOrder() as $order){
-		$countOrder++;
-		foreach($order['carts'] as $key=>$value){
-			$countItems += $value;
+	$o = $db->loadOrder();
+	foreach($o as $order){
+		if($order['status'] == "pending"){
+			$countOrder++;
+			foreach($order['carts'] as $key=>$value){
+				$countItems += $value;
+			}
 		}
 	} 
 ?>
@@ -22,6 +26,34 @@
 	<link rel="stylesheet" href="css/cart.css">
 	<link rel="stylesheet" href="css/jquery-ui.css">
 </head>
+
+<div class="modal fade" id="orderDetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalCenterTitle">Order Detail</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<label class="font-weight-bold">Order ID</label>
+				<p id="date"></p>
+				<label class="font-weight-bold">Order Date</label>
+				<p id="id"></p>
+				<label class="font-weight-bold">Order By</label>
+				<p id="user"></p>
+				<label class="font-weight-bold">Order Product(s)</label>
+				<div id="products"></div>
+				<label class="font-weight-bold">Status</label>
+				<p id="status"></p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <body class="bg">
 	<?php
@@ -103,7 +135,8 @@
 	<script>
 		$(document).ready(function() {
 			load_order();
-			var orders = [];
+			var order_list = [];
+
 			function showTable(response) {
 				var table = $('#root').tableSortable({
 					data: JSON.parse(response),
@@ -129,38 +162,99 @@
 					data: {},
 					success: function(response) {
 						showTable(response);
+						$(document).on('click', '#btnView', function() {
+							var id = $(this).val();
+							$.each(JSON.parse(response), function(index, value) {
+								if (id === value.oid) {
+									$('#orderDetail').modal('show');
+									$("#date").text(value.date);
+									$("#id").text(value.oid);
+									$("#user").text(value.user);
+									$("#status").text(value.status);
+									$("#products").empty();
+									var content = "<table class=\"table\"><tr><th><?php echo $db->getPrimaryKey(); ?></th><th>Quantity</th></tr>";
+									$.each(value.cart, function(index, val) {
+										content += "<tr><td>"+index+"</td><td>"+val+"</td></tr>";
+									});
+									$("#products").append(content);
+								}
+
+							});
+						});
 					}
 				});
 			}
 
-			$(document).on('click', '#btnRemove', function() {
-				var item = $(this).val();
-				var action = 'update';
-				$.ajax({
-					url: './showCart.php?update=remove',
-					method: "POST",
-					data: {
-						action: action,
-						item: item,
-					},
-					success: function(response) {
-						load_order();
-					}
-				});
-				$('#wrapper').load('Cart.php' + ' #summary');
+			$(document).on('click', '#btnComplete', function() {
+				var action = 'complete';
+				if (order_list.length == 0) alert("Please select at least ONE order.");
+				else {
+					$.ajax({
+						url: './updateOrders.php?action=complete',
+						method: "POST",
+						data: {
+							action: action,
+							orders: order_list,
+						},
+						success: function(response) {
+							load_order();
+						}
+					});
+					$('#wrapper').load('OrderManage.php' + ' #summary');
+				}
 			});
-			
+
+			$(document).on('click', '#btnProcess', function() {
+				var action = 'process';
+				if (order_list.length == 0) alert("Please select at least ONE order.");
+				else {
+					$.ajax({
+						url: './updateOrders.php?action=process',
+						method: "POST",
+						data: {
+							action: action,
+							orders: order_list,
+						},
+						success: function(response) {
+							load_order();
+						}
+					});
+					$('#wrapper').load('OrderManage.php' + ' #summary');
+				}
+			});
+
+			$(document).on('click', '#btnRemove', function() {
+				var action = 'remove';
+				if (order_list.length == 0) alert("Please select at least ONE order.");
+				else {
+					$.ajax({
+						url: './updateOrders.php?action=remove',
+						method: "POST",
+						data: {
+							action: action,
+							orders: order_list,
+						},
+						success: function(response) {
+							load_order();
+						}
+					});
+					$('#wrapper').load('OrderManage.php' + ' #summary');
+				}
+			});
+
+
 			$(document).on('click', '#checkAll', function() {
 				if (this.checked) {
 					// Iterate each checkbox
 					$(':checkbox').each(function() {
 						this.checked = true;
 					});
+					get_orders();
 				} else {
 					$(':checkbox').each(function() {
 						this.checked = false;
 					});
-					var orders = [];
+					get_orders();
 				}
 			});
 
@@ -185,8 +279,21 @@
 							window.location = './Product_List/Order'+<?php echo date("Ymd") ?> + '.xlsx';*/
 					}
 				});
-				
-				
+
+
+			});
+
+			function get_orders() {
+				var orders = [];
+				$('.common_selector:checked').each(function() {
+					orders.push($(this).val());
+				});
+				order_list = orders;
+				console.log(order_list);
+			}
+
+			$(document).on('click', '.common_selector', function() {
+				get_orders();
 			});
 		});
 

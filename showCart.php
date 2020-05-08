@@ -8,7 +8,6 @@
 		if(isset($_POST['action'])){
 			$result = $_POST['item'];
 			$uid = "001";
-			$oid = "o-".$uid."-".$db->countOrder($uid);
 			$new=[];
 			foreach($db->loadCart($uid) as $cart) {
 				foreach(iterator_to_array($cart['carts']) as $k=>$v){
@@ -17,14 +16,13 @@
 				}
 				break;
 			}
-			$db->updateCart($oid, $new);
+			$db->updateCart($uid, $new);
 		}
 	}
 	else if($_GET['update'] === 'decrease'){ 
 		if(isset($_POST['action'])){ var_dump($_POST['id']);
 			$id = $_POST['id'];
 			$uid = "001";
-			$oid = "o-".$uid."-".$db->countOrder($uid);
 			$new=[];
 			foreach($db->loadCart($uid) as $cart) {
 				foreach(iterator_to_array($cart['carts']) as $k=>$v){
@@ -35,7 +33,7 @@
 				}
 				break;
 			}
-			$db->updateCart($oid, $new);
+			$db->updateCart($uid, $new);
 		}
 	}
 	
@@ -43,7 +41,6 @@
 		if(isset($_POST['action'])){
 			$id = $_POST['id'];
 			$uid = "001";
-			$oid = "o-".$uid."-".$db->countOrder($uid);
 			$new=[];
 			foreach($db->loadCart($uid) as $cart) {
 				foreach(iterator_to_array($cart['carts']) as $k=>$v){
@@ -54,7 +51,7 @@
 				}
 				break;
 			}
-			$db->updateCart($oid, $new);
+			$db->updateCart($uid, $new);
 		}
 	}
 		$uid="001";
