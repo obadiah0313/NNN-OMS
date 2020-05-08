@@ -21,22 +21,35 @@
         <div class = "row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
             <div class="col-12 py-3">
                 <div class = "container-fluid">
-          			<form action="#" name="registration">
+          			<form action="userEdit.php" method="post" name="formedit" id="formedit">
 						<div class="form-group">
 							<label for="exampleInputEmail1">Full Name</label>
-							<input type="text" name="fullname" class="form-control" id="fullname" aria-describedby="emailHelp" placeholder="Enter Full Name">
+							<input type="text" name="fullname" class="form-control" id="fullname" aria-describedby="emailHelp" value="<?php if (isset($_SESSION['fullname'])){
+                                    echo $_SESSION['fullname'];}
+                                 else {
+                                     echo 'Guest';} ?>">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputEmail1">Phone</label>
-							<input type="tel" name="phone" class="form-control" id="phone" aria-describedby="emailHelp" placeholder="Enter Phone" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
+							<input type="tel" name="phone" class="form-control" id="phone" aria-describedby="emailHelp" value="<?php if (isset($_SESSION['phone'])){
+                                echo $_SESSION['phone'];}
+                                 else {echo '-';} ?>" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputEmail1">Email address</label>
-							<input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+							<input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" value="<?php if (isset($_SESSION['email'])){
+                                    echo $_SESSION['email'];}
+                                 else {echo '-';} ?>">
 						</div>     
-						<div class="row my-5">
-                            <div class= "col-md-6"><button style="float: right;" onclick="document.location.href = 'Profile.php';"  class=" button btn-block allBtn">Cancel</button></div>
-                            <div class= "col-md-6"><button type="submit" class="button allBtn btn-block">Save Changes</button></div>
+                         <div class="row my-3">
+                             <div class= "col-md-12"><p class="text-danger"><?php if (isset($_SESSION['error'])){
+                                    echo $_SESSION['error'];
+                                    $_SESSION['error'] = " "; ;}
+                                    else {echo ' ';} ?><p></div>
+                        </div>
+						<div class="row my-3">
+                            <div class= "col-md-6"><button style="float: right;" type="button" onclick="document.location.href = 'Profile.php';"  class="button btn-block allBtn">Cancel</button></div>
+                            <div class= "col-md-6"><button type="Submit" form="formedit" class="button allBtn btn-block">Save Changes</button></div>
                         </div>
 					</form>
 				</div>

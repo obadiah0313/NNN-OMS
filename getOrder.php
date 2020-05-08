@@ -4,10 +4,12 @@
 	$orderList = [];
 	foreach($db->loadOrder() as $order){
 		$temp = array(
+			'check' => '<input type="checkbox" value="'.$order['oid'].'" id="order">',
 			'oid' => $order['oid'],
 			'date' => $order['date'],
 			'user' => $order['uid'],
-			'edit' => '<button class="button allBtn item mb-1" id="btnComplete" value="'.$order['oid'].'">Complete <i class="far fa-check-circle"></i></button> <button class="button allBtn item mb-1" id="btnComplete" value="'.$order['oid'].'">Modify <i class="fas fa-edit"></i></button> <button class="button allBtn item" id="btnRemove" value="'.$order['oid'].'">Remove <i class="far fa-times-circle"></i></button>',
+			'status'=> $order['status'],
+			'view' => '<button class="button allBtn item mb-1" id="btnView" value="'.$order['oid'].'">View <i class="fas fa-eye"></i></button>',
 		);	
 		array_push($orderList,$temp);	
 	}	

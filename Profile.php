@@ -23,11 +23,21 @@
             <div class="col-12 py-3">
                 <div class = "container-fluid">
                     <h5>Full name</h5> 
-                        <a>Ali Abu</a> <br><br>
+                        <a><?php if (isset($_SESSION['fullname'])){
+                                    echo $_SESSION['fullname'];}
+                                 else {
+                                     echo 'Guest';} ?></a>
+                    <br><br>
                     <h5>Mobile</h5> 
-                        <a>012345678</a> <br><br>
+                        <a><?php if (isset($_SESSION['phone'])){
+                                    echo $_SESSION['phone'];}
+                                 else {echo '-';} ?></a>
+                    <br><br>
                     <h5>Email Address</h5> 
-                        <a>email@mail.com</a> <br><br>
+                        <a><?php if (isset($_SESSION['email'])){
+                                    echo $_SESSION['email'];}
+                                 else {echo '-';} ?></a>
+                    <br><br>
                     <div class="row my-3">
                         <div class= "col-md-6"><button onclick="document.location.href = './EditProfile.php';" class=" button btn-block allBtn">Edit Profile</button></div>
                         <div class= "col-md-6"><button onclick="document.location.href = './Password.php';" class=" button btn-block allBtn">Change Password</button></div>

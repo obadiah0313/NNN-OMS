@@ -5,13 +5,13 @@
 		//Constructor
 		public function __construct(){
 			try {
-				$this->client = new MongoDB\Client();
-				//$this->client = new MongoDB\Client('mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c');
+				//$this->client = new MongoDB\Client();
+				$this->client = new MongoDB\Client('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false');
 			}catch (MongoConnectionException $e) {
 				die('Error connecting to MongoDB server');
 			}
-			$this->db = $this->client->NNNdb;
-			//$this->db = $this->client->heroku_0g0g5g6c;
+			//$this->db = $this->client->NNNdb;
+			$this->db = $this->client->heroku_0g0g5g6c;
 			$this->collect = $this->db->selectCollection('stock');
 			$this->deletion = $this->db->selectCollection('deletion');
 			$this->user = $this->db->selectCollection('user');
@@ -163,6 +163,20 @@
 				]);
 			foreach($data as $d)
 				return $d['date'];
+		}
+        /*************/
+		/*Create User*/
+		/*************/
+        public function insertUser($fullname, $phone, $email, $password, $type){
+			$this->user->insertOne(['fullname' => $fullname, 'phone' => $phone, 'email' => $email, 'password' => $password, 'type' => $type]);
+		}
+        
+        public function updateUser($_id, $fullname, $phone, $email){
+			$this->user->updateOne(['_id' => $_id], ['$set' =>['fullname' => $fullname, 'phone' => $phone, 'email' => $email]]);
+		}
+        
+        public function updatePass($_id, $npassword){
+			$this->user->updateOne(['_id' => $_id], ['$set' =>['password' => $npassword]]);
 		}
 	}
 	

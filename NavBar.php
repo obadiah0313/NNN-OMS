@@ -1,3 +1,6 @@
+<?php if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}?>
 <link rel="stylesheet" href="css/nav.css">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="fontawesome/css/all.css">
@@ -64,7 +67,7 @@
 							Setting
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="./UserManage.php">User Management</a>
+							<a class="dropdown-item" href="./userlist.php">User Management</a>
 							<a class="dropdown-item" href="./OrderManage.php">Order Management</a>
 							<a class="dropdown-item" href="./CatalogueManage.php">Catalogue Management</a>
 						</div>
@@ -74,7 +77,7 @@
 			<div class="collapse navbar-collapse order-1" id="exCollapsingNavbar">
 				<ul class="nav navbar-nav ml-auto mr-2">
 					<li class="nav-item"><a href="./Cart.php" class="nav-link">Cart <i class="fas fa-shopping-cart"></i></a></li>
-					<li class="nav-item"><a href="./Profile.php" class="nav-link"></i></a></li>
+					<li class="nav-item"><a href="./Profile.php" class="nav-link"></a></li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Profile <i class="fas fa-user-circle"></i>
@@ -82,11 +85,18 @@
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 							<a class="dropdown-item" href="./Profile.php">My Profile</a>
 							<a class="dropdown-item" href="#">Order History</a>
-							<a class="dropdown-item" href="./index.php">Logout</a>
+							<a class="dropdown-item" href="./logout.php">Logout</a>
 						</div>
 					</li>
 				</ul>
+                <a class="text-warning nav-link">Hello,  
+                    <?php 
+                  if (isset($_SESSION['fullname'])){
+                    echo $_SESSION['fullname'];}
+                    else {echo 'Guest';} ?>
+                </a>
 				<button id="btnLogin" class="button allBtn justify-content-between " onclick="document.location.href = './Login.php';">Login</button>
+                
 			</div>
 
 		</div>

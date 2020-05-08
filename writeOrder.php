@@ -22,11 +22,13 @@
 	$alphas = range('A','Z');
 	$count = sizeof($db->getHeaders());
 	$barcode = 0;
+	$qty = 0;
 	foreach ($db->getHeaders() as $k=>$v){
 		if($v == "Barcode"){
 			$barcode = $k;
-			break;
 		}
+		if(strpos($v, "Quantity") !== false)
+			$qty = $k;
 	}
 
 	use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -62,6 +64,11 @@
 	$spreadsheet->getActiveSheet()->getStyle($alphas[$barcode].'2:'.$alphas[$barcode].sizeof($product))
 		->getNumberFormat()
 		->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER);
+	$spreadsheet->getActiveSheet()->getStyle($alphas[$qty].'2:'.$alphas[$qty].sizeof($product))
+		->getFill()
+		->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+		->getStartColor()->setARGB('FFFF85');
+	$spreadsheet->getActiveSheet()->freezePane('A2');
 
 
 	for($i = 0 ; $i < $count; $i++)
@@ -70,9 +77,10 @@
 	}
 		
 	header('Content-Type: application/vnd.ms-excel');
-    header('Content-Disposition: attachment;filename="myfile.xlsx"');
+    header('Content-Disposition: attachment;filename="Order'.date("Ymd").'.xlsx"');
     header('Cache-Control: max-age=0');
 
 	$writer = new Xlsx($spreadsheet);
-	$writer->save('./Product_List/myfile.xlsx');
+	$writer->save('./Product_List/Order'.date("Ymd").'.xlsx');
+	echo json_encode(["result" => "done"]);
 ?>

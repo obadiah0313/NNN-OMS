@@ -38,7 +38,24 @@
 		</div>
 		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 			<div class="col px-auto">
-				<div id="root"></div>
+				<div class="row py-2">
+					<div class="col-5 text-right">
+						<button class="button allBtn item" id="btnComplete" value="'.$order['oid'].'">Complete <i class="far fa-check-circle"></i></button>
+					</div>
+					<div class="col-auto">
+						<button class="button allBtn item" id="btnProcess" value="'.$order['oid'].'">Process <i class="fas fa-sync-alt"></i></button>
+					</div>
+					<div class="col">
+						<button class="button allBtn item" id="btnRemove" value="'.$order['oid'].'">Remove <i class="far fa-times-circle"></i></button>
+					</div>
+
+				</div>
+				<div class="row">
+					<div class="col-12">
+						<div id="root"></div>
+					</div>
+
+				</div>
 			</div>
 			<div class="col-auto my-3 ml-auto">
 				<div class="row">
@@ -86,7 +103,7 @@
 	<script>
 		$(document).ready(function() {
 			load_order();
-
+			var orders = [];
 			function showTable(response) {
 				var table = $('#root').tableSortable({
 					data: JSON.parse(response),
@@ -97,10 +114,12 @@
 			}
 
 			var columns = {
+				check: '<?php echo '<input type="checkbox" id="checkAll">' ?>',
 				oid: 'Order(s)',
 				user: 'Order By',
 				date: 'Order Date',
-				edit: ''
+				status: 'Status',
+				view: ''
 			}
 
 			function load_order() {
@@ -130,6 +149,20 @@
 				});
 				$('#wrapper').load('Cart.php' + ' #summary');
 			});
+			
+			$(document).on('click', '#checkAll', function() {
+				if (this.checked) {
+					// Iterate each checkbox
+					$(':checkbox').each(function() {
+						this.checked = true;
+					});
+				} else {
+					$(':checkbox').each(function() {
+						this.checked = false;
+					});
+					var orders = [];
+				}
+			});
 
 			$(document).on('click', '#btnExport', function() {
 				var files = <?php $out = array();
@@ -138,18 +171,22 @@
 					$out[] = $p['filename'];
 				}
 				echo json_encode($out); ?>;
-				var action ="write"
+				var action = "write"
 				$.ajax({
 					url: './writeOrder.php',
 					method: "POST",
 					data: {
 						action: action,
-						file: './Product_List/'+files[files.length-1],
+						file: './Product_List/' + files[files.length - 1],
 					},
 					success: function(response) {
+						response = JSON.parse(response);
+						/*if(response.result == "done")
+							window.location = './Product_List/Order'+<?php echo date("Ymd") ?> + '.xlsx';*/
 					}
 				});
-				//window.location = './Product_List/'+files[files.length-1] + '.xlsm';
+				
+				
 			});
 		});
 

@@ -22,7 +22,7 @@
         <div class = "row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
             <div class="col-12 py-3">
             	<div class = "container-fluid">
-                	<form action="#" name="pwdForm"> 
+                	<form action="passwordEdit.php" method="post" name="formpassword" id="formpassword"> 
                         <div class="form-group">
 								<label for="exampleInputEmail1">Current Password</label>
 								<input type="password" name="oldpassword" class="form-control" id="oldpassword" aria-describedby="emailHelp" placeholder="Enter Old Password">
@@ -36,8 +36,14 @@
 								<input type="password" name="retypenewpassword" id="retypenewpassword" class="form-control" aria-describedby="emailHelp" placeholder="Retype New Password">
                             </div>
                         <div class="row my-3">
-                             <div class= "col-md-6"><button onclick="document.location.href = './Profile.php';"  class=" button allBtn btn-block">Cancel</button></div>
-                            <div class= "col-md-6"><button type="submit" class="button allBtn btn-block">Save Changes</button></div>
+                             <div class= "col-md-12"><p class="text-danger"><?php if (isset($_SESSION['error'])){
+                                    echo $_SESSION['error'];
+                                    $_SESSION['error'] = " "; ;}
+                                    else {echo ' ';} ?><p></div>
+                        </div>
+                        <div class="row my-3">
+                             <div class= "col-md-6"><button type="button" onclick="document.location.href = './Profile.php';"  class=" button allBtn btn-block">Cancel</button></div>
+                            <div class= "col-md-6"><button type="submit" form="formpassword" class="button allBtn btn-block">Save Changes</button></div>
                         </div>
 					</form>
 				</div>

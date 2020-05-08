@@ -21,7 +21,7 @@
 								<h1>Login</h1>
 							</div>
 						</div>
-						<form action="" method="post" name="login">
+						<form action="checkLogin.php" id="form1" method="post" name="login">
 							<div class="form-group">
 								<label for="exampleInputEmail1">Email address</label>
 								<input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
@@ -34,7 +34,7 @@
 								<p class="text-center">By signing up you accept our <a href="#">Terms Of Use</a></p>
 							</div>
 							<div class="col-md-12 text-center ">
-								<button type="submit" class=" button btn-block allBtn btn-outline-warning tx-tfm">Login</button>
+								<button type="submit" id="form1" class=" button btn-block allBtn btn-outline-warning tx-tfm">Login</button>
 							</div>
 							<div class="col-md-12 ">
 								<div class="login-or">
@@ -56,7 +56,7 @@
 								<h1>Signup</h1>
 							</div>
 						</div>
-						<form action="#" name="registration">
+						<form action="addUser.php" method="post" name="registration" id="form2">
 							<div class="form-group">
 								<label for="exampleInputEmail1">Full Name</label>
 								<input type="text" name="fullname" class="form-control" id="fullname" aria-describedby="emailHelp" placeholder="Enter Full Name">
@@ -74,7 +74,7 @@
 								<input type="password" name="password" id="password" class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
 							</div>
 							<div class="col-md-12 text-center mb-3">
-								<button type="submit" class="button allBtn btn-block btn-outline-warning tx-tfm">Get Started For Free</button>
+								<button type="submit" form="form2" value="Submit" class="button allBtn btn-block btn-outline-warning tx-tfm">Get Started For Free</button>
 							</div>
 							<div class="col-md-12 ">
 								<div class="form-group">
