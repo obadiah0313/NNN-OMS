@@ -1,4 +1,5 @@
 <?php
+	require './Database.php';
 	$db = new MongodbDatabase();
 
 	if(isset($_POST['action'])) 

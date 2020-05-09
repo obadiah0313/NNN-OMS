@@ -5,13 +5,13 @@
 		//Constructor
 		public function __construct(){
 			try {
-				//$this->client = new MongoDB\Client();
-				$this->client = new MongoDB\Client('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false');
+				$this->client = new MongoDB\Client();
+				//$this->client = new MongoDB\Client('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false');
 			}catch (MongoConnectionException $e) {
 				die('Error connecting to MongoDB server');
 			}
-			//$this->db = $this->client->NNNdb;
-			$this->db = $this->client->heroku_0g0g5g6c;
+			$this->db = $this->client->NNNdb;
+			//$this->db = $this->client->heroku_0g0g5g6c;
 			$this->collect = $this->db->selectCollection('stock');
 			$this->deletion = $this->db->selectCollection('deletion');
 			$this->user = $this->db->selectCollection('user');
@@ -145,12 +145,12 @@
 		}
 		
 		public function updateOrder($oid, $status){
-			$this->cart->updateOne(['oid' => $oid],
+			$this->cart->updateOne(['_id' => new MongoDB\BSON\ObjectID($oid)],
 									['$set' => ['status' => $status]]);
 		}
 		
 		public function removeOrder($oid) {
-			$this->cart->deleteOne(['oid' => $oid]);
+			$this->cart->deleteOne(['_id' => $oid]);
 		}
 		/******************/
 		/*Get Filter value*/

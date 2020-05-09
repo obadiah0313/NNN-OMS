@@ -188,16 +188,17 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#setPrimary').hide();
+		var file;
 		$("body").on("click", "#upload", function() {
 			//Reference the FileUpload element.
 			var fileUpload = $("#fileUpload")[0];
-
+			
 			//Validate whether File is valid Excel file.
 			var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx|.xlsm)$/;
 			if (regex.test(fileUpload.value.toLowerCase())) {
 				if (typeof(FileReader) != "undefined") {
 					var reader = new FileReader();
-
+					
 					//For Browsers other than IE.
 					if (reader.readAsBinaryString) {
 						reader.onload = function(e) {
@@ -213,9 +214,9 @@
 							contentType:false,
 							cache:false,
 							processData:false,
-							success:function(data)
-							{
-								alert(data);
+							success:function(data){
+								data = JSON.parse(data);
+								file = data.filename;
 							}
 						});
 					} else {
@@ -239,7 +240,8 @@
 
 		});
 		var product,deletion,head;
-		function ProcessExcel(data) {
+		
+		function ProcessExcel(data,filename) {
 			//Read the Excel File data.
 			var workbook = XLSX.read(data, {
 				type: 'binary'
@@ -286,10 +288,6 @@
 
 				headers.push(hdr);
 			}
-			var ws = XLSX.utils.json_to_sheet(newObj);
-			var wb = XLSX.utils.book_new();
-			XLSX.utils.book_append_sheet(wb,ws, "GBD_Asia");
-			XLSX.writeFile(wb, "test.xlsx");
 
 			console.log('-----');
 			console.log(newObj);
@@ -362,7 +360,8 @@
 					data: product,
 					data2: deletion,
 					data3: head,
-					primarykey: pk,
+					data4: file,
+					primarykey: pk,			
 				},
 				url: './ubackend.php',
 				success: function(response) {

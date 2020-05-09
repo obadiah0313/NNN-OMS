@@ -1,6 +1,6 @@
 <?php
 	error_reporting(0);
-	require 'Database.php';
+	require './Database.php';
 	$db = new MongodbDatabase();
 	$countOrder = 0;
 	$countItems = 0;

@@ -21,13 +21,14 @@
 			}
 			array_push($all, $new);
 		}
+		$filename = $_POST['data4'];
 		$primary_key = $_POST['primarykey'];
 		if ($db->checkExists() != null) {
-			$db->replaceStock(date("Y-m-d"),$all,$header,$primary_key);
+			$db->replaceStock(date("Y-m-d"),$all,$header,$primary_key,$filename);
 			echo json_encode(["type" => "success", "msg" => "Replaced successfully!"]);
 		}
 		else{
-			$db->insertStock(date("Y-m-d"),$all,$header,$primary_key);
+			$db->insertStock(date("Y-m-d"),$all,$header,$primary_key,$filename);
 			$db->insertDeletion(date("Y-m-d"),$_POST['data2']);
 			echo json_encode(["type" => "success", "msg" => "Insert successfully!"]);
 		}
