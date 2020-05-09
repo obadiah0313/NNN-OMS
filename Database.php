@@ -5,13 +5,13 @@
 		//Constructor
 		public function __construct(){
 			try {
-				$this->client = new MongoDB\Client();
-				//$this->client = new MongoDB\Client('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false');
+				//$this->client = new MongoDB\Client();
+				$this->client = new MongoDB\Client('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=false');
 			}catch (MongoConnectionException $e) {
 				die('Error connecting to MongoDB server');
 			}
-			$this->db = $this->client->NNNdb;
-			//$this->db = $this->client->heroku_0g0g5g6c;
+			//$this->db = $this->client->NNNdb;
+			$this->db = $this->client->heroku_0g0g5g6c;
 			$this->collect = $this->db->selectCollection('stock');
 			$this->deletion = $this->db->selectCollection('deletion');
 			$this->user = $this->db->selectCollection('user');
@@ -69,9 +69,9 @@
 			return $this->collect->countDocuments(['date' => date("Y-m-d")]);
 		}
 		
-		public function replaceStock($date, $product, $header, $primarykey){
+		public function replaceStock($date, $product, $header, $primarykey, $file){
 			$this->collect->replaceOne(['date' => $date],
-										['date' => $date, 'products' => $product, 'header' => $header, 'primaryKey' => $primarykey]);
+										['date' => $date, 'products' => $product, 'header' => $header, 'primaryKey' => $primarykey, 'filename' => $file]);
 		}
 		
 		public function replaceDeletion($date, $deletion){
@@ -79,8 +79,8 @@
 										['date' => $date, 'deletions' => $deletion]);
 		}
 		
-		public function insertStock($date, $product, $header, $primarykey){
-			$this->collect->insertOne(['date' => $date, 'products' =>$product, 'header' => $header, 'primaryKey' => $primarykey]);
+		public function insertStock($date, $product, $header, $primarykey, $file){
+			$this->collect->insertOne(['date' => $date, 'products' =>$product, 'header' => $header, 'primaryKey' => $primarykey, 'filename' => $file]);
 		}
 		
 		public function insertDeletion($date, $deletion){
