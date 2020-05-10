@@ -5,7 +5,7 @@
 		//Constructor
 		public function __construct(){
 			try {
-				$//this->client = new MongoDB\Client();
+				//$this->client = new MongoDB\Client();
 				$this->client = new MongoDB\Client('mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c');
 			}catch (MongoConnectionException $e) {
 				die('Error connecting to MongoDB server');
