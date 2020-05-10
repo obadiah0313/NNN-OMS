@@ -259,27 +259,16 @@
 			});
 
 			$(document).on('click', '#btnExport', function() {
-				var files = <?php $out = array();
-				foreach (glob('./Product_List/*.xlsm') as $filename) {
-					$p = pathinfo($filename);
-					$out[] = $p['filename'];
-				}
-				echo json_encode($out); ?>;
 				var action = "write"
 				$.ajax({
-					url: './writeOrder.php',
+					url: './exportOrder.php',
 					method: "POST",
 					data: {
 						action: action,
-						file: './Product_List/' + files[files.length - 1],
 					},
 					success: function(response) {
-						response = JSON.parse(response);
-						/*if(response.result == "done")
-							window.location = './Product_List/Order'+<?php echo date("Ymd") ?> + '.xlsx';*/
 					}
 				});
-
 
 			});
 

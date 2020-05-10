@@ -61,7 +61,8 @@
 				<ul class="nav navbar-nav">
 					<li class="nav-item"><a href="./Catalogue_Available.php" class="nav-link">Catalogue Available</a></li>
 					<li class="nav-item"><a href="./Catalogue_Unavailable.php" class="nav-link">Deletions</a></li>
-
+                    <?php 
+                    if (isset($_SESSION['fullname'])){if ($_SESSION['type']=="admin" || $_SESSION['type']=="staff"){echo'
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Setting
@@ -71,14 +72,14 @@
 							<a class="dropdown-item" href="./OrderManage.php">Order Management</a>
 							<a class="dropdown-item" href="./CatalogueManage.php">Catalogue Management</a>
 						</div>
-					</li>
+					</li>';}else {echo"";}}else {echo"";}?>
 				</ul>
 			</div>
 			<div class="collapse navbar-collapse order-1" id="exCollapsingNavbar">
 				<ul class="nav navbar-nav ml-auto mr-2">
 					<li class="nav-item"><a href="./Cart.php" class="nav-link">Cart <i class="fas fa-shopping-cart"></i></a></li>
 					<li class="nav-item"><a href="./Profile.php" class="nav-link"></a></li>
-					<li class="nav-item dropdown">
+					<?php if (isset($_SESSION['fullname'])){echo'<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Profile <i class="fas fa-user-circle"></i>
 						</a>
@@ -87,7 +88,10 @@
 							<a class="dropdown-item" href="#">Order History</a>
 							<a class="dropdown-item" href="./logout.php">Logout</a>
 						</div>
-					</li>
+					</li>';} 
+                    else{
+                    echo'<a id="btnLogin" class="button allBtn justify-content-between " href="./Login.php">Login</a>';}
+                ?>
 				</ul>
                 <a class="text-warning nav-link">Hello,  
                     <?php 
@@ -95,8 +99,6 @@
                     echo $_SESSION['fullname'];}
                     else {echo 'Guest';} ?>
                 </a>
-				<button id="btnLogin" class="button allBtn justify-content-between " onclick="document.location.href = './Login.php';">Login</button>
-                
 			</div>
 
 		</div>

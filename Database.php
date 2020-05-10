@@ -5,7 +5,7 @@
 		//Constructor
 		public function __construct(){
 			try {
-				//$this->client = new MongoDB\Client();
+				$//this->client = new MongoDB\Client();
 				$this->client = new MongoDB\Client('mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c');
 			}catch (MongoConnectionException $e) {
 				die('Error connecting to MongoDB server');
@@ -124,7 +124,7 @@
 		}
 		
 		public function updateStatus($uid, $remarks){
-			$this->cart->updateOne(['uid' => $oid, 'status' => 'active'],
+			$this->cart->updateOne(['uid' => $uid, 'status' => 'active'],
 									['$set' => ['remarks' => $remarks, 'date'=> date("Y-m-d"),'status' => "pending"]]);
 		}
 				
@@ -174,8 +174,8 @@
         /*************/
 		/*Create User*/
 		/*************/
-        public function insertUser($fullname, $phone, $email, $password, $type){
-			$this->user->insertOne(['fullname' => $fullname, 'phone' => $phone, 'email' => $email, 'password' => $password, 'type' => $type]);
+        public function insertUser($fullname, $phone, $email, $password, $type, $status){
+			$this->user->insertOne(['fullname' => $fullname, 'phone' => $phone, 'email' => $email, 'password' => $password, 'type' => $type, 'status' => $status]);
 		}
         
         public function updateUser($_id, $fullname, $phone, $email){
@@ -184,6 +184,10 @@
         
         public function updatePass($_id, $npassword){
 			$this->user->updateOne(['_id' => $_id], ['$set' =>['password' => $npassword]]);
+		}
+        
+        public function updateUserStatus($_id, $status){
+			$this->user->updateOne(['_id' => $_id], ['$set' =>['status' => $status]]);
 		}
 	}
 	

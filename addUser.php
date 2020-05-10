@@ -10,6 +10,6 @@ $email= $_POST['email'];
 $password= md5($_POST['password']);
 
        
-$db->insertUser($fullname, $phone, $email, $password,"staff");
+$db->insertUser($fullname, $phone, $email, $password,"customer",true);
 header("Location:Login.php");
 ?>

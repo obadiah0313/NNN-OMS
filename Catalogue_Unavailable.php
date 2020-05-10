@@ -60,7 +60,6 @@
 						responsive: {
 							1100: {
 								columns: {
-									code: 'Code',
 									desp: 'Description',
 									datechange: 'Date of Change',
 									comment: 'Comment (correct at time of removal)',

@@ -19,11 +19,11 @@ $rpasswordlength= strlen($rpassword);
 
 
 if(($opasswordlength > 7) && ($npasswordlength > 7) && ($rpasswordlength > 7)){
-if($opassword==$password){
+if(md5($opassword)==$password){
     if($rpassword==$npassword){
         if($npassword!=$opassword){
 
-$db->updatePass($_id,$npassword);
+$db->updatePass($_id,md5($npassword));
 
 session_destroy();
 session_start();
@@ -32,7 +32,7 @@ $_SESSION['_id'] = $_id;
 $_SESSION['fullname'] = $fullname;
 $_SESSION['phone'] = $phone;
 $_SESSION['email'] = $email;
-$_SESSION['password'] = $npassword;
+$_SESSION['password'] = md5($npassword);
 $_SESSION['type'] = $type;
     
 
