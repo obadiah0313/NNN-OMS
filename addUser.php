@@ -1,6 +1,6 @@
 <?php
-	error_reporting(0);
-	require 'Database.php';
+	//error_reporting(0);
+	require './Database.php';
 
 
 $db = new MongodbDatabase();
