@@ -1,5 +1,4 @@
 <?php 
-	session_start();
 	require './Database.php';
 	$db = new MongodbDatabase();
 	foreach($db->getSetting() as $stt){
