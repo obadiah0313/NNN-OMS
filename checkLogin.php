@@ -1,7 +1,7 @@
 <?php
 session_start();
 //$manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
-$manager = new MongoDB\Driver\Manager('mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c');
+$manager = new MongoDB\Driver\Manager('mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c?replicaSet=rs-ds239009?retryWrites=false');
 
 $email= $_POST["email"];
 $password= md5($_POST["password"]);
