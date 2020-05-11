@@ -188,7 +188,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#setPrimary').hide();
-		var file;
+		var excelfile;
 		$("body").on("click", "#upload", function() {
 			//Reference the FileUpload element.
 			var fileUpload = $("#fileUpload")[0];
@@ -209,8 +209,7 @@
 						processData: false,
 						success: function(data) {
 							data = JSON.parse(data);
-							file = data.filename;
-							alert(file);
+							excelfile = data.filename;
 							var reader = new FileReader();
 							//For Browsers other than IE.
 							if (reader.readAsBinaryString) {
@@ -244,7 +243,7 @@
 		});
 		var product, deletion, head;
 
-		function ProcessExcel(data, filename) {
+		function ProcessExcel(data) {
 			//Read the Excel File data.
 			var workbook = XLSX.read(data, {
 				type: 'binary'
@@ -364,7 +363,7 @@
 					data: product,
 					data2: deletion,
 					data3: head,
-					data4: file,
+					data4: excelfile,
 					primarykey: pk,
 				},
 				url: './ubackend.php',
