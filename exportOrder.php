@@ -1,4 +1,4 @@
 <?php
-	exec("\mysheet\bin\Debug\mysheet.exe 2>&1", $output);
+	exec("ls -al", $output);
 	print_r($output);
 ?>
