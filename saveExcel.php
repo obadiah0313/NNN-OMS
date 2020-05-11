@@ -1,7 +1,7 @@
 <?php
 if(!empty($_FILES["file"]["name"]))
 {   
-	$dir = 'Product_List/';
+	$dir = 'app/Product_List/';
 	chmod($dir, 0777);
 	$path = $dir.$_FILES["file"]["name"];
 	if(!file_exists($path)) {
