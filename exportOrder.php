@@ -1,4 +1,4 @@
 <?php
-	exec('.\mysheet\bin\Debug\mysheet.exe 2>&1', $output);
+	exec('mysheet.exe', $output);
 	print_r($output);
 ?>
