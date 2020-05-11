@@ -1,8 +1,8 @@
 <?php
-if($_FILES["file"]["name"] != '')
-{
-	$location = './Product_List/'.$_FILES["file"]["name"];
-	move_uploaded_file($_FILES["file"]["tmp_name"], $location);
+if(!empty($_FILES["file"]["name"]))
+{   echo "<script type='text/javascript'>alert('".$_FILES["file"]["name"]."');</script>";
+	$location = 'Product_List/'.$_FILES["file"]["name"];
+	//move_uploaded_file($_FILES["file"]["tmp_name"], $location);
 	echo json_encode(["filename" => $location]);
 }
 ?>
