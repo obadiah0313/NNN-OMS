@@ -192,45 +192,47 @@
 		$("body").on("click", "#upload", function() {
 			//Reference the FileUpload element.
 			var fileUpload = $("#fileUpload")[0];
-			var form_data = new FormData();
-			form_data.append("file", fileUpload.files[0]);
-			$.ajax({
-				url: './saveExcel.php',
-				method: 'POST',
-				data: form_data,
-				contentType: false,
-				cache: false,
-				processData: false,
-				success: function(data) {
-					data = JSON.parse(data);
-					file = data.filename;
-				}
-			});
 
 			//Validate whether File is valid Excel file.
 			var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx|.xlsm)$/;
 			if (regex.test(fileUpload.value.toLowerCase())) {
 				if (typeof(FileReader) != "undefined") {
-					var reader = new FileReader();
 
-					//For Browsers other than IE.
-					if (reader.readAsBinaryString) {
-						reader.onload = function(e) {
-							ProcessExcel(e.target.result);
-						};
-						reader.readAsBinaryString(fileUpload.files[0]);
-					} else {
-						//For IE Browser.
-						reader.onload = function(e) {
-							var data = "";
-							var bytes = new Uint8Array(e.target.result);
-							for (var i = 0; i < bytes.byteLength; i++) {
-								data += String.fromCharCode(bytes[i]);
+					var form_data = new FormData();
+					form_data.append("file", fileUpload.files[0]);
+					$.ajax({
+						url: './saveExcel.php',
+						method: 'POST',
+						data: form_data,
+						contentType: false,
+						cache: false,
+						processData: false,
+						success: function(data) {
+							data = JSON.parse(data);
+							file = data.filename;
+							var reader = new FileReader();
+							//For Browsers other than IE.
+							if (reader.readAsBinaryString) {
+								reader.onload = function(e) {
+									ProcessExcel(e.target.result);
+								};
+								reader.readAsBinaryString(fileUpload.files[0]);
+
+							} else {
+								//For IE Browser.
+								reader.onload = function(e) {
+									var data = "";
+									var bytes = new Uint8Array(e.target.result);
+									for (var i = 0; i < bytes.byteLength; i++) {
+										data += String.fromCharCode(bytes[i]);
+									}
+									ProcessExcel(data);
+								};
+								reader.readAsArrayBuffer(fileUpload.files[0]);
 							}
-							ProcessExcel(data);
-						};
-						reader.readAsArrayBuffer(fileUpload.files[0]);
-					}
+						}
+					});
+
 				} else {
 					alert("This browser does not support HTML5.");
 				}
