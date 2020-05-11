@@ -2,15 +2,7 @@
     error_reporting(0);
 	require 'Database.php';	
 	$db = new MongodbDatabase();
-	if (isset($_POST['data'])) {	
-		/*$header = [];
-		foreach( as $h){ 
-			array_push($header,$h);
-        }*/
-        /*$deletion = [];
-        foreach( as $d){ 
-			array_push($deletion,$d);
-        }*/
+	if (isset($_POST['data'])) {
 		$all = [];
 		foreach($_POST['data'] as $p){
 			$new=[];
@@ -27,7 +19,6 @@
         $uploadData = array(
             'header' => $_POST['data3'],
             'product' => $all,
-            'deletion' => $_POST['data2'],
         );
 		echo json_encode($uploadData);
 	}

@@ -301,7 +301,6 @@
 				method: 'POST',
 				data: {
 					data: newObj,
-					data2: newObj2,
 					data3: headers,
 				},
 				success: function(response) {
@@ -313,8 +312,8 @@
 						$('#setHeaders').css("display", "none");;
 					};
 					product = response.product;
-					deletion = response.deletion;
-					head = response.header;
+					deletion = newObj2,
+					head = headers;
 					console.log(head);
 					console.log(product);
 					console.log(deletion);
