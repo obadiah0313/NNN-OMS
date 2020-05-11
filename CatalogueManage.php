@@ -209,7 +209,7 @@
 						success: function(data) {
 							data = JSON.parse(data);
 							excelfile = data.filename;
-							console.log(excelfile);
+							
 							var reader = new FileReader();
 							//For Browsers other than IE.
 							if (reader.readAsBinaryString) {
@@ -296,15 +296,14 @@
 
 			console.log('-----');
 
-			$.ajax({
+			$.ajax({				
+				url: 'upload.php',
 				method: 'POST',
-				timeout: 500000000,
 				data: {
 					data: newObj,
 					data2: newObj2,
 					data3: headers,
 				},
-				url: 'upload.php',
 				success: function(response) {
 					response = JSON.parse(response);
 					for (var i = 0; i < response.header.length; i++) {
@@ -319,10 +318,6 @@
 					console.log(head);
 					console.log(product);
 					console.log(deletion);
-				},
-				error: function(XMLHttpRequest, textStatus, errorThrown) {
-					alert("Status: " + textStatus);
-					alert("Error: " + errorThrown);
 				}
 			})
 			console.log('-----');
