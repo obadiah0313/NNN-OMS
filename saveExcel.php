@@ -9,4 +9,5 @@ if(!empty($_FILES["file"]["name"]))
 	move_uploaded_file($_FILES["file"]["tmp_name"], $location);
 	echo json_encode(["filename" => $location]);
 }
+else json_encode(["filename" => "Nothing"]);
 ?>

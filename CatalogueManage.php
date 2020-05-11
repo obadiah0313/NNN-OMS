@@ -197,11 +197,10 @@
 			var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx|.xlsm)$/;
 			if (regex.test(fileUpload.value.toLowerCase())) {
 				if (typeof(FileReader) != "undefined") {
-
 					var form_data = new FormData();
 					form_data.append("file", fileUpload.files[0]);
 					$.ajax({
-						url: './saveExcel.php',
+						url: 'saveExcel.php',
 						method: 'POST',
 						data: form_data,
 						contentType: false,
@@ -212,7 +211,7 @@
 							excelfile = data.filename;
 							var reader = new FileReader();
 							//For Browsers other than IE.
-							/*if (reader.readAsBinaryString) {
+							if (reader.readAsBinaryString) {
 								reader.onload = function(e) {
 									ProcessExcel(e.target.result);
 								};
@@ -229,7 +228,7 @@
 									ProcessExcel(data);
 								};
 								reader.readAsArrayBuffer(fileUpload.files[0]);
-							}*/
+							}
 						}
 					});
 
