@@ -128,8 +128,8 @@
 	<?php include './Footer.php'; ?>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-ui.js"></script>
-	<script src="js/xlsx.full.min.js"></script>
-	<script src="js/jszip.js"></script>
+	<!--<script src="js/xlsx.full.min.js"></script>
+	<script src="js/jszip.js"></script>-->
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="Table-Sortable/table-sortable.js"></script>
 	<script>
