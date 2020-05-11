@@ -16,11 +16,11 @@ namespace mysheet
     {
         static void Main(string[] args)
         {
-            var connectionString = new MongoUrl("mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c");
-            //MongoClient dbClient = new MongoClient(connectionString);
-            MongoClient dbClient = new MongoClient();
-            //var database = dbClient.GetDatabase("heroku_0g0g5g6c");
-            var database = dbClient.GetDatabase("NNNdb");
+            var connectionString = new MongoUrl("mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c?replicaSet=rs-ds239009&retryWrites=false");
+            MongoClient dbClient = new MongoClient(connectionString);
+            //MongoClient dbClient = new MongoClient();
+            var database = dbClient.GetDatabase("heroku_0g0g5g6c");
+            //var database = dbClient.GetDatabase("NNNdb");
             var cart = database.GetCollection<BsonDocument>("cart");
             var product_colletion = database.GetCollection<BsonDocument>("stock");
             List<string> header = new List<string>();
