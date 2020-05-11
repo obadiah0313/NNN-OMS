@@ -1,4 +1,11 @@
 <?php
-	exec("https://nnn-oms.herokuapp.com/mysheet/bin/Debug/mysheet.exe 2>&1", $output);
-	print_r($output);
+	function _exec($cmd)
+	{
+	   $WshShell = new COM("WScript.Shell");
+	   $oExec = $WshShell->Run($cmd, 0,false);
+	   echo $cmd;
+	   return $oExec == 0 ? true : false;
+	}
+	exec("/mysheet/bin/Debug/mysheet.exe");
+	//print_r($output);
 ?>
