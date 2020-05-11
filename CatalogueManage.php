@@ -188,7 +188,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#setPrimary').hide();
-		var excelfile ="lol";
+		var excelfile = "";
 		$("body").on("click", "#upload", function() {
 			//Reference the FileUpload element.
 			var fileUpload = $("#fileUpload")[0];
@@ -275,7 +275,7 @@
 					newObj2.push(value);
 				}
 			})
-			
+
 
 			var headers = [];
 			var range = XLSX.utils.decode_range(workbook.Sheets[worksheet]['!ref']);
@@ -297,13 +297,13 @@
 
 			$.ajax({
 				method: 'POST',
-				timeout: 5000000,
+				timeout: 500000000,
 				data: {
 					data: newObj,
 					data2: newObj2,
 					data3: headers,
 				},
-				url: './upload.php',
+				url: 'upload.php',
 				success: function(response) {
 					response = JSON.parse(response);
 					for (var i = 0; i < response.header.length; i++) {
@@ -318,6 +318,10 @@
 					console.log(head);
 					console.log(product);
 					console.log(deletion);
+				},
+				error: function(XMLHttpRequest, textStatus, errorThrown) {
+					alert("Status: " + textStatus);
+					alert("Error: " + errorThrown);
 				}
 			})
 			console.log('-----');
