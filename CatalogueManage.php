@@ -74,7 +74,7 @@
 											foreach($db->fetchProduct() as $header){
 												for($i = 0; $i < sizeof($header['header']); $i++){
 										?>
-										<label><input type="checkbox" class="common_selector cCatheader" value="<?php echo $header['header'][$i]; ?>" <?php if (in_array($header['header'][$i],$cch)) echo "checked";?> > <?php echo $header['header'][$i]; ?></label><br>
+										<label><input type="checkbox" class="common_selector cCatheader" value="<?php echo $header['header'][$i]; ?>" <?php if (in_array($header['header'][$i],$cch)) echo "checked";?>> <?php echo $header['header'][$i]; ?></label><br>
 										<?php	
 									}}
 								?>
@@ -89,7 +89,7 @@
 											foreach($db->fetchProduct() as $header){
 												for($i = 0; $i < sizeof($header['header']); $i++){
 										?>
-										<label><input type="checkbox" class="common_selector cCatfilter" value="<?php echo $header['header'][$i]; ?>" <?php if (in_array($header['header'][$i],$ccf)) echo "checked";?>  > <?php echo $header['header'][$i]; ?></label><br>
+										<label><input type="checkbox" class="common_selector cCatfilter" value="<?php echo $header['header'][$i]; ?>" <?php if (in_array($header['header'][$i],$ccf)) echo "checked";?>> <?php echo $header['header'][$i]; ?></label><br>
 										<?php	
 									}}
 						?>
@@ -114,7 +114,7 @@
 											foreach($db->fetchProduct() as $header){
 												for($i = 0; $i < sizeof($header['header']); $i++){
 										?>
-										<label><input type="checkbox" class="common_selector pCatheader" value="<?php echo $header['header'][$i]; ?>" <?php if (in_array($header['header'][$i],$pch)) echo "checked";?>  > <?php echo $header['header'][$i]; ?></label><br>
+										<label><input type="checkbox" class="common_selector pCatheader" value="<?php echo $header['header'][$i]; ?>" <?php if (in_array($header['header'][$i],$pch)) echo "checked";?>> <?php echo $header['header'][$i]; ?></label><br>
 										<?php	
 									}}
 						?>
@@ -129,7 +129,7 @@
 											foreach($db->fetchProduct() as $header){
 												for($i = 0; $i < sizeof($header['header']); $i++){
 										?>
-										<label><input type="checkbox" class="common_selector pCatfilter" value="<?php echo $header['header'][$i]; ?>" <?php if (in_array($header['header'][$i],$pcf)) echo "checked";?>  > <?php echo $header['header'][$i]; ?></label><br>
+										<label><input type="checkbox" class="common_selector pCatfilter" value="<?php echo $header['header'][$i]; ?>" <?php if (in_array($header['header'][$i],$pcf)) echo "checked";?>> <?php echo $header['header'][$i]; ?></label><br>
 										<?php	
 									}}
 						?>
@@ -154,7 +154,7 @@
 											foreach($db->fetchProduct() as $header){
 												for($i = 0; $i < sizeof($header['header']); $i++){
 										?>
-										<label><input type="checkbox" class="common_selector cartHeader" value="<?php echo $header['header'][$i]; ?>" <?php if (in_array($header['header'][$i],$ch)) echo "checked";?>  > <?php echo $header['header'][$i]; ?></label><br>
+										<label><input type="checkbox" class="common_selector cartHeader" value="<?php echo $header['header'][$i]; ?>" <?php if (in_array($header['header'][$i],$ch)) echo "checked";?>> <?php echo $header['header'][$i]; ?></label><br>
 										<?php	
 									}
 								}
@@ -192,33 +192,33 @@
 		$("body").on("click", "#upload", function() {
 			//Reference the FileUpload element.
 			var fileUpload = $("#fileUpload")[0];
-			
+			var form_data = new FormData();
+			form_data.append("file", fileUpload.files[0]);
+			$.ajax({
+				url: './saveExcel.php',
+				method: 'POST',
+				data: form_data,
+				contentType: false,
+				cache: false,
+				processData: false,
+				success: function(data) {
+					data = JSON.parse(data);
+					file = data.filename;
+				}
+			});
+
 			//Validate whether File is valid Excel file.
 			var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx|.xlsm)$/;
 			if (regex.test(fileUpload.value.toLowerCase())) {
 				if (typeof(FileReader) != "undefined") {
 					var reader = new FileReader();
-					
+
 					//For Browsers other than IE.
 					if (reader.readAsBinaryString) {
 						reader.onload = function(e) {
 							ProcessExcel(e.target.result);
 						};
 						reader.readAsBinaryString(fileUpload.files[0]);
-						var form_data = new FormData();
-						form_data.append("file", fileUpload.files[0]);
-						$.ajax({
-							url:'./saveExcel.php',
-							method:'POST',
-							data:form_data,
-							contentType:false,
-							cache:false,
-							processData:false,
-							success:function(data){
-								data = JSON.parse(data);
-								file = data.filename;
-							}
-						});
 					} else {
 						//For IE Browser.
 						reader.onload = function(e) {
@@ -239,9 +239,9 @@
 			}
 
 		});
-		var product,deletion,head;
-		
-		function ProcessExcel(data,filename) {
+		var product, deletion, head;
+
+		function ProcessExcel(data, filename) {
 			//Read the Excel File data.
 			var workbook = XLSX.read(data, {
 				type: 'binary'
@@ -255,7 +255,9 @@
 			}
 
 			//Read all rows from First Sheet into an JSON array.
-			var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[worksheet], {raw:false});
+			var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[worksheet], {
+				raw: false
+			});
 			var newObj = [];
 			$.each(excelRows, function(index, value) {
 				if (value.hasOwnProperty("Product Code")) {
@@ -304,11 +306,11 @@
 				url: './upload.php',
 				success: function(response) {
 					response = JSON.parse(response);
-					for(var i = 0 ; i < response.header.length ; i++){
-						var li = $('<label><input type="radio" name="key" value="'+response.header[i]+'"/>' + response.header[i] + '</label><br>');
-						  $('#headerlist').append(li);
-						  $('#setPrimary').css("display", "block");
-						  $('#setHeaders').css("display", "none");;
+					for (var i = 0; i < response.header.length; i++) {
+						var li = $('<label><input type="radio" name="key" value="' + response.header[i] + '"/>' + response.header[i] + '</label><br>');
+						$('#headerlist').append(li);
+						$('#setPrimary').css("display", "block");
+						$('#setHeaders').css("display", "none");;
 					};
 					product = response.product;
 					deletion = response.deletion;
@@ -317,7 +319,7 @@
 			})
 			console.log('-----');
 		};
-		
+
 		function save_setting() {
 			var action = 'save_setting';
 			var cCatheader = get_setting('cCatheader');
@@ -351,7 +353,7 @@
 			save_setting();
 		});
 
-		$('body').on("click","#btnConfirm", function() {
+		$('body').on("click", "#btnConfirm", function() {
 			var pk = $("input[name='key']:checked").val();
 			$.ajax({
 				method: 'POST',
@@ -360,7 +362,7 @@
 					data2: deletion,
 					data3: head,
 					data4: file,
-					primarykey: pk,			
+					primarykey: pk,
 				},
 				url: './ubackend.php',
 				success: function(response) {
