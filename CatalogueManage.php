@@ -210,6 +210,7 @@
 						success: function(data) {
 							data = JSON.parse(data);
 							file = data.filename;
+							alert(file);
 							var reader = new FileReader();
 							//For Browsers other than IE.
 							if (reader.readAsBinaryString) {
