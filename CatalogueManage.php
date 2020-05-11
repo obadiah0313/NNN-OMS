@@ -275,6 +275,7 @@
 					newObj2.push(value);
 				}
 			})
+			
 
 			var headers = [];
 			var range = XLSX.utils.decode_range(workbook.Sheets[worksheet]['!ref']);
