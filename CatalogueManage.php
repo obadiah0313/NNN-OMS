@@ -209,6 +209,7 @@
 						success: function(data) {
 							data = JSON.parse(data);
 							excelfile = data.filename;
+							console.log(excelfile);
 							var reader = new FileReader();
 							//For Browsers other than IE.
 							if (reader.readAsBinaryString) {

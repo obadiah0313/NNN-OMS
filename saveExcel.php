@@ -6,7 +6,7 @@ if(!empty($_FILES["file"]["name"]))
 		chmod($location, 0755);
 		unlink($location);
 	}
-	move_uploaded_file($_FILES["file"]["tmp_name"], $location);
-	echo json_encode(["filename" => $location]);
+	if(move_uploaded_file($_FILES["file"]["tmp_name"], $location))
+		echo json_encode(["filename" => $_FILES["file"]["name"]]);
 }
 ?>
