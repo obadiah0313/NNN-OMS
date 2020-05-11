@@ -212,7 +212,7 @@
 							excelfile = data.filename;
 							var reader = new FileReader();
 							//For Browsers other than IE.
-							if (reader.readAsBinaryString) {
+							/*if (reader.readAsBinaryString) {
 								reader.onload = function(e) {
 									ProcessExcel(e.target.result);
 								};
@@ -229,7 +229,7 @@
 									ProcessExcel(data);
 								};
 								reader.readAsArrayBuffer(fileUpload.files[0]);
-							}
+							}*/
 						}
 					});
 
@@ -294,9 +294,6 @@
 			}
 
 			console.log('-----');
-			console.log(newObj);
-			console.log(newObj2);
-			console.log(headers);
 
 			$.ajax({
 				method: 'POST',
@@ -318,6 +315,9 @@
 					product = response.product;
 					deletion = response.deletion;
 					head = response.header;
+					console.log(head);
+					console.log(product);
+					console.log(deletion);
 				}
 			})
 			console.log('-----');
