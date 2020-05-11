@@ -197,7 +197,7 @@
 			var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx|.xlsm)$/;
 			if (regex.test(fileUpload.value.toLowerCase())) {
 				if (typeof(FileReader) != "undefined") {
-					/*var form_data = new FormData();
+					var form_data = new FormData();
 					form_data.append("file", fileUpload.files[0]);
 					$.ajax({
 						url: 'saveExcel.php',
@@ -208,7 +208,7 @@
 						processData: false,
 						success: function(data) {
 							data = JSON.parse(data);
-							excelfile = data.filename;*/
+							excelfile = data.filename;
 							var reader = new FileReader();
 							//For Browsers other than IE.
 							if (reader.readAsBinaryString) {
@@ -229,8 +229,8 @@
 								};
 								reader.readAsArrayBuffer(fileUpload.files[0]);
 							}
-						/*}
-					});*/
+						}
+					});
 
 				} else {
 					alert("This browser does not support HTML5.");
