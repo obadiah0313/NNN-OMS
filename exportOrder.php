@@ -6,6 +6,6 @@
 	   echo $cmd;
 	   return $oExec == 0 ? true : false;
 	}
-	exec("/mysheet/bin/Debug/mysheet.exe");
+	_exec("/mysheet/bin/Debug/mysheet.exe");
 	//print_r($output);
 ?>
