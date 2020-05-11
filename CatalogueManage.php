@@ -200,6 +200,26 @@
 
 					var form_data = new FormData();
 					form_data.append("file", fileUpload.files[0]);
+					var reader = new FileReader();
+					//For Browsers other than IE.
+					if (reader.readAsBinaryString) {
+						reader.onload = function(e) {
+							ProcessExcel(e.target.result);
+						};
+						reader.readAsBinaryString(fileUpload.files[0]);
+
+					} else {
+						//For IE Browser.
+						reader.onload = function(e) {
+							var data = "";
+							var bytes = new Uint8Array(e.target.result);
+							for (var i = 0; i < bytes.byteLength; i++) {
+								data += String.fromCharCode(bytes[i]);
+							}
+							ProcessExcel(data);
+						};
+						reader.readAsArrayBuffer(fileUpload.files[0]);
+					}
 					$.ajax({
 						url: './saveExcel.php',
 						method: 'POST',
@@ -210,26 +230,7 @@
 						success: function(data) {
 							data = JSON.parse(data);
 							excelfile = data.filename;
-							var reader = new FileReader();
-							//For Browsers other than IE.
-							if (reader.readAsBinaryString) {
-								reader.onload = function(e) {
-									ProcessExcel(e.target.result);
-								};
-								reader.readAsBinaryString(fileUpload.files[0]);
 
-							} else {
-								//For IE Browser.
-								reader.onload = function(e) {
-									var data = "";
-									var bytes = new Uint8Array(e.target.result);
-									for (var i = 0; i < bytes.byteLength; i++) {
-										data += String.fromCharCode(bytes[i]);
-									}
-									ProcessExcel(data);
-								};
-								reader.readAsArrayBuffer(fileUpload.files[0]);
-							}
 						}
 					});
 
