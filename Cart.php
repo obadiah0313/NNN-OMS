@@ -2,7 +2,7 @@
 	require 'Database.php';
 	$db = new MongodbDatabase();
 	$pk = $db->getPrimaryKey();
-	$uid="001";
+	$uid=  $_SESSION['_id'];
 	$count = 0;
 	$total = 0;
 	$empty = true;

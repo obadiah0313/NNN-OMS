@@ -7,7 +7,7 @@
 	if($_GET['update'] === 'remove'){ 
 		if(isset($_POST['action'])){
 			$result = $_POST['item'];
-			$uid = "001";
+			$uid =  $_SESSION['_id'];
 			$new=[];
 			foreach($db->loadCart($uid) as $cart) {
 				foreach(iterator_to_array($cart['carts']) as $k=>$v){
@@ -22,7 +22,7 @@
 	else if($_GET['update'] === 'decrease'){ 
 		if(isset($_POST['action'])){ var_dump($_POST['id']);
 			$id = $_POST['id'];
-			$uid = "001";
+			$uid =  $_SESSION['_id'];
 			$new=[];
 			foreach($db->loadCart($uid) as $cart) {
 				foreach(iterator_to_array($cart['carts']) as $k=>$v){
@@ -40,7 +40,7 @@
 	else if($_GET['update'] === 'increase'){ 
 		if(isset($_POST['action'])){
 			$id = $_POST['id'];
-			$uid = "001";
+			$uid =  $_SESSION['_id'];
 			$new=[];
 			foreach($db->loadCart($uid) as $cart) {
 				foreach(iterator_to_array($cart['carts']) as $k=>$v){
