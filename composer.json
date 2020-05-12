@@ -12,7 +12,7 @@
 		"compile": [
 			"chmod -R 777 Product_List/",
 			"chmod -R 777 mysheet/bin/Debug/",
-			"chmod -R 777 public/",
+			"chmod -R 777 public/"
 			]
 	}
 	
