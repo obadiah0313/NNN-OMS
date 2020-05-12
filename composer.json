@@ -8,8 +8,11 @@
 	"require-dev": {
 		"heroku/heroku-buildpack-php": "*"
 	},
-	"post-install-cmd": [
-     "chmod -R 777 Product_List/",
-     "chmod -R 777 mysheet/"
- ]
+	"scripts" : {
+		"compile": [
+			"chmod -R 777 Product_List/",
+			"chmod -R 777 mysheet/"
+			]
+	}
+	
 }
