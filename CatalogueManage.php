@@ -374,14 +374,14 @@
 							url: 'ubackend.php?doc=deletion',
 							success: function(response) {
 								response = JSON.parse(response);
+								$("body").overhang({
+									type: response.type,
+									message: response.msg,
+									callback: function() {
+										document.location.reload();
+									}
+								});
 							}
-							$("body").overhang({
-								type: response.type,
-								message: response.msg,
-								callback: function() {
-									document.location.reload();
-								}
-							});
 						});
 					}
 				}
