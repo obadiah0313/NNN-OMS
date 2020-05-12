@@ -27,17 +27,17 @@
 			$primary_key = $_POST['primarykey'];
 			if ($db->checkExists() != null) {
 				$db->replaceStock(date("Y-m-d"),$all,$header,$primary_key,$filename);
-				echo json_encode(["stock" => "success"]);
+				echo json_encode(["stock" => "replace"]);
 			}
 			else{
 				$db->insertStock(date("Y-m-d"),$all,$header,$primary_key,$filename);
-				echo json_encode(["stock" => "success"]);
+				echo json_encode(["stock" => "insert"]);
 			}
 		}
 	}
 	if($_GET['doc'] == 'deletion')
 	{	
-		if ($db->checkExists() != null) {
+		if($_POST['process'] == "replace"){
 			$db->replaceDeletion(date("Y-m-d"),$_POST['data2']);
 			echo json_encode(["type" => "success", "msg" => "Replaced successfully!"]);
 		}

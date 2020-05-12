@@ -365,25 +365,24 @@
 				url: 'ubackend.php?doc=stock',
 				success: function(response) {
 					response = JSON.parse(response);
-					if (response.stock == "success") {
-						$.ajax({
-							method: 'POST',
-							data: {
-								data2: deletion
-							},
-							url: 'ubackend.php?doc=deletion',
-							success: function(response) {
-								response = JSON.parse(response);
-								$("body").overhang({
-									type: response.type,
-									message: response.msg,
-									callback: function() {
-										document.location.reload();
-									}
-								});
-							}
-						});
-					}
+					$.ajax({
+						method: 'POST',
+						data: {
+							process: response.stock,
+							data2: deletion
+						},
+						url: 'ubackend.php?doc=deletion',
+						success: function(data) {
+							data = JSON.parse(data);
+							$("body").overhang({
+								type: data.type,
+								message: data.msg,
+								callback: function() {
+									document.location.reload();
+								}
+							});
+						}
+					});
 				}
 			});
 		});
