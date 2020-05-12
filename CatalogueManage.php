@@ -352,7 +352,7 @@
 			save_setting();
 		});
 
-		$('body').on("click", "#btnConfirm", function() {
+		$(document).on("click", "#btnConfirm", function() {
 			var pk = $("input[name='key']:checked").val();
 			$.ajax({
 				method: 'POST',
