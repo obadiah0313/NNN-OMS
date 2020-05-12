@@ -2,11 +2,7 @@
 error_reporting(0);
 if(!empty($_FILES["file"]["name"]))
 {   
-	$dir = "productList";
-	if( is_dir($dir) === false )
-	{
-		mkdir($dir,0777, true);
-	}
+	$dir = "Product_List";
 	$path = $dir.'/'.$_FILES["file"]["name"];
 	if(!file_exists($path)) {
 		chmod($path, 0755);

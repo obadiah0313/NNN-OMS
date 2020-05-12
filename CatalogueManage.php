@@ -294,8 +294,6 @@
 				headers.push(hdr);
 			}
 
-			console.log('-----');
-
 			$.ajax({				
 				url: 'upload.php',
 				method: 'POST',
@@ -319,7 +317,6 @@
 					console.log(deletion);
 				}
 			})
-			console.log('-----');
 		};
 
 		function save_setting() {
@@ -366,7 +363,7 @@
 					data4: excelfile,
 					primarykey: pk,
 				},
-				url: './ubackend.php',
+				url: 'ubackend.php',
 				success: function(response) {
 					response = JSON.parse(response);
 					$("body").overhang({
