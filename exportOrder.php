@@ -1,4 +1,4 @@
 <?php
-	exec("/path/to/exportExcel -f /path/to/exportExcel.exe",$out);
+	exec("index.php",$out);
 	var_dump($out);
 ?>
