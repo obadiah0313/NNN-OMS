@@ -1,4 +1,4 @@
 <?php
-	exec("ls -al" , $out);
+	exec("ls mysheet/bin/Debug -al" , $out);
 	var_dump($out);
 ?>
