@@ -3,8 +3,8 @@
 	$db = new MongodbDatabase();
 	if($_GET['doc'] == 'stock')
 	{
-		if (isset($_POST['product'])) {
-			$all = [];
+		if (isset($_POST['product']) && isset($_POST['header']) && isset($_POST['primarykey']) && isset($_POST['filename'])) {
+			/*$all = [];
 			foreach($_POST['product'] as $p){
 				$new=[];
 				foreach($p as $k=>$v){
@@ -16,7 +16,7 @@
 					}
 				}
 				array_push($all, $new);
-			}
+			}*/
 			if ($db->checkExists() != null) {
 				$db->replaceStock(date("Y-m-d"),$all,$_POST['header'],$_POST['primarykey'],$_POST['filename']);
 				echo json_encode(["stock" => "replace"]);
