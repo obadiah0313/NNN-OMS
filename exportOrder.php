@@ -1,5 +1,5 @@
 <?php
-	exec("mysheet/bin/Debug/mysheet.exe",$out,$return);
+	exec("mysheet.exe",$out,$return);
 	if (!$return) {
     echo "Excel Created Successfully";
 	} else {
