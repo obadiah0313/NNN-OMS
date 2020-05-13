@@ -1,3 +1,3 @@
 <?php
-	echo realpath("mysheet.exe");
+	exec($cmd . " > /path/to/file &");
 ?>
