@@ -357,9 +357,9 @@
 			$.ajax({
 				method: 'POST',
 				data: {
-					data: product,
-					data3: head,
-					data4: excelfile,
+					product: product,
+					header: head,
+					filename: excelfile,
 					primarykey: pk,
 				},
 				url: 'ubackend.php?doc=stock',
@@ -369,7 +369,7 @@
 						method: 'POST',
 						data: {
 							process: response.stock,
-							data2: deletion
+							deletion: deletion
 						},
 						url: 'ubackend.php?doc=deletion',
 						success: function(data) {

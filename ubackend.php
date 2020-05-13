@@ -1,36 +1,28 @@
 <?php
-	//session_start();
-	//error_reporting(0);
 	require './Database.php';	
 	$db = new MongodbDatabase();
 	if($_GET['doc'] == 'stock')
 	{
-		if (isset($_POST['data'])) {	
-			$header = [];
-			foreach($_POST['data3'] as $h){ 
-				array_push($header,$h);
-			}
+		if (isset($_POST['product'])) {
 			$all = [];
-			foreach($_POST['data'] as $p){
+			foreach($_POST['product'] as $p){
 				$new=[];
 				foreach($p as $k=>$v){
 					$new[$k] = $v;
 				}
-				for($i = 0 ; $i < sizeof($header); $i++){
-					if(!array_key_exists($header[$i], $p)){
-						$new[$header[$i]] = '-';
+				for($i = 0 ; $i < sizeof($_POST['header']); $i++){
+					if(!array_key_exists($_POST['header'][$i], $p)){
+						$new[$_POST['header'][$i]] = '-';
 					}
 				}
 				array_push($all, $new);
 			}
-			$filename = $_POST['data4'];
-			$primary_key = $_POST['primarykey'];
 			if ($db->checkExists() != null) {
-				$db->replaceStock(date("Y-m-d"),$all,$header,$primary_key,$filename);
+				$db->replaceStock(date("Y-m-d"),$all,$_POST['header'],$_POST['primarykey'],$_POST['filename']);
 				echo json_encode(["stock" => "replace"]);
 			}
 			else{
-				$db->insertStock(date("Y-m-d"),$all,$header,$primary_key,$filename);
+				$db->insertStock(date("Y-m-d"),$all,$_POST['header'],$_POST['primarykey'],$_POST['filename']);
 				echo json_encode(["stock" => "insert"]);
 			}
 		}
@@ -38,11 +30,11 @@
 	if($_GET['doc'] == 'deletion')
 	{	
 		if($_POST['process'] == "replace"){
-			$db->replaceDeletion(date("Y-m-d"),$_POST['data2']);
+			$db->replaceDeletion(date("Y-m-d"),$_POST['deletion']);
 			echo json_encode(["type" => "success", "msg" => "Replaced successfully!"]);
 		}
 		else {
-			$db->insertDeletion(date("Y-m-d"),$_POST['data2']);
+			$db->insertDeletion(date("Y-m-d"),$_POST['deletion']);
 			echo json_encode(["type" => "success", "msg" => "Insert successfully!"]);
 		}
 		
