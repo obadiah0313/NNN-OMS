@@ -1,3 +1,3 @@
 <?php
-	exec($cmd . " > /path/to/file &");
+	exec("ls -al");
 ?>
