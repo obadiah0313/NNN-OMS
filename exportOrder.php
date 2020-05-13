@@ -1,3 +1,4 @@
 <?php
-	exec("ls -al");
+	exec("ls -al" , $out);
+	var_dump($out);
 ?>
