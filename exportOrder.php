@@ -4,5 +4,7 @@
     echo "Excel Created Successfully";
 	} else {
 		echo "Excel not created";
+		var_dump($out);
+		var_dump($retuen);
 	}
 ?>
