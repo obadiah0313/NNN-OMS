@@ -1,10 +1,4 @@
 <?php
-	exec("/exportExcel/exportExcel.exe",$out,$return);
-	if (!$return) {
-    echo "Excel Created Successfully";
-	} else {
-		echo "Excel not created";
-		var_dump($out);
-		var_dump($retuen);
-	}
+	exec("/path/to/exportExcel -f /path/to/exportExcel.exe",$out);
+	var_dump($out);
 ?>
