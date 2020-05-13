@@ -1,5 +1,5 @@
 <?php
 	$output = array();
-	exec("/mysheet/bin/Debug/mysheet.exe 2>&1", $output);
+	exec("cd /mysheet/bin/Debug/ ls -al 2>&1", $output);
 	var_dump($output);
 ?>
