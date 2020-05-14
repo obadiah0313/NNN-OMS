@@ -5,7 +5,6 @@
 	{
 		if (isset($_POST['product']) && isset($_POST['header']) && isset($_POST['primarykey']) && isset($_POST['filename']))
 		{
-			var_dump($_POST['filename']);
 			if ($db->checkExists() != null) {
 				$db->replaceStock(date("Y-m-d"),$all,$_POST['header'],$_POST['primarykey'],$_POST['filename']);
 				echo json_encode(["stock" => "replace"]);
