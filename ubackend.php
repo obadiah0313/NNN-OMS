@@ -6,28 +6,25 @@
 		if (isset($_POST['product']) && isset($_POST['header']) && isset($_POST['primarykey']) && isset($_POST['filename']))
 		{
 			var_dump($_POST['filename']);
-			/*if ($db->checkExists() != null) {
+			if ($db->checkExists() != null) {
 				$db->replaceStock(date("Y-m-d"),$all,$_POST['header'],$_POST['primarykey'],$_POST['filename']);
 				echo json_encode(["stock" => "replace"]);
 			}
 			else{
 				$db->insertStock(date("Y-m-d"),$all,$_POST['header'],$_POST['primarykey'],$_POST['filename']);
 				echo json_encode(["stock" => "insert"]);
-			}*/
+			}
 		}
-		else echo json_encode(["stock" => "fail"]);
 	}
 	if($_GET['doc'] == 'deletion')
 	{	
-		var_dump($_POST['deletion']);
-		/*if($_POST['process'] == "replace"){
+		if($_POST['process'] == "replace"){
 			$db->replaceDeletion(date("Y-m-d"),$_POST['deletion']);
 			echo json_encode(["type" => "success", "msg" => "Replaced successfully!"]);
 		}
 		else {
 			$db->insertDeletion(date("Y-m-d"),$_POST['deletion']);
 			echo json_encode(["type" => "success", "msg" => "Insert successfully!"]);
-		}*/
-		
+		}		
 	}
 ?>
