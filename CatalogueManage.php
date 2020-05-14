@@ -355,8 +355,8 @@
 		$(document).on("click", "#btnConfirm", function() {
 			var pk = $("input[name='key']:checked").val();
 			alert(pk);
-			alert(size.length);
-			alert(product.length);
+			console.log(head);
+			console.log(product);;
 			alert(excelfile);
 			$.ajax({
 				method: 'POST',
