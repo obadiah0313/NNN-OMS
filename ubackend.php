@@ -15,6 +15,7 @@
 				echo json_encode(["stock" => "insert"]);
 			}*/
 		}
+		else echo json_encode(["stock" => "fail"]);
 	}
 	if($_GET['doc'] == 'deletion')
 	{	
