@@ -14,7 +14,8 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8">	
+	<link rel="icon" href="img/neko.png">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/overhang.min.css">
 	<link rel="stylesheet" href="css/style.css">
@@ -312,9 +313,6 @@
 					product = response.product;
 					deletion = newObj2,
 						head = headers;
-					console.log(head);
-					console.log(product);
-					console.log(deletion);
 				}
 			})
 		};
@@ -354,10 +352,6 @@
 
 		$(document).on("click", "#btnConfirm", function() {
 			var pk = $("input[name='key']:checked").val();
-			alert(pk);
-			console.log(head);
-			console.log(product);;
-			alert(excelfile);
 			$.ajax({
 				method: 'POST',
 				data: {

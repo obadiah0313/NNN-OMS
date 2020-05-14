@@ -1,4 +1,11 @@
 <?php
-	exec("/exportExcel/exportExcel.exe",$out);
-	var_dump($out);
+	function execInBackground() {
+		if (substr(php_uname(), 0, 7) == "Windows"){
+			pclose(popen('start /B exportExcel\exportExcel.exe', 'r')); 
+		}
+		else {
+			exec("exportxcel/exportExcel.exe > /dev/null &");  
+		}
+	}
+	execInBackground();
 ?>
