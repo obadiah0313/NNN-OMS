@@ -66,7 +66,7 @@
 		/*Upload Data -- Stock & Deletion*/
 		/*********************************/
 		public function checkExists(){
-			return $this->collect->countDocuments(['date' => date("Y-m-d")]);
+			return $this->collect->findOne(['date' => date("Y-m-d")]);
 		}
 		
 		public function replaceStock($date, $product, $header, $primarykey, $file){
