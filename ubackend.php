@@ -1,6 +1,7 @@
 <?php
 	require './Database.php';	
 	$db = new MongodbDatabase();
+echo date("Y-m-d");
 	if($_GET['doc'] == 'stock')
 	{
 		if (isset($_POST['product']) && isset($_POST['header']) && isset($_POST['primarykey']) && isset($_POST['filename']))
