@@ -14,7 +14,7 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">	
+	<meta charset="UTF-8">
 	<link rel="icon" href="img/neko.png">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/overhang.min.css">
@@ -210,6 +210,10 @@
 						success: function(data) {
 							data = JSON.parse(data);
 							excelfile = data.filename;
+							$("body").overhang({
+								type: "info",
+								message: "Saving Excel...Please Wait",
+							});
 
 							var reader = new FileReader();
 							//For Browsers other than IE.
@@ -351,6 +355,10 @@
 		});
 
 		$(document).on("click", "#btnConfirm", function() {
+			$("body").overhang({
+				type: "info",
+				message: "Upload in progress...Please Wait",
+			});
 			var pk = $("input[name='key']:checked").val();
 			$.ajax({
 				method: 'POST',
