@@ -4,7 +4,7 @@
 			pclose(popen('start /B exportExcel\exportExcel.exe', 'r')); 
 		}
 		else {
-			exec("exporExcel/exportExcel.exe > /dev/null &");  
+			exec("sudo exporExcel/exportExcel.exe > /dev/null &");  
 		}
 	}
 	execInBackground();
