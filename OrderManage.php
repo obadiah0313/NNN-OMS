@@ -259,13 +259,10 @@
 			});
 
 			$(document).on('click', '#btnExport', function() {
-				var action = "write"
 				$.ajax({
 					url: './exportOrder.php',
 					method: "POST",
-					data: {
-						action: action,
-					},
+					data: {},
 					success: function(response) {
 					}
 				});
