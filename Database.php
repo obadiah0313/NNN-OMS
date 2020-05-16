@@ -5,13 +5,13 @@
 		//Constructor
 		public function __construct(){
 			try {
-				//$this->client = new MongoDB\Client();
-				$this->client = new MongoDB\Client('mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c?replicaSet=rs-ds239009&retryWrites=false');
+				$this->client = new MongoDB\Client();
+				//$this->client = new MongoDB\Client('mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c?replicaSet=rs-ds239009&retryWrites=false');
 			}catch (MongoConnectionException $e) {
 				die('Error connecting to MongoDB server');
 			}
-			//$this->db = $this->client->NNNdb;
-			$this->db = $this->client->heroku_0g0g5g6c;
+			$this->db = $this->client->NNNdb;
+			//$this->db = $this->client->heroku_0g0g5g6c;
 			$this->collect = $this->db->selectCollection('stock');
 			$this->deletion = $this->db->selectCollection('deletion');
 			$this->user = $this->db->selectCollection('user');
@@ -151,7 +151,7 @@
 		}
 		
 		public function removeOrder($oid) {
-			$this->cart->deleteOne(['_id' => $oid]);
+			$this->cart->deleteOne(['_id' => new MongoDB\BSON\ObjectID($oid)]);
 		}
 		/******************/
 		/*Get Filter value*/
@@ -189,6 +189,10 @@
         
         public function updateUserStatus($_id, $status){
 			$this->user->updateOne(['_id' => $_id], ['$set' =>['status' => $status]]);
+		}
+		
+		public function getUserName($_id) {
+			return $this->user->findOne(['_id' => $_id],['projection' => ['fullname' => 1]]);
 		}
 	}
 	

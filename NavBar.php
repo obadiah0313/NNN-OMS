@@ -85,7 +85,7 @@
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 							<a class="dropdown-item" href="./Profile.php">My Profile</a>
-							<a class="dropdown-item" href="#">Order History</a>
+							<a class="dropdown-item" href="orderHistory.php">Order History</a>
 							<a class="dropdown-item" href="./logout.php">Logout</a>
 						</div>
 					</li>';} 

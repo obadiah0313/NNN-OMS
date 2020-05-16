@@ -1,4 +1,5 @@
 <?php 
+	session_start();
 	require './Database.php';
 	$db = new MongodbDatabase();
 	foreach($db->getSetting() as $stt){
@@ -244,7 +245,7 @@
 					data: {},
 					success: function(response) {
 						showTable(response);
-						$(document).on('click','#btnDetails', function() {
+						$(document).on('click', '#btnDetails', function() {
 							var id = $(this).val();
 							$.each(JSON.parse(response), function(index, value) {
 								var regex = />(.*)</;
@@ -296,12 +297,24 @@
 					},
 					success: function(data) {
 						data = JSON.parse(data);
-						$("body").overhang({
-							type: data.type,
-							message: data.msg
-						});
+						if (data.type == "success") {
+							$("body").overhang({
+								type: data.type,
+								message: data.msg
+							});
+						} else {
+							$("body").overhang({
+								type: data.type,
+								message: data.msg,
+								callback: function() {
+									document.location.href= "Login.php";
+								}
+
+							});
+						}
 					}
 				});
+
 
 			});
 		});

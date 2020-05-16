@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -7,16 +8,24 @@
 	<title>Document</title>
 </head>
 
-<body>
-<?php
+<body class="bg">
+	<?php
 	include './NavBar.php';
 ?>
 	<div class="page-container">
-		<h3 class="text-center">Deletion Stock</h3>
-		<h6 class="text-center text-danger">Please note that these deletions are correct for the main GW business in UK. Some local warehouses may still carry stock of these items until they have sold through</h6>
-		<h6 class="text-center text-danger">Also, some items will come back into the Trade Range if the sales warrant bringing them back due to their popularity</h6>
-		<h6 class="text-center text-danger">Products that are repackaged or change from hard cover to soft cover - the new stock will be sent to you once the old stock has sold through </h6>
-			<div class="row mt-5 mb-3 align-items-center">
+		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
+			<div class="col-12 py-3">
+				<div class="text-center">
+					<h3 class="text-center">Deletion Stock</h3>
+					<h6 class="text-center text-danger">Please note that these deletions are correct for the main GW business in UK. Some local warehouses may still carry stock of these items until they have sold through</h6>
+					<h6 class="text-center text-danger">Also, some items will come back into the Trade Range if the sales warrant bringing them back due to their popularity</h6>
+					<h6 class="text-center text-danger">Products that are repackaged or change from hard cover to soft cover - the new stock will be sent to you once the old stock has sold through </h6>
+				</div>
+			</div>
+		</div>
+		<div class="row py-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
+		<div class="col-12">
+			<div class="row align-items-center">
 				<div class="col-md-3">
 					<input type="text" class="form-control" placeholder="Search in table..." id="searchField">
 				</div>
@@ -35,7 +44,10 @@
 				</div>
 			</div>
 			<div id="root"></div>
+			</div>
 		</div>
+	</div>
+	<?php include 'Footer.php';?>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="Table-Sortable/table-sortable.js"></script>

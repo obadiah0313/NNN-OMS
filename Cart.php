@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	require 'Database.php';
 	$db = new MongodbDatabase();
 	$pk = $db->getPrimaryKey();
@@ -224,14 +225,12 @@
 			$(document).on('click', '.chkout-btn', function() {
 				var remarks = $('#remarks').val();
 				var action = 'checkout';
-				var uid = "<?php echo $uid; ?>";
 				$.ajax({
 					url: './checkout.php',
 					method: "POST",
 					data: {
 						action: action,
 						remark: remarks,
-						uid : uid
 					},
 					success: function(data) {
 						data = JSON.parse(data);

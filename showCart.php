@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	error_reporting(0);
 	require 'Database.php';
 	$db = new MongodbDatabase();
@@ -54,7 +55,7 @@
 			$db->updateCart($uid, $new);
 		}
 	}
-		$uid="001";
+		$uid=$_SESSION['_id'];
 		foreach($db->fetchProduct() as $cl) {
 			foreach($cl['products'] as $k=>$v){
 				foreach($v as $ke=>$val){
