@@ -4,7 +4,7 @@
 			pclose(popen('start /B exportOrder\exportExcel.exe', 'r')); 
 		}
 		else {
-			exec("/exporOrder/linux-x64/exportExcel > /dev/null &");  
+			exec("/exporOrder/linux-x64/exportExcel.dll > /dev/null &");  
 		}
 	}
 	execInBackground();
