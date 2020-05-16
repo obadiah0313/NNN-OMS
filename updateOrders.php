@@ -10,9 +10,9 @@
 				foreach($_POST['orders'] as $o)
 					$db->updateOrder($o, "completed");
 				break;
-			case "process":
+			case "confirm":
 				foreach($_POST['orders'] as $o)
-					$db->updateOrder($o, "processing");
+					$db->updateOrder($o, "confirmed");
 				break;
 			case "remove":
 				foreach($_POST['orders'] as $o)

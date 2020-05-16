@@ -139,7 +139,8 @@
 			return $this->cart->find([
 				'$or' => [
 					['status' => "pending"],
-					['status' => "processing"]
+					['status' => "processing"],
+					['status' => "confirmed"]
 				]
 			]);
 		}

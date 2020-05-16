@@ -6,7 +6,7 @@
 	$countItems = 0;
 	$o = $db->loadOrder();
 	foreach($o as $order){
-		if($order['status'] == "pending"){
+		if($order['status'] == "confirmed"){
 			$countOrder++;
 			foreach($order['carts'] as $key=>$value){
 				$countItems += $value;
@@ -75,7 +75,7 @@
 						<button class="button allBtn item" id="btnComplete" value="'.$order['oid'].'">Complete <i class="far fa-check-circle"></i></button>
 					</div>
 					<div class="col-auto">
-						<button class="button allBtn item" id="btnProcess" value="'.$order['oid'].'">Process <i class="fas fa-sync-alt"></i></button>
+						<button class="button allBtn item" id="btnConfirm" value="'.$order['oid'].'">Confirm <i class="fas fa-sync-alt"></i></button>
 					</div>
 					<div class="col">
 						<button class="button allBtn item" id="btnRemove" value="'.$order['oid'].'">Remove <i class="far fa-times-circle"></i></button>
@@ -128,8 +128,6 @@
 	<?php include './Footer.php'; ?>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-ui.js"></script>
-	<!--<script src="js/xlsx.full.min.js"></script>
-	<script src="js/jszip.js"></script>-->
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="Table-Sortable/table-sortable.js"></script>
 	<script>
@@ -204,12 +202,12 @@
 				}
 			});
 
-			$(document).on('click', '#btnProcess', function() {
-				var action = 'process';
+			$(document).on('click', '#btnConfirm', function() {
+				var action = 'confirm';
 				if (order_list.length == 0) alert("Please select at least ONE order.");
 				else {
 					$.ajax({
-						url: './updateOrders.php?action=process',
+						url: './updateOrders.php?action=confirm',
 						method: "POST",
 						data: {
 							action: action,
