@@ -11,7 +11,7 @@
 	"scripts" : {
 		"compile": [
 			"chmod -R 777 Product_List/",
-			"chmod -R 777 mysheet/bin/Debug/",
+			"chmod -R 777 exportOrder/",
 			"chmod -R 777 exportExcel/"
 			]
 	}
