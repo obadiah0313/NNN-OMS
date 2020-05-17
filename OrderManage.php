@@ -196,9 +196,10 @@
 						},
 						success: function(response) {
 							load_order();
+							$('#wrapper').load('OrderManage.php' + ' #summary');
 						}
 					});
-					$('#wrapper').load('OrderManage.php' + ' #summary');
+					
 				}
 			});
 
@@ -215,9 +216,9 @@
 						},
 						success: function(response) {
 							load_order();
+							$('#wrapper').load('OrderManage.php' + ' #summary');
 						}
 					});
-					$('#wrapper').load('OrderManage.php' + ' #summary');
 				}
 			});
 
@@ -234,9 +235,9 @@
 						},
 						success: function(response) {
 							load_order();
+							$('#wrapper').load('OrderManage.php' + ' #summary');
 						}
 					});
-					$('#wrapper').load('OrderManage.php' + ' #summary');
 				}
 			});
 

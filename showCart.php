@@ -24,7 +24,7 @@
 			foreach($db->loadCart($uid) as $cart) {
 				foreach(iterator_to_array($cart['carts']) as $k=>$v){
 					if($k == $id)
-						$new[$k] = $_POST['count'];
+						$new[$k] = (int)$_POST['count'];
 					else
 						$new[$k] = $v;
 				}
