@@ -191,8 +191,12 @@
 			$this->user->updateOne(['_id' => $_id], ['$set' =>['status' => $status]]);
 		}
 		
-		public function getUser() {
-			return $this->user->find(['_id' => $_id, 'status' => 'active']);
+		public function getUserName($_id) {
+			$userinfo = $this->user->find(['_id' => $_id, 'status' => 'active']);
+			foreach ($userinfo as $u)
+			{
+				return $u['fullname'];
+			}
 		}
 	}
 	
