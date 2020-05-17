@@ -7,7 +7,6 @@
 	$cart = [];
 	$uid =  $_SESSION['_id'];
 	if($_GET['update'] === 'remove'){ 
-		if(isset($_POST['action'])){
 			$result = $_POST['item'];
 			$new=[];
 			foreach($db->loadCart($uid) as $cart) {
@@ -18,10 +17,8 @@
 				break;
 			}
 			$db->updateCart($uid, $new);
-		}
 	}
 	else if($_GET['update'] === 'decrease'){ 
-		if(isset($_POST['action'])){
 			$id = $_POST['id'];
 			$new=[];
 			foreach($db->loadCart($uid) as $cart) {
@@ -34,11 +31,9 @@
 				break;
 			}
 			$db->updateCart($uid, $new);
-		}
 	}
 	
 	else if($_GET['update'] === 'increase'){ 
-		if(isset($_POST['action'])){
 			$id = $_POST['id'];
 			$new=[];
 			foreach($db->loadCart($uid) as $cart) {
@@ -51,7 +46,6 @@
 				break;
 			}
 			$db->updateCart($uid, $new);
-		}
 	}
 		foreach($db->fetchProduct() as $cl) {
 			foreach($cl['products'] as $k=>$v){
