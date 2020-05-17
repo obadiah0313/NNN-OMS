@@ -33,5 +33,6 @@ try {
 }
 catch (MongoDB\Driver\Exception\Exception $e){
     die("Error Encountered:".$e);
+	header("Location:./Login.php");
 }
 ?>

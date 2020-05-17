@@ -262,6 +262,7 @@
 					method: "POST",
 					data: {},
 					success: function(response) {
+						load_order();
 					}
 				});
 

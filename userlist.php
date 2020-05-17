@@ -21,32 +21,54 @@
 				</div>
 			</div>
         </div>
+		<div class="row" style="text-align:center; padding: 20px"> 
+          <form action="userlist.php" id="search" method="post"> 
+
+          <label for="fname" style="margin-right:10px;">Enter name:</label>
+          <input type="text" id="fname" name="fname" style="margin-right:100px;">
+
+          <input type="radio" id="active" name="status" value="active" checked="checked">
+          <label for="staffs" style="margin-right:10px;">Active</label>            
+          <input type="radio" id="deactive" name="status" value="deactive">
+          <label for="customers" style="margin-right:100px;">Deactived</label> 
+
+          <input type="radio" id="staffs" name="type" value="staffs">
+          <label for="staffs" style="margin-right:10px;">Staffs</label>            
+          <input type="radio" id="customers" name="type" value="customers">
+          <label for="customers" style="margin-right:20px;">Customers</label> 
+
+        <button type="submit" style="margin-right:20px;" form="search" value="Submit" class="button btn-outline-warning tx-tfm">Search</button>
+              
+        </form>
+</div>
         <div class = "row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 <?php
             
 //$manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
 $manager = new MongoDB\Driver\Manager('mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c?replicaSet=rs-ds239009&retryWrites=false');
-$query = new MongoDB\Driver\Query([]);
+if(isset($_POST['status'])){
+    $fname = $_POST['fname'];
+}
+else{
+    $fname = "";
+}
+        $regex = new MongoDB\BSON\Regex($fname, 'i');
+    
 $queryActive = new MongoDB\Driver\Query(['status'=>true]);
+$queryActiveSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'status'=>true]);
 $queryNotActive = new MongoDB\Driver\Query(['status'=>false]);
-//$rowsActive = $manager->executeQuery("NNNdb.user",$queryActive);
-//$rowsNotActive = $manager->executeQuery("NNNdb.user",$queryNotActive);
-$rowsActive = $manager->executeQuery("heroku_0g0g5g6c.user",$queryActive);
-$rowsNotActive = $manager->executeQuery("heroku_0g0g5g6c.user",$queryNotActive);
-?>
-    <div class="col-md-3" style="text-align:center; padding: 20px">        
-    <input type="checkbox" id="active" name="active" value="active">
-    <label for="active"> Show Deactivated </label></div>
-            
-  <div class="col-md-6" style="text-align:center; padding: 20px">  
-  <input type="radio" id="staffs" name="type" value="staffs">
-  <label for="staffs">Staffs</label>
-     
-            
-  <input type="radio" id="customers" name="type" value="customers">
-  <label for="customers">Customers</label> </div> 
-           
-<?php
+$queryNotActiveSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'status'=>false]);
+$queryStaffAc= new MongoDB\Driver\Query(['type'=>'staff','status'=>true]);
+$queryStaffAcSearch= new MongoDB\Driver\Query(['fullname'=>$regex,'type'=>'staff','status'=>true]);
+$queryStaffDe = new MongoDB\Driver\Query(['type'=>'staff','status'=>false]);
+$queryStaffDeSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'type'=>'staff','status'=>false]);
+$queryCustomerAcSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'type'=>'customer','status'=>true]);
+$queryCustomerDe = new MongoDB\Driver\Query(['type'=>'customer','status'=>false]);
+$queryCustomerDeSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'type'=>'customer','status'=>false]);
+
+//$rowsActive = $manager->executeQuery("heroku_0g0g5g6c.user",$queryActive);
+//$rowsNotActive = $manager->executeQuery("heroku_0g0g5g6c.user",$queryNotActive);
+
 echo "<table class='table table-light'>
 <thead><tr>
 <th> Full Name </th>
@@ -56,18 +78,96 @@ echo "<table class='table table-light'>
 <th> Action </th>
 </tr>
 </thead>";
+    
+if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
+    $action = "Activate";
+        if(isset($_POST['type']) && $_POST['type'] == 'staffs'){
+            if(isset($_POST['fname'])){
+                //$rows = $manager->executeQuery("NNNdb.user",$queryStaffDeSearch);
+                $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryStaffDeSearch);
+            }
+            else{
+                //$rows = $manager->executeQuery("NNNdb.user",$queryStaffDe);
+                $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryStaffDe);
+                }
+           }
+        else if(isset($_POST['type']) && $_POST['type'] == 'customers'){
+            if(isset($_POST['fname'])){
+                //$rows = $manager->executeQuery("NNNdb.user",$queryCustomerDeSearch);
+                $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerDeSearch);
+            }
+            else{
+				//$rows = $manager->executeQuery("NNNdb.user",$queryCustomerDe);
+				$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerDe);
+                }
+        }
+        else{
+            if(isset($_POST['fname'])){
+                //$rows = $manager->executeQuery("NNNdb.user",$queryNotActiveSearch);
+                $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryNotActiveSearch);
+            }
+            else{
+				//$rows = $manager->executeQuery("NNNdb.user",$queryNotActive);
+				$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryNotActive);
+                }
+            }
+    foreach ($rows as $row){
+                echo"<tbody>".
+                    "<tr>".
+                    "<td>".$row->fullname."</td>".
+                    "<td>".$row->phone."</td>".
+                    "<td>".$row->email."</td>".
+                    "<td>".$row->type."</td>".
+                    "<td><a id='btnActivate' class='button allBtn justify-content-between' href ='./activate.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>" .$action."</a><td>".
+                    "</tr>".
+                    "</tbody>";}
+}else {
+     $action = "Deactivate";
+        if(isset($_POST['type']) && $_POST['type'] == 'staffs'){
+            if(isset($_POST['fname'])){
+            //$rows = $manager->executeQuery("NNNdb.user",$queryStaffAcSearch);
+            $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryStaffAcSearch);
+            }
+            else{
+            //$rows = $manager->executeQuery("NNNdb.user",$queryStaffAc);  
+            $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryStaffAc);  
+            }
+        }
+        else if(isset($_POST['type']) && $_POST['type'] == 'customers'){
+            if(isset($_POST['fname'])){
+            //$rows = $manager->executeQuery("NNNdb.user",$queryCustomerAcSearch);  
+            $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerAcSearch);  
+            }
+            else{
+            //$rows = $manager->executeQuery("NNNdb.user",$queryCustomerAc);
+            $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerAc);
+            }
+        }
+        else{if(isset($_POST['fname'])){
+            //$rows = $manager->executeQuery("NNNdb.user",$queryActiveSearch); 
+            $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryActiveSearch); 
+            }
+            else{
+            //$rows = $manager->executeQuery("NNNdb.user",$queryActive);
+            $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryActive);
+            }
+        }
+    foreach ($rows as $row){
+                echo"<tbody>".
+                    "<tr>".
+                    "<td>".$row->fullname."</td>".
+                    "<td>".$row->phone."</td>".
+                    "<td>".$row->email."</td>".
+                    "<td>".$row->type."</td>".
+                    "<td><a id='btnDeactivate' class='button allBtn justify-content-between' href ='./delete.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>" .$action."</a><td>".
+                    "</tr>".
+                    "</tbody>";}
+        }
 
-foreach ($rowsNotActive as $row){
-    echo"<tbody>".
-        "<tr>".
-        "<td>".$row->fullname."</td>".
-        "<td>".$row->phone."</td>".
-        "<td>".$row->email."</td>".
-        "<td>".$row->type."</td>".
-        "<td><a id='btnDeactivate' class='button allBtn justify-content-between' href ='./delete.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'> Dectivate </a><td>".
-        "</tr>".
-        "</tbody>";
-}
+            
+            
+           
+
 
 echo "</table>"
 ?>

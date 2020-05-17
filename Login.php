@@ -11,6 +11,8 @@
 
 <body class="bg">
 	<?php include './NavBar.php'; ?>
+	<?php if (isset($_SESSION['fullname'])){
+     header("Location:./index.php");}?>
 	<div class="container loginform">
 		<div class="row">
 			<div class="col-md-5 mx-auto">
