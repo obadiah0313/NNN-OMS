@@ -191,8 +191,8 @@
 			$this->user->updateOne(['_id' => $_id], ['$set' =>['status' => $status]]);
 		}
 		
-		public function getUserName($_id) {
-			return $this->user->findOne(['_id' => $_id],['projection' => ['fullname' => 1]]);
+		public function getUser() {
+			return $this->user->find(['_id' => $_id, 'status' => 'active']);
 		}
 	}
 	

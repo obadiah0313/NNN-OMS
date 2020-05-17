@@ -5,10 +5,10 @@
 	$db = new MongodbDatabase();
 	$pk = $db->getPrimaryKey();
 	$cart = [];
+	$uid =  $_SESSION['_id'];
 	if($_GET['update'] === 'remove'){ 
 		if(isset($_POST['action'])){
 			$result = $_POST['item'];
-			$uid =  $_SESSION['_id'];
 			$new=[];
 			foreach($db->loadCart($uid) as $cart) {
 				foreach(iterator_to_array($cart['carts']) as $k=>$v){
@@ -21,9 +21,8 @@
 		}
 	}
 	else if($_GET['update'] === 'decrease'){ 
-		if(isset($_POST['action'])){ var_dump($_POST['id']);
+		if(isset($_POST['action'])){
 			$id = $_POST['id'];
-			$uid =  $_SESSION['_id'];
 			$new=[];
 			foreach($db->loadCart($uid) as $cart) {
 				foreach(iterator_to_array($cart['carts']) as $k=>$v){
@@ -41,7 +40,6 @@
 	else if($_GET['update'] === 'increase'){ 
 		if(isset($_POST['action'])){
 			$id = $_POST['id'];
-			$uid =  $_SESSION['_id'];
 			$new=[];
 			foreach($db->loadCart($uid) as $cart) {
 				foreach(iterator_to_array($cart['carts']) as $k=>$v){
@@ -55,7 +53,6 @@
 			$db->updateCart($uid, $new);
 		}
 	}
-		$uid=$_SESSION['_id'];
 		foreach($db->fetchProduct() as $cl) {
 			foreach($cl['products'] as $k=>$v){
 				foreach($v as $ke=>$val){
