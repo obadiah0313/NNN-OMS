@@ -192,7 +192,7 @@
 		}
 		
 		public function getUserName($_id) {
-			$userinfo = $this->user->find(['_id' => $_id, 'status' => 'active']);
+			$userinfo = $this->user->find(['_id' => new MongoDB\BSON\ObjectID($_id), 'status' => 'active']);
 			foreach ($userinfo as $u)
 			{
 				return $u['fullname'];
