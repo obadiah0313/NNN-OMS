@@ -1,6 +1,6 @@
 <?php
 	session_start();
-	error_reporting(0);
+	//error_reporting(0);
 	require 'Database.php';
 	$db = new MongodbDatabase();
 	$pk = $db->getPrimaryKey();
@@ -47,6 +47,7 @@
 			}
 			$db->updateCart($uid, $new);
 	}
+	else{
 		foreach($db->fetchProduct() as $cl) {
 			foreach($cl['products'] as $k=>$v){
 				foreach($v as $ke=>$val){
@@ -74,5 +75,6 @@
 			}
 		}	
 	echo json_encode($cart);
+	}
 
 ?>
