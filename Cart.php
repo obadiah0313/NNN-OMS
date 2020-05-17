@@ -153,9 +153,10 @@
 					},
 					success: function(response) {
 						load_cart();
+						$('#wrapper').load('Cart.php' + ' #summary');
 					}
 				});
-				$('#wrapper').load('Cart.php' + ' #summary');
+				
 			});
 
 			function incrementValue(e) {
@@ -180,9 +181,9 @@
 					},
 					success: function(response) {
 						load_cart();
+						$('#wrapper').load('Cart.php' + ' #summary');
 					}
 				});
-				$('#wrapper').load('Cart.php' + ' #summary');
 			}
 
 			function decrementValue(e) {
@@ -209,9 +210,9 @@
 					},
 					success: function(response) {
 						load_cart();
+						$('#wrapper').load('Cart.php' + ' #summary');
 					}
-				});
-				$('#wrapper').load('Cart.php' + ' #summary');		
+				});		
 			}
 
 			$(document).on('click', '.button-plus', function(e) {
