@@ -1,9 +1,11 @@
 <?php
+	error_reporting(0);
 	session_start();
 	require 'Database.php';
 	$db = new MongodbDatabase();
 	$pk = $db->getPrimaryKey();
-	$uid=  $_SESSION['_id'];
+	$uid =  $_SESSION['_id'];
+	if(!isset($uid)) header("Location:./Login.php");
 	$count = 0;
 	$total = 0;
 	$empty = true;
@@ -38,6 +40,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Neko Neko Nyaa</title>
+	<link rel="icon" href="img/neko.png">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/cart.css">

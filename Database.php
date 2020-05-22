@@ -5,13 +5,13 @@
 		//Constructor
 		public function __construct(){
 			try {
-				//$this->client = new MongoDB\Client();
-				$this->client = new MongoDB\Client('mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c?replicaSet=rs-ds239009&retryWrites=false');
+				$this->client = new MongoDB\Client();
+				//$this->client = new MongoDB\Client('mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c?replicaSet=rs-ds239009&retryWrites=false');
 			}catch (MongoConnectionException $e) {
 				die('Error connecting to MongoDB server');
 			}
-			//$this->db = $this->client->NNNdb;
-			$this->db = $this->client->heroku_0g0g5g6c;
+			$this->db = $this->client->NNNdb;
+			//$this->db = $this->client->heroku_0g0g5g6c;
 			$this->collect = $this->db->selectCollection('stock');
 			$this->deletion = $this->db->selectCollection('deletion');
 			$this->user = $this->db->selectCollection('user');
@@ -59,6 +59,17 @@
 		public function getHeaders(){
 			foreach($this->fetchProduct() as $i){
 				return iterator_to_array($i['header']);
+			}
+		}
+		
+		public function getProductDetail($code) {
+			$data =  $this->collect->find();
+			foreach($data as $d){
+				foreach ($d['products'] as $val){
+					if($val[$d['primaryKey']] == $code){
+						return $val['Description'];
+					}
+				}
 			}
 		}
 		
@@ -136,15 +147,17 @@
 		/*Order Management*/
 		/******************/
 		public function loadOrder(){
-			return $this->cart->find([
-				'$or' => [
-					['status' => "pending"],
-					['status' => "processing"],
-					['status' => "confirmed"]
-				]
-			]);
+			return $this->cart->find(['status' => [ '$ne' => "active"]]);
 		}
 		
+		public function loadConfirmedOrder($oid) {
+			return $this->cart->find(['_id' => new MongoDB\BSON\ObjectID($oid)]);
+		}
+		
+		public function filterOrder($status){
+			return $this->cart->find(['status' => $status]);
+		}
+				
 		public function updateOrder($oid, $status){
 			$this->cart->updateOne(['_id' => new MongoDB\BSON\ObjectID($oid)],
 									['$set' => ['status' => $status]]);
@@ -172,9 +185,9 @@
 				return $d['date'];
 		}
 		
-        /*************/
-		/*Create User*/
-		/*************/
+        /*****************/
+		/*User Management*/
+		/*****************/
         public function insertUser($fullname, $phone, $email, $password, $type, $status){
 			$this->user->insertOne(['fullname' => $fullname, 'phone' => $phone, 'email' => $email, 'password' => $password, 'type' => $type, 'status' => $status]);
 		}
@@ -194,6 +207,35 @@
 		public function getUserName($_id) {
 			$userinfo = $this->user->findOne(['_id' => new MongoDB\BSON\ObjectID($_id)]);
 			return $userinfo['fullname'];
+		}
+		
+		public function getUserEmail($_id) {
+			$userinfo = $this->user->findOne(['_id' => new MongoDB\BSON\ObjectID($_id)]);
+			return $userinfo['email'];
+		}
+		
+		public function loadOrderHistory($_id)
+		{
+			$orderhistory = [];
+			$hist = $this->cart->find(['uid' => $_id, 'status' => ['$ne' => "active"]] );
+			foreach($hist as $h)
+			{
+				$item = new stdClass();
+				foreach ($h['carts'] as $k=>$v){
+					$key = $this->getProductDetail((string)$k);
+					$item->$key = $v;
+				}
+				$temp = array(
+					'test' => $item,
+					'oid' => (string)$h['_id'],
+					'date' => $h['date'],
+					'status' => $h['status'],
+					'view' => '<button class="button allBtn item mb-1" id="btnView" value="'.(string)$h['_id'].'">View <i class="fas fa-eye"></i></button>',
+					
+				);
+				array_push($orderhistory, $temp);
+			}
+			return $orderhistory;
 		}
 	}
 	

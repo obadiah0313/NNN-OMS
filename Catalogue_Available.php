@@ -5,6 +5,8 @@
 	foreach($db->getSetting() as $stt){
 		$cCatHeader = iterator_to_array($stt['cCat_Header']);
 		$cCatFilter = iterator_to_array($stt['cCat_Filter']);
+		$pCatHeader = iterator_to_array($stt['pCat_Header']);
+		$pCatFilter = iterator_to_array($stt['pCat_Filter']);
 	}
 	$header = $db->getHeaders();
 	$product = $db->getProduct();

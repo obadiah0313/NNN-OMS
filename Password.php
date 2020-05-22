@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Neko Neko Nyaa</title>
+	<link rel="icon" href="img/neko.png">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/login.css">
 	<link rel="stylesheet" href="css/style.css">
