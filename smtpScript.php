@@ -18,8 +18,8 @@ foreach($_POST['orders'] as $o)
 	$mail->SMTPAutoTLS = false;
 	$mail->Port = 587;
 
-	$mail->setFrom('cherng5757@gmail.com', 'Neko Neko Nyaa');
-	$mail->addReplyTo('cherng5757@gmail.com', 'Neko Neko Nyaa');
+	$mail->setFrom('testingneko123@gmail.com', 'Neko Neko Nyaa');
+	$mail->addReplyTo('testingneko123@gmail.com', 'Neko Neko Nyaa');
 	$mail->addAddress($db->getUserEmail((string)$detail['uid']), $db->getUserName((string)$detail['uid'])); 
 
 	$mail->Subject = 'Order Has been Processed';
