@@ -133,12 +133,15 @@
 					<div class="col-auto">
 						<button class="button allBtn item" id="btnConfirm" value="'.$order['oid'].'">Confirm <i class="fas fa-sync-alt"></i></button>
 					</div>
-					<div class="col-3 text-left">
+					<div class="col-auto">
 						<button class="button allBtn item" id="btnRemove" value="'.$order['oid'].'">Remove <i class="far fa-times-circle"></i></button>
 					</div>
-					<div class="col-3 text-right d-none">
-						<button class="button allBtn export-btn" id="btnExport" type="button">Export <i class="fas fa-file-export"></i></button>
+					<div class="col-3 text-left">
+						<button class="button allBtn item" id="btnNotify" type="button">Notify<i class="far fa-envelope"></i></button>
 					</div>
+					<!--<div class="col-3 text-right d-none">
+						<button class="button allBtn export-btn" id="btnExport" type="button">Export <i class="fas fa-file-export"></i></button>
+					</div>-->
 
 				</div>
 				<div class="row">
@@ -253,6 +256,21 @@
 									orders: order_list,
 								}
 							});
+						}
+					});
+				}
+			});
+
+			$(document).on('click', '#btnNotify', function() {
+				var action = 'notify';
+				if (order_list.length == 0) alert("Please select at least ONE order.");
+				else {
+					$.ajax({
+						url: 'notify.php',
+						method: 'POST',
+						data: {
+							action: 'notify',
+							orders: order_list,
 						}
 					});
 				}
