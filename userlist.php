@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="css/overhang.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<title>Neko Neko Nyaa</title>
+		<link rel="icon" href="img/neko.png">
 </head>
 
 <body class="bg">
@@ -35,9 +36,11 @@
           <input type="radio" id="staffs" name="type" value="staffs">
           <label for="staffs" style="margin-right:10px;">Staffs</label>            
           <input type="radio" id="customers" name="type" value="customers">
-          <label for="customers" style="margin-right:20px;">Customers</label> 
+          <label for="customers" style="margin-right:20px;">Customers</label>            
+          <input type="radio" id="customers" name="type" value="partners">
+          <label for="partners" style="margin-right:20px;">Partners</label> 
 
-        <button type="submit" style="margin-right:20px;" form="search" value="Submit" class="button btn-outline-warning tx-tfm">Search</button>
+        <button type="submit" style="margin-right:20px;" form="search" value="Submit" class="button allBtn tx-tfm">Search</button>
               
         </form>
 </div>

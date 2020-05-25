@@ -3,6 +3,7 @@
 
 <head>
 	<title>Neko Neko Nyaa</title>
+	<link rel="icon" href="img/neko.png">
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/style.css">

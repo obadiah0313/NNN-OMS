@@ -27,9 +27,10 @@ try {
     $_SESSION['email'] = $email;
     $_SESSION['password'] = $password;
     $_SESSION['type'] = $type;
-    
-     header("Location:./index.php");
-      
+	if(isset($_SESSION['_id']))
+    	header("Location:./index.php");
+	else
+		header("Location:./Login.php?exist=false");
 }
 catch (MongoDB\Driver\Exception\Exception $e){
     die("Error Encountered:".$e);

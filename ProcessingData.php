@@ -1,10 +1,19 @@
 <?php
+	session_start();
 	error_reporting(0);
 	require 'Database.php';
 	$db = new MongodbDatabase();
-	foreach($db->getSetting() as $stt){
-		$cCatHeader = iterator_to_array($stt['cCat_Header']);
-		$cCatFilter = iterator_to_array($stt['cCat_Filter']);
+	if($_SESSION['type'] == 'customer' || !isset($_SESSION['type'])){
+		foreach($db->getSetting() as $stt){
+			$cCatHeader = iterator_to_array($stt['cCat_Header']);
+			$cCatFilter = iterator_to_array($stt['cCat_Filter']);
+		}
+	}
+	else {
+		foreach($db->getSetting() as $stt){
+			$cCatHeader = iterator_to_array($stt['pCat_Header']);
+			$cCatFilter = iterator_to_array($stt['pCat_Filter']);
+		}
 	}
 	$pk = $db->getPrimaryKey();
 	$data = [];

@@ -1,12 +1,17 @@
+<?php
+	error_reporting(0);
+	?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<title>Neko Neko Nyaa</title>
+		<link rel="icon" href="img/neko.png">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/login.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/overhang.min.css">
 </head>
 
 <body class="bg">
@@ -91,9 +96,28 @@
 	</div>
 	<?php include './Footer.php'; ?>
 	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/overhang.min.js"></script>
 	<script src="js/jquery.validate.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script src="js/login.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var exist = <?php echo $_GET['exist']; ?>;
+			if(exist == true){
+				$("body").overhang({
+					type: "error",
+					message: "Account Exists......"
+				});
+			}
+			else if(exist == false) {
+				$("body").overhang({
+					type: "error",
+					message: "No Account Registered Yet, Please Sign Up First."
+				});
+			}
+		});
+	</script>
 </body>
 
 </html>

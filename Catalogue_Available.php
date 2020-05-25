@@ -2,12 +2,19 @@
 	session_start();
 	require './Database.php';
 	$db = new MongodbDatabase();
-	foreach($db->getSetting() as $stt){
-		$cCatHeader = iterator_to_array($stt['cCat_Header']);
-		$cCatFilter = iterator_to_array($stt['cCat_Filter']);
-		$pCatHeader = iterator_to_array($stt['pCat_Header']);
-		$pCatFilter = iterator_to_array($stt['pCat_Filter']);
+	if($_SESSION['type'] == 'customer' || !isset($_SESSION['type'])){
+		foreach($db->getSetting() as $stt){
+			$cCatHeader = iterator_to_array($stt['cCat_Header']);
+			$cCatFilter = iterator_to_array($stt['cCat_Filter']);
+		}
 	}
+	else {
+		foreach($db->getSetting() as $stt){
+			$cCatHeader = iterator_to_array($stt['pCat_Header']);
+			$cCatFilter = iterator_to_array($stt['pCat_Filter']);
+		}
+	}
+	
 	$header = $db->getHeaders();
 	$product = $db->getProduct();
 ?>
@@ -211,20 +218,20 @@
 					},
 					success: function(response) {
 						showTable(response);
-						$(document).on('dblclick', 'tr', function() {
-							var arr = $(this).text().split(' ');
-							var id = arr[arr.length - 1];
+						$(document).on('click', '#btnDetails', function() {
+							var id = $(this).val();
 							$.each(JSON.parse(response), function(index, value) {
 								var regex = />(.*)</;
 								var rid = value.id.match(regex);
 								if (rid[1] === id) {
 									$('#productDetail').modal('show');
+
 									<?php 
-									foreach ($header as $head) {
-										if(strpos($head, "Order") === false){
+												foreach ($header as $head) {
+													if(strpos($head, "Order") === false){
 														echo '$("#'.substr(str_replace([' ','(',')'], '',$head),0,13).'").text(value["'.$head.'"]);';
 													}
-									}?>
+												}?>
 								}
 							});
 						});
@@ -279,6 +286,10 @@
 
 			$('.common_selector').click(function() {
 				filter_data();
+				$("body").overhang({
+					type: "info",
+					message: "Filtering...Wait a moment"
+				});
 			});
 
 			$(".reset-btn").click(function() {

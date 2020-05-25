@@ -188,6 +188,11 @@
         /*****************/
 		/*User Management*/
 		/*****************/
+		public function checkUserExist($email){
+			$userinfo = $this->user->findOne(['email' => $email]);
+			return $userinfo['_id'];
+		}
+	
         public function insertUser($fullname, $phone, $email, $password, $type, $status){
 			$this->user->insertOne(['fullname' => $fullname, 'phone' => $phone, 'email' => $email, 'password' => $password, 'type' => $type, 'status' => $status]);
 		}

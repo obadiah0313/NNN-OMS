@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="fontawesome/css/all.css">
 <div style="background:rgba(255, 165, 0, 0.85)">
 	<div class="d-none d-lg-block bg-dark">
-		<div class="page-container">
+		<div class="page-container mb-0">
 			<div class="row text-white">
 				<div class="d-inline col-auto mr-auto">
 					<i class="fab fa-whatsapp"></i> WhatsApp : <a class="text-white" href="https://wa.me/60138183616">013-818 3616</a>
@@ -40,11 +40,11 @@
 				<div class="col-auto mr-auto">
 					<a href="./index.php"><img src="img/neko.png" alt="logo" style="position:absolute; z-index:2;width:500%;"></a>
 				</div>
-				<div class="col-auto my-auto">
-					<h3>
-						<i class="display-4">Neko Neko Nyaa</i>
+				<div class="col-auto">
+					<h1 class="mt-3">
+						<i>Neko Neko Nyaa</i>
 						<small class="text-muted"> Ordering System</small>
-					</h3>
+					</h1>
 				</div>
 			</div>
 		</div>

@@ -1,16 +1,19 @@
 <?php 
 	session_start(); 
+	if(!isset($_SESSION['_id'])) header("Location:./Login.php");
 	require 'Database.php';
 	$db = new MongodbDatabase();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="icon" href="img/neko.png">
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/jquery-ui.css">
+	<link rel="stylesheet" href="css/jquery-ui.css">	
+	<link rel="stylesheet" href="css/overhang.min.css">
 	<title>Neko Neko Nyaa</title>
 </head>
 
@@ -40,7 +43,7 @@
 
 <body class="bg">
 	<?php include 'NavBar.php';?>
-	
+
 	<div class="page-container">
 		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 			<div class="col-12 py-3">
@@ -54,16 +57,17 @@
 			<div class="col mx-5 text-center" id="root"></div>
 		</div>
 	</div>
-	
+
 	<?php include 'Footer.php'; ?>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-ui.js"></script>
+	<script src="js/overhang.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
 	<script type="text/javascript" src="Table-Sortable/table-sortable.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			load_orderHistory();
-			
+
 			function showTable(response) {
 				var table = $('#root').tableSortable({
 					data: JSON.parse(response),
@@ -76,41 +80,55 @@
 					table.updateRowsPerPage(parseInt($(this).val(), 10));
 				});
 			}
-			
+
 			var columns = {
 				date: 'Date',
 				status: 'Status',
 				view: 'Details',
 			}
-			
-			function load_orderHistory(){
+
+			function load_orderHistory() {
 				$.ajax({
 					method: 'GET',
 					url: 'getHistory.php',
 					data: {},
 					success: function(response) {
-						showTable(response);
-						$(document).on('click', '#btnView', function() {
-							var id = $(this).val();
-							$.each(JSON.parse(response), function(index, value) {
-								if (id === value.oid) {
-									$('#orderDetail').modal('show');
-									$("#date").text(value.date);
-									$("#status").text(value.status);
-									$("#products").empty();
-									var content = "<table class=\"table\"><tr><th>Description</th><th>Quantity</th></tr>";
-									$.each(value.test, function(index, val) {
-										content += "<tr><td>" + index + "</td><td>" + val + "</td></tr>";
-									});
-									$("#products").append(content);
-								}
+						if (response != null) {
+							showTable(response);
+							$(document).on('click', '#btnView', function() {
+								var id = $(this).val();
+								$.each(JSON.parse(response), function(index, value) {
+									if (id === value.oid) {
+										$('#orderDetail').modal('show');
+										$("#date").text(value.date);
+										$("#status").text(value.status);
+										$("#products").empty();
+										var content = "<table class=\"table\"><tr><th>Description</th><th>Quantity</th></tr>";
+										$.each(value.test, function(index, val) {
+											content += "<tr><td>" + index + "</td><td>" + val + "</td></tr>";
+										});
+										$("#products").append(content);
+									}
 
+								});
 							});
+						}
+						else{
+							$("body").overhang({
+							type: 'warning',
+							message: 'No Order yet, Start to order now',
+							callback: function() {
+								window.location.replace("./Catalogue_Available.php");
+							}
 						});
+						}
+
 					}
 				});
 			}
 		});
+
 	</script>
 </body>
+
 </html>
