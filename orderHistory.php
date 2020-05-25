@@ -12,7 +12,7 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="icon" href="img/neko.png">
 	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="css/jquery-ui.css">	
+	<link rel="stylesheet" href="css/jquery-ui.css">
 	<link rel="stylesheet" href="css/overhang.min.css">
 	<title>Neko Neko Nyaa</title>
 </head>
@@ -93,7 +93,16 @@
 					url: 'getHistory.php',
 					data: {},
 					success: function(response) {
-						if (response != null) {
+						data = JSON.parse(response);
+						if (data.type == 'warning') {
+							$("body").overhang({
+								type: data.type,
+								message: data.msg,
+								callback: function() {
+									window.location.replace("./Catalogue_Available.php");
+								}
+							});
+						} else {
 							showTable(response);
 							$(document).on('click', '#btnView', function() {
 								var id = $(this).val();
@@ -112,15 +121,6 @@
 
 								});
 							});
-						}
-						else{
-							$("body").overhang({
-							type: 'warning',
-							message: 'No Order yet, Start to order now',
-							callback: function() {
-								window.location.replace("./Catalogue_Available.php");
-							}
-						});
 						}
 
 					}
