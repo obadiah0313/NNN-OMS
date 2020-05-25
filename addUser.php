@@ -1,3 +1,7 @@
+<?php 
+	error_reporting(0);
+	session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,12 +18,16 @@
 		include "NavBar.php";
 	?>
 	<div class="page-container mt-3">
+		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
+            <div class="col-12 py-3">
+				<div class="text-center">
+					<h2>Email Confirmation</h2>
+				</div>
+			</div>
+        </div>
+        <div class="row py-4" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 <?php
 
-	//error_reporting(0);
-// Import PHPMailer classes into the global namespace
-// These must be at the top of your script, not inside a function
-// Load Composer's autoloader
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -32,51 +40,53 @@ $email= $_POST['email'];
 $password= md5($_POST['password']);
 
 if(isset($_SESSION))
-{session_destroy();}
+{
+	session_destroy();}
 
-$code=rand(1000,9999);
-session_start();
-$_SESSION['code'] = $code;
+	$code=rand(1000,9999);
+	session_start();
+	$_SESSION['code'] = $code;
 
-// Instantiation and passing `true` enables exceptions
-$mail = new PHPMailer(true);
-$mail->isSMTP();
+	// Instantiation and passing `true` enables exceptions
+	$mail = new PHPMailer(true);
+	$mail->isSMTP();
 
-try {
-    //Server settings
-    $mail->Host = 'smtp.gmail.com';
-	$mail->SMTPAuth = true;
-	$mail->Username = 'testingneko123@gmail.com'; 
-	$mail->Password = 'testing123~'; 
-	$mail->SMTPSecure = 'tls';
-	$mail->SMTPAutoTLS = false;
-	$mail->Port = 587;// TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+	try {
+		//Server settings
+		$mail->Host = 'smtp.gmail.com';
+		$mail->SMTPAuth = true;
+		$mail->Username = 'testingneko123@gmail.com'; 
+		$mail->Password = 'testing123~'; 
+		$mail->SMTPSecure = 'tls';
+		$mail->SMTPAutoTLS = false;
+		$mail->Port = 587;// TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
-    //Recipients
-    $mail->setFrom('testingneko123@gmail.com', 'Neko Neko Nyaa');
-    $mail->addAddress($email);     // Add a recipient
-    $mail->addReplyTo('testingneko123@gmail.com', 'Neko Neko Nyaa');
+		//Recipients
+		$mail->setFrom('testingneko123@gmail.com', 'Neko Neko Nyaa');
+		$mail->addAddress($email);     // Add a recipient
+		$mail->addReplyTo('testingneko123@gmail.com', 'Neko Neko Nyaa');
 
-    // Content
-    $mail->isHTML(true);                                  // Set email format to HTML
-    $mail->Subject = 'Confirmation code';
-    $mail->Body    = 'This is your code : <b>'.$code.'</b>';
+		// Content
+		$mail->isHTML(true);                                  // Set email format to HTML
+		$mail->Subject = 'Confirmation code';
+		$mail->Body    = 'This is your code : <b>'.$code.'</b>';
 
-    $mail->send();
-    echo 'Confirmation code have been sent to ' .$email;
-} catch (Exception $e) {
-    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+		$mail->send();
+		echo 'Confirmation code have been sent to ' .$email.'. Please verify and enter the confirmation code at the given field.';
+	} catch (Exception $e) {
+		echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
 
-    echo"<form action='addUserConfirm.php?fullname=".$fullname."&phone=".$phone."&email=".$email."&password=".$password."' id='confirm' method='POST'>
-    <p>Refresh the page to resend a new code.</p>
+    echo"<center><form action='addUserConfirm.php?fullname=".$fullname."&phone=".$phone."&email=".$email."&password=".$password."' id='confirm' method='POST'>
+    <p>Refresh the page to RESEND a new code if not receiving.</p>
 <label for='code'>Enter confirmation code:</label>
 <input type='text' id='confirm' name='confirm' style='margin-right:10px;'>
-<button form='confirm' value='submit'>confirm</button>
-</form>";
+<button class='button allBtn' form='confirm' value='submit'>confirm</button>
+</form></center>";
 
 ?>
         </div>
+	</div>
 <?php include './Footer.php'?>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/popper.min.js"></script>
