@@ -46,14 +46,16 @@
 		<div class="row py-3" id="setPrimary" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white; display:none">
 			<div class="col-12 py-4">
 				<div class="card border-warning filter">
-					<h4 class="card-header" style="background:#ffff99">Primary Key: <small class="text-danger">Select the Product Code/ID for the products.</small></h4>
+					<h4 class="card-header" style="background:#ffff99">Key Information</h4>
 					<div class="card-body">
 						<form method="GET" action="">
-							<div class="list-group mb-3">
-								<div style="overflow-y: auto; overflow-x: hidden;">
-									<div id="headerlist" class="list-group-item radiobutton ">
-									</div>
-								</div>
+							<div class="mb-3">
+								<label for="primaryKey">ID/Code Key of Products</label>
+									<select id="primaryKey" name="primaryKey"></select>
+							</div>
+							<div>
+								<label for="desp">Description Key of Products</label>
+									<select name="desp" id="desp"></select>
 							</div>
 						</form>
 						<button class="button allBtn my-3 text-center" id="btnConfirm">Save</button>
@@ -309,11 +311,15 @@
 				success: function(response) {
 					response = JSON.parse(response);
 					for (var i = 0; i < response.header.length; i++) {
-						var li = $('<label><input type="radio" name="key" value="' + response.header[i] + '"/>' + response.header[i] + '</label><br>');
-						$('#headerlist').append(li);
-						$('#setPrimary').css("display", "block");
-						$('#setHeaders').css("display", "none");;
+						var li = $('<option value="' + response.header[i] + '">' + response.header[i] + '</option>');
+						$('#primaryKey').append(li);
 					};
+					for (var j = 0; j < response.header.length; j++) {
+						var op = $('<option value="' + response.header[j] + '">' + response.header[j] + '</option>');
+						$('#desp').append(op);
+					};
+					$('#setPrimary').css("display", "block");
+					$('#setHeaders').css("display", "none");;
 					product = response.product;
 					deletion = newObj2,
 						head = headers;
@@ -359,7 +365,8 @@
 				type: "info",
 				message: "Upload in progress...Please Wait",
 			});
-			var pk = $("input[name='key']:checked").val();
+			var pk = $('#primaryKey').find(":selected").val();
+			var desp = $('#desp').find(":selected").val();
 			$.ajax({
 				method: 'POST',
 				data: {
@@ -367,6 +374,7 @@
 					header: head,
 					filename: excelfile,
 					primarykey: pk,
+					desp: desp,
 				},
 				url: 'ubackend.php?doc=stock',
 				success: function(response) {

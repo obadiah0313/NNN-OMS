@@ -55,6 +55,11 @@
 				return $i['primaryKey'];
 			}
 		}
+		public function getDespKey(){
+			foreach($this->fetchProduct() as $i){
+				return $i['desp'];
+			}
+		}
 
 		public function getHeaders(){
 			foreach($this->fetchProduct() as $i){
@@ -67,7 +72,7 @@
 			foreach($data as $d){
 				foreach ($d['products'] as $val){
 					if($val[$d['primaryKey']] == $code){
-						return $val['Description'];
+						return $val[$d['desp']];
 					}
 				}
 			}
@@ -80,9 +85,9 @@
 			return $this->collect->findOne(['date' => date("Y-m-d")]);
 		}
 		
-		public function replaceStock($date, $product, $header, $primarykey, $file){
+		public function replaceStock($date, $product, $header, $primarykey,$desp, $file){
 			$this->collect->replaceOne(['date' => $date],
-										['date' => $date, 'products' => $product, 'header' => $header, 'primaryKey' => $primarykey, 'filename' => $file]);
+										['date' => $date, 'products' => $product, 'header' => $header, 'primaryKey' => $primarykey,'desp'=>$desp, 'filename' => $file]);
 		}
 		
 		public function replaceDeletion($date, $deletion){
@@ -90,8 +95,8 @@
 										['date' => $date, 'deletions' => $deletion]);
 		}
 		
-		public function insertStock($date, $product, $header, $primarykey, $file){
-			$this->collect->insertOne(['date' => $date, 'products' =>$product, 'header' => $header, 'primaryKey' => $primarykey, 'filename' => $file]);
+		public function insertStock($date, $product, $header, $primarykey,$desp, $file){
+			$this->collect->insertOne(['date' => $date, 'products' =>$product, 'header' => $header, 'primaryKey' => $primarykey, 'desp'=>$desp,'filename' => $file]);
 		}
 		
 		public function insertDeletion($date, $deletion){
