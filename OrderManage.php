@@ -1,5 +1,8 @@
 <?php
 	error_reporting(0);
+session_start();
+if(!isset($_SESSION['_id']) || $_SESSION['type']!='staff'||$_SESSION['type']!='admin')
+		header('Location:./index.php');
 	require './Database.php';
 	$db = new MongodbDatabase();
 	$countOrder = 0;

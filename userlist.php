@@ -1,3 +1,8 @@
+<?php
+session_start();
+if(!isset($_SESSION['_id']) || $_SESSION['type']!='staff'||$_SESSION['type']!='admin')
+		header('Location:./index.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,13 +66,21 @@ $queryActive = new MongoDB\Driver\Query(['status'=>true]);
 $queryActiveSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'status'=>true]);
 $queryNotActive = new MongoDB\Driver\Query(['status'=>false]);
 $queryNotActiveSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'status'=>false]);
+			
 $queryStaffAc= new MongoDB\Driver\Query(['type'=>'staff','status'=>true]);
 $queryStaffAcSearch= new MongoDB\Driver\Query(['fullname'=>$regex,'type'=>'staff','status'=>true]);
 $queryStaffDe = new MongoDB\Driver\Query(['type'=>'staff','status'=>false]);
 $queryStaffDeSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'type'=>'staff','status'=>false]);
+				
+$queryCustomerAc= new MongoDB\Driver\Query(['type'=>'customer','status'=>true]);		
 $queryCustomerAcSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'type'=>'customer','status'=>true]);
 $queryCustomerDe = new MongoDB\Driver\Query(['type'=>'customer','status'=>false]);
-$queryCustomerDeSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'type'=>'customer','status'=>false]);
+$queryCustomerDeSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'type'=>'customer','status'=>false]);		
+				
+$queryPartnerAc= new MongoDB\Driver\Query(['type'=>'partner','status'=>true]);		
+$queryPartnerAcSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'type'=>'partner','status'=>true]);
+$queryPartnerDe = new MongoDB\Driver\Query(['type'=>'partner','status'=>false]);
+$queryPartnerDeSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'type'=>'partner','status'=>false]);
 
 //$rowsActive = $manager->executeQuery("heroku_0g0g5g6c.user",$queryActive);
 //$rowsNotActive = $manager->executeQuery("heroku_0g0g5g6c.user",$queryNotActive);
@@ -102,6 +115,16 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
             else{
 				//$rows = $manager->executeQuery("NNNdb.user",$queryCustomerDe);
 				$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerDe);
+                }
+        }
+        else if(isset($_POST['type']) && $_POST['type'] == 'partners'){
+            if(isset($_POST['fname'])){
+                //$rows = $manager->executeQuery("NNNdb.user",$queryCustomerDeSearch);
+                $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerDeSearch);
+            }
+            else{
+				//$rows = $manager->executeQuery("NNNdb.user",$queryCustomerDe);
+				$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerDe);
                 }
         }
         else{
@@ -144,6 +167,16 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
             else{
             //$rows = $manager->executeQuery("NNNdb.user",$queryCustomerAc);
             $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerAc);
+            }
+        }
+        else if(isset($_POST['type']) && $_POST['type'] == 'customers'){
+            if(isset($_POST['fname'])){
+            //$rows = $manager->executeQuery("NNNdb.user",$queryCustomerAcSearch);  
+            $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerAcSearch);  
+            }
+            else{
+            //$rows = $manager->executeQuery("NNNdb.user",$queryCustomerAc);
+            $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerAc);
             }
         }
         else{if(isset($_POST['fname'])){

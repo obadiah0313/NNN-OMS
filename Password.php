@@ -1,3 +1,8 @@
+<?php
+session_start();
+if(!isset($_SESSION['_id']) || $_SESSION['type']!='staff'||$_SESSION['type']!='admin')
+		header('Location:./index.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
