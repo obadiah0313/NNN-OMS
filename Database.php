@@ -163,8 +163,8 @@
 			return $this->cart->find(['status' => $status]);
 		}
 				
-		public function updateOrder($oid, $status){
-			$this->cart->updateOne(['_id' => new MongoDB\BSON\ObjectID($oid)],
+		public function updateOrder($oid, $current, $status){
+			$this->cart->updateOne(['_id' => new MongoDB\BSON\ObjectID($oid), 'status' => $current],
 									['$set' => ['status' => $status]]);
 		}
 		

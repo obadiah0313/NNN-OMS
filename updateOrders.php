@@ -8,11 +8,11 @@
 		{
 			case "complete":
 				foreach($_POST['orders'] as $o)
-					$db->updateOrder($o, "completed");
+					$db->updateOrder($o,"ordered", "completed");
 				break;
 			case "confirm":
 				foreach($_POST['orders'] as $o)
-					$db->updateOrder($o, "confirmed");
+					$db->updateOrder($o,"pending", "confirmed");
 				break;
 			case "remove":
 				foreach($_POST['orders'] as $o)
