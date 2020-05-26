@@ -1,7 +1,7 @@
 <?php
 	error_reporting(0);
 	session_start();
-	if(!isset($_SESSION['_id']) || $_SESSION['type']!='staff'||$_SESSION['type']!='admin')
+	if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=='partner')
 		header('Location:./index.php');
 	require './Database.php';
 	$db = new MongodbDatabase();
