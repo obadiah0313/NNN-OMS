@@ -34,7 +34,7 @@
 			</div>
 		</div>
 		<div class="row my-3 py-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
-			<div class="col-12 justify-content-center" id="roots">
+			<div class="col-12 justify-content-center" id="root">
 
 			</div>
 		</div>
@@ -54,7 +54,6 @@
 				data: JSON.parse(response),
 				columns: columns,
 				sorting: false,
-				searchField: '#searchField',
 				pagination: false
 			});
 		}
