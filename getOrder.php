@@ -7,7 +7,13 @@
 		if($_POST['status'] === 'any') $ol = $db->loadOrder();
 		else $ol = $db->filterOrder($_POST['status']);
 		foreach($ol as $o){
+			$item = new stdClass();
+			foreach ($o['carts'] as $k=>$v){
+				$key = $db->getProductDetail((string)$k);
+				$item->$k = $key;
+			}
 			$temp = array(
+				'item' => $item,
 				'check' => '<input class="common_selector" type="checkbox" value="'.(string)$o['_id'].'" id="order">',
 				'oid' => (string)$o['_id'],
 				'date' => $o['date'],
@@ -21,7 +27,13 @@
 	}
 	else if ($_GET['init'] == 'true'){
 		foreach($db->loadOrder() as $order){
+			$item = new stdClass();
+			foreach ($order['carts'] as $k=>$v){
+				$key = $db->getProductDetail((string)$k);
+				$item->$k = $key;
+			}
 			$temp = array(
+				'item' => $item,
 				'check' => '<input class="common_selector" type="checkbox" value="'.(string)$order['_id'].'" id="order">',
 				'oid' => (string)$order['_id'],
 				'date' => $order['date'],
