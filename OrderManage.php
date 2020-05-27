@@ -74,8 +74,8 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 										<label><input type="radio" name="status" class="filter_selector status" value="any" checked> Any</label><br>
 										<label><input type="radio" name="status" class="filter_selector status" value="pending"> Pending</label><br>
 										<label><input type="radio" name="status" class="filter_selector status" value="confirmed"> Confirmed</label><br>
-										<label><input type="radio" name="status" class="filter_selector status" value="processing"> Processing</label><br>
-										<label><input type="radio" name="status" class="filter_selector status" value="ordered"> Ordered</label><br>
+										<label><input type="radio" name="status" class="filter_selector status" value="processing"> Shipping</label><br>
+										<label><input type="radio" name="status" class="filter_selector status" value="received"> Received</label><br>
 										<label><input type="radio" name="status" class="filter_selector status" value="completed"> Completed</label><br>
 									</div>
 								</div>
@@ -98,8 +98,8 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 									<label><input type="radio" name="status" class="filter_selector status" value="any" checked> Any</label><br>
 									<label><input type="radio" name="status" class="filter_selector status" value="pending"> Pending</label><br>
 									<label><input type="radio" name="status" class="filter_selector status" value="confirmed"> Confirmed</label><br>
-									<label><input type="radio" name="status" class="filter_selector status" value="processing"> Processing</label><br>
-									<label><input type="radio" name="status" class="filter_selector status" value="ordered"> Ordered</label><br>
+									<label><input type="radio" name="status" class="filter_selector status" value="processing"> Shipping</label><br>
+									<label><input type="radio" name="status" class="filter_selector status" value="received"> Received</label><br>
 									<label><input type="radio" name="status" class="filter_selector status" value="completed"> Completed</label><br>
 								</div>
 							</div>
@@ -115,19 +115,20 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 				</div>
 			</div>
 			<div class="col px-auto">
-				<div class="row py-2">
+				<div class="row py-2">					
 					<div class="col-3 text-right">
-						<button class="button allBtn item" id="btnComplete" value="'.$order['oid'].'">Complete <i class="far fa-check-circle"></i></button>
-					</div>
-					<div class="col-auto">
 						<button class="button allBtn item" id="btnConfirm" value="'.$order['oid'].'">Confirm <i class="fas fa-sync-alt"></i></button>
 					</div>
 					<div class="col-auto">
-						<button class="button allBtn item" id="btnRemove" value="'.$order['oid'].'">Remove <i class="far fa-times-circle"></i></button>
+						<button class="button allBtn item" id="btnComplete" value="'.$order['oid'].'">Complete <i class="far fa-check-circle"></i></button>
 					</div>
-					<div class="col-3 text-left">
+					<div class="col-auto">
 						<button class="button allBtn item" id="btnNotify" type="button">Notify <i class="far fa-envelope"></i></button>
 					</div>
+					<div class="col-3 text-left">
+						<button class="button allBtn item" id="btnRemove" value="'.$order['oid'].'">Remove <i class="far fa-times-circle"></i></button>
+					</div>
+					
 					<!--<div class="col-3 text-right d-none">
 						<button class="button allBtn export-btn" id="btnExport" type="button">Export <i class="fas fa-file-export"></i></button>
 					</div>-->
@@ -217,7 +218,6 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 						},
 						success: function(response) {
 							load_order();
-							$('#wrapper').load('OrderManage.php' + ' #summary');
 						}
 					});
 
@@ -237,7 +237,6 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 						},
 						success: function(response) {
 							load_order();
-							$('#wrapper').load('OrderManage.php' + ' #summary');
 							$.ajax({
 								url: 'smtpScript.php',
 								method: 'POST',
@@ -252,15 +251,26 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 			});
 
 			$(document).on('click', '#btnNotify', function() {
-				var action = 'notify';
+				var action = 'received';
 				if (order_list.length == 0) alert("Please select at least ONE order.");
 				else {
 					$.ajax({
-						url: 'notify.php',
-						method: 'POST',
+						url: './updateOrders.php?action=received',
+						method: "POST",
 						data: {
-							action: 'notify',
+							action: action,
 							orders: order_list,
+						},
+						success: function(response) {
+							load_order();
+							$.ajax({
+								url: 'notify.php',
+								method: 'POST',
+								data: {
+									action: 'notify',
+									orders: order_list,
+								}
+							});
 						}
 					});
 				}
@@ -279,7 +289,6 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 						},
 						success: function(response) {
 							load_order();
-							$('#wrapper').load('OrderManage.php' + ' #summary');
 						}
 					});
 				}

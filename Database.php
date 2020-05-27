@@ -156,7 +156,7 @@
 		
 		public function loadSummary($start, $end){
 			$sum = [];
-			$summary = $this->cart->find(['status' => "ordered", 'date' => [ '$gte' => $start, '$lte' => $end ]]);
+			$summary = $this->cart->find(['$or' => [['status' => 'shipping' ], ['status' => 'completed'], ['status' => 'received']], 'date' => [ '$gte' => $start, '$lte' => $end ]]);
 			foreach ($summary as $s){
 				foreach ($s['carts'] as $k=>$v) {
 					if(!isset($sum[$k]))

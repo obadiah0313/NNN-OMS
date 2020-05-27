@@ -353,8 +353,8 @@
 		$(document).on("click", "#btnConfirm", function() {
 			$("body").overhang({
 				type: "info",
-				message: "Upload in progress...Stay on the page until Upload finish...",
-				duration: 3,
+				message: "Uploading might take few seconds...Wait Until the Page to REFRESH...",
+				duration: 2,
 				overlay: true
 			});
 			var pk = $('#primaryKey').find(":selected").val();

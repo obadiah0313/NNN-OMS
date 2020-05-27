@@ -5,11 +5,11 @@
 		{
 			if ($db->checkExists() != null) {
 				$db->replaceStock(date("Y-m-d"),$_POST['product'],$_POST['header'],$_POST['primarykey'],$_POST['desp'],$_POST['filename']);
-				echo json_encode(["type" => "success", "msg" => "Replaced successfully!"]);
+				echo json_encode(["type" => "success", "msg" => "Upload successfully!"]);
 			}
 			else{
 				$db->insertStock(date("Y-m-d"),$_POST['product'],$_POST['header'],$_POST['primarykey'],$_POST['desp'],$_POST['filename']);
-				echo json_encode(["type" => "success", "msg" => "Insert successfully!"]);
+				echo json_encode(["type" => "success", "msg" => "Upload successfully!"]);
 			}
 		}
 ?>

@@ -18,6 +18,10 @@
 				foreach($_POST['orders'] as $o)
 					$db->removeOrder($o);
 				break;
+			case "received":
+				foreach($_POST['orders'] as $o)
+					$db->updateOrder($o,"shipping", "received");
+				break;
 		}
 	}
 ?>
