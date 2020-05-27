@@ -33,7 +33,7 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 				<p id="id"></p>
 				<label class="font-weight-bold">Order Date</label>
 				<p id="date"></p>
-				<label class="font-weight-bold">Customer/Partner</label>
+				<label class="font-weight-bold">Order By</label>
 				<p id="user"></p>
 				<label class="font-weight-bold">Order Product(s)</label>
 				<div id="products"></div>
@@ -195,7 +195,8 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 									$("#products").empty();
 									var content = "<table class=\"table\"><tr><th><?php echo $db->getPrimaryKey(); ?></th><th><?php echo $db->getDespKey(); ?></th><th>Quantity</th></tr>";
 									$.each(value.cart, function(index, val) {
-										content += "<tr><td>" + index + "</td><td><?php echo $db->getProductDetail(index);?></td><td>" + val + "</td></tr>";
+										alert(index);
+										content += "<tr><td>" + index + "</td><td><?php echo $db->getProductDetail((string)index);?></td><td>" + val + "</td></tr>";
 									});
 									$("#products").append(content);
 								}
