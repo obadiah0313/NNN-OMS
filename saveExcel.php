@@ -3,7 +3,9 @@ error_reporting(0);
 if(!empty($_FILES["file"]["name"]))
 {   
 	$dir = "Product_List";
-	$path = $dir.'/'.$_FILES["file"]["name"];
+	if(strpos($_FILES["file"]["name"], '%20')  !== false)
+		$path = $dir.'/'.str_replace('%20', ' ', $_FILES["file"]["name"]);
+	else $path = $dir.'/'.$_FILES["file"]["name"];
 	if(!file_exists($path)) {
 		chmod($path, 0755);
 		unlink($path);

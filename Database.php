@@ -153,6 +153,24 @@
 		public function removeOrder($oid) {
 			$this->cart->deleteOne(['_id' => new MongoDB\BSON\ObjectID($oid)]);
 		}
+		
+		public function loadSummary($start, $end){
+			$sum = [];
+			$summary = $this->cart->find(['status' => "ordered", 'date' => [ '$gte' => $start, '$lte' => $end ]]);
+			foreach ($summary as $s){
+				foreach ($s['carts'] as $k=>$v) {
+					if(!isset($sum[$k]))
+						$sum[$k] = $v;
+					else
+						$sum[$k] += $v;
+				}
+			}
+			$result = array();
+			foreach($sum as $key=>$val) {
+				array_push($result,array($key, $this->getProductDetail((string)$key), $val));
+			}
+			return $result;
+		}
 		/******************/
 		/*Get Filter value*/
 		/******************/

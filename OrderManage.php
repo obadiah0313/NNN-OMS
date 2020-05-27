@@ -51,9 +51,6 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 	<?php
 		include './NavBar.php';
 	?>
-	<div style="display:none">
-		<input type="file" id="productList">
-	</div>
 	<div class="page-container">
 		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 			<div class="text-center col-12 py-3">
