@@ -167,7 +167,7 @@
 			}
 			$result = array();
 			foreach($sum as $key=>$val) {
-				array_push($result,array($key, $this->getProductDetail((string)$key), $val));
+				array_push($result,array('code'=>$key, 'desp'=>$this->getProductDetail((string)$key), 'qty'=>$val));
 			}
 			return $result;
 		}

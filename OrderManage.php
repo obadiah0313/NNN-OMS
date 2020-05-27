@@ -193,7 +193,6 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 									$("#products").empty();
 									var content = "<table class=\"table\"><tr><th><?php echo $db->getPrimaryKey(); ?></th><th><?php echo $db->getDespKey(); ?></th><th>Quantity</th></tr>";
 									$.each(value.cart, function(index, val) {
-										alert();
 										content += "<tr><td>" + index + "</td><td>"+value.item[index]+"</td><td>" + val + "</td></tr>";
 									});
 									$("#products").append(content);
@@ -383,7 +382,7 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 									$("#products").empty();
 									var content = "<table class=\"table\"><tr><th><?php echo $db->getPrimaryKey(); ?></th><th><?php echo $db->getDespKey(); ?></th><th>Quantity</th></tr>";
 									$.each(value.cart, function(index, val) {
-										content += "<tr><td>" + index + "</td><td>" + val + "</td></tr>";
+										content += "<tr><td>" + index + "</td><td>"+value.item[index]+"</td><td>" + val + "</td></tr>";
 									});
 									$("#products").append(content);
 								}

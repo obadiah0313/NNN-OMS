@@ -1,3 +1,7 @@
+<?php
+	require 'Database.php';
+	$db = new MongodbDatabase();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +13,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="stylesheet" href="css/login.css">
 	<link rel="stylesheet" href="css/overhang.min.css">
+	<link rel="stylesheet" href="css/jquery-ui.css">
 	<link rel="stylesheet" href="css/daterangepicker.css">
 </head>
 
@@ -28,8 +33,11 @@
 				</div>
 			</div>
 		</div>
-		<!--<div class="row my-3 py-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
-			</div>-->
+		<div class="row my-3 py-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
+			<div class="col-12 justify-content-center" id="roots">
+
+			</div>
+		</div>
 
 	</div>
 	<?php include './Footer.php'; ?>
@@ -39,7 +47,24 @@
 	<script src="js/moment.min.js"></script>
 	<script src="js/daterangepicker.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
+	<script src="Table-Sortable/table-sortable.js"></script>
 	<script type="text/javascript">
+		function showTable(response) {
+			var table = $('#root').tableSortable({
+				data: JSON.parse(response),
+				columns: columns,
+				sorting: false,
+				searchField: '#searchField',
+				pagination: false
+			});
+		}
+
+		var columns = {
+			code: '<?php echo $db->getPrimaryKey(); ?>',
+			desp: '<?php echo $db->getDespKey(); ?>',
+			qty: 'Quantity Ordered'
+		}
+		
 		$(function() {
 
 			var start = moment().subtract(29, 'days');
@@ -56,11 +81,7 @@
 						end: end.format('YYYY-MM-DD'),
 					},
 					success: function(response) {
-						response = JSON.parse(response);
-						$("body").overhang({
-							type: response.type,
-							message: response.msg
-						});
+						showTable(response);
 					}
 				});
 			}
