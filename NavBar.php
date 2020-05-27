@@ -40,8 +40,8 @@
 				<div class="col-auto mr-auto">
 					<a href="./index.php"><img src="img/neko.png" alt="logo" style="position:absolute; z-index:4;width:500%;"></a>
 				</div>
-				<div class="col-auto">
-					<h1 class="mt-3">
+				<div class="col-auto mb-0 mt-3">
+					<h1>
 						<i>Neko Neko Nyaa</i>
 						<small class="text-muted"> Ordering System</small>
 					</h1>
@@ -52,17 +52,18 @@
 	<nav style="z-index:3" class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark" role="navigation">
 		<div class="container-fluid" style="margin-left: 10%;
 	margin-right: 10%;">
-			<div class="d-none d-lg-block" style="margin-left:6%"></div>
+			<div class="d-none d-lg-block" style="width:100px"></div>
 			<a class="navbar-brand text-warning" href="index.php">Neko Neko Nyaa</a>
 			<button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
 				&#9776;
 			</button>
 			<div class="collapse navbar-collapse order-0" id="exCollapsingNavbar">
 				<ul class="nav navbar-nav">
-					<li class="nav-item"><a href="./Catalogue_Available.php" class="nav-link">Catalogue Available</a></li>
-					<li class="nav-item"><a href="./Catalogue_Unavailable.php" class="nav-link">Deletions</a></li>
+					<li class="nav-item"><a href="./Catalogue_Available.php" class="nav-link">Catalogue</a></li>
+					<li class="nav-item"><a href="./about.php" class="nav-link">About Us</a></li>
                     <?php 
-                    if (isset($_SESSION['fullname'])){if ($_SESSION['type']=="admin" || $_SESSION['type']=="staff"){echo'
+                    if (isset($_SESSION['fullname'])){
+						if ($_SESSION['type']=="admin" || $_SESSION['type']=="staff"){?>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Setting
@@ -72,7 +73,20 @@
 							<a class="dropdown-item" href="./OrderManage.php">Order Management</a>
 							<a class="dropdown-item" href="./CatalogueManage.php">Catalogue Management</a>
 						</div>
-					</li>';}else {echo"";}}else {echo"";}?>
+					</li>
+					<?php }
+						if ($_SESSION['type']=="admin"){?>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Admin
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="./addStaff.php">Add Staff</a>
+							<a class="dropdown-item" href="./OrderSummary.php">Order Summary</a>
+						</div>
+					</li>
+					<?php } }
+					?>
 				</ul>
 			</div>
 			<div class="collapse navbar-collapse order-1" id="exCollapsingNavbar">

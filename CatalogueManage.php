@@ -200,7 +200,7 @@
 			var fileUpload = $("#fileUpload")[0];
 
 			//Validate whether File is valid Excel file.
-			var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xls|.xlsx|.xlsm)$/;
+			var regex = /^([a-zA-Z0-9\s_\\.\-:%])+(.xls|.xlsx|.xlsm)$/;
 			if (regex.test(fileUpload.value.toLowerCase())) {
 				if (typeof(FileReader) != "undefined") {
 					var form_data = new FormData();
@@ -251,7 +251,7 @@
 			}
 
 		});
-		var product, deletion, head;
+		var product, head;
 
 		function ProcessExcel(data) {
 			//Read the Excel File data.
@@ -263,7 +263,6 @@
 			var SheetList = workbook.SheetNames;
 			for (var i = 0; i < SheetList.length; i++) {
 				if (SheetList[i] == "GBD_Asia") var worksheet = SheetList[i];
-				if (SheetList[i] == "Deletions") var worksheet2 = SheetList[i];
 			}
 
 			//Read all rows from First Sheet into an JSON array.
@@ -276,17 +275,6 @@
 					newObj.push(value);
 				}
 			})
-
-			var excelRows2 = XLSX.utils.sheet_to_json(workbook.Sheets[worksheet2], {
-				range: 3
-			});
-			var newObj2 = [];
-			$.each(excelRows2, function(index, value) {
-				if (value.hasOwnProperty("Code")) {
-					newObj2.push(value);
-				}
-			})
-
 
 			var headers = [];
 			var range = XLSX.utils.decode_range(workbook.Sheets[worksheet]['!ref']);
@@ -324,8 +312,7 @@
 					$('#setPrimary').css("display", "block");
 					$('#setHeaders').css("display", "none");;
 					product = response.product;
-					deletion = newObj2,
-						head = headers;
+					head = headers;
 				}
 			})
 		};
@@ -366,7 +353,9 @@
 		$(document).on("click", "#btnConfirm", function() {
 			$("body").overhang({
 				type: "info",
-				message: "Upload in progress...Please Wait",
+				message: "Upload in progress...Stay on the page until Upload finish...",
+				duration: 3,
+				overlay: true
 			});
 			var pk = $('#primaryKey').find(":selected").val();
 			var desp = $('#desp').find(":selected").val();
@@ -379,25 +368,14 @@
 					primarykey: pk,
 					desp: desp,
 				},
-				url: 'ubackend.php?doc=stock',
-				success: function(response) {
-					response = JSON.parse(response);
-					$.ajax({
-						method: 'POST',
-						data: {
-							process: response.stock,
-							deletion: deletion
-						},
-						url: 'ubackend.php?doc=deletion',
-						success: function(data) {
-							data = JSON.parse(data);
-							$("body").overhang({
-								type: data.type,
-								message: data.msg,
-								callback: function() {
-									document.location.reload();
-								}
-							});
+				url: 'ubackend.php',
+				success: function(data) {
+					data = JSON.parse(data);
+					$("body").overhang({
+						type: data.type,
+						message: data.msg,
+						callback: function() {
+							document.location.reload();
 						}
 					});
 				}

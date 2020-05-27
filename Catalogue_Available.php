@@ -1,4 +1,5 @@
 <?php 
+	error_reporting(0);
 	session_start();
 	require './Database.php';
 	$db = new MongodbDatabase();
@@ -322,7 +323,6 @@
 								callback: function() {
 									document.location.href= "Login.php";
 								}
-
 							});
 						}
 					}

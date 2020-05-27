@@ -30,16 +30,7 @@
 					'sort' => ['date'=> -1]
 				]);
 		}
-		
-		public function fetchDeletion(){
-			return $this->deletion->find(
-				[],
-				[
-					'limit' => 1, 
-					'sort' => ['date'=> -1]
-				]);
-		}
-		
+				
 		public function getProduct(){
 			foreach($this->fetchProduct() as $i){
 				return iterator_to_array($i['products']);
@@ -89,20 +80,11 @@
 			$this->collect->replaceOne(['date' => $date],
 										['date' => $date, 'products' => $product, 'header' => $header, 'primaryKey' => $primarykey,'desp'=>$desp, 'filename' => $file]);
 		}
-		
-		public function replaceDeletion($date, $deletion){
-			$this->deletion->replaceOne(['date' => $date],
-										['date' => $date, 'deletions' => $deletion]);
-		}
-		
+				
 		public function insertStock($date, $product, $header, $primarykey,$desp, $file){
 			$this->collect->insertOne(['date' => $date, 'products' =>$product, 'header' => $header, 'primaryKey' => $primarykey, 'desp'=>$desp,'filename' => $file]);
 		}
-		
-		public function insertDeletion($date, $deletion){
-			$this->deletion->insertOne(['date' => $date, 'deletions' =>$deletion]);
-		}
-		
+				
 		/******************/
 		/*Table Management*/
 		/******************/
@@ -195,7 +177,10 @@
 		/*****************/
 		public function checkUserExist($email){
 			$userinfo = $this->user->findOne(['email' => $email]);
-			return $userinfo['_id'];
+			if($userinfo!= null)
+				return $userinfo['_id'];
+			else 
+				return null;
 		}
 	
         public function insertUser($fullname, $phone, $email, $password, $type, $status){
@@ -247,6 +232,7 @@
 			}
 			return $orderhistory;
 		}
+		
 	}
 	
 ?>

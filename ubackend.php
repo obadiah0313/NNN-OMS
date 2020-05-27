@@ -1,29 +1,15 @@
 <?php
 	require 'Database.php';	
 	$db = new MongodbDatabase();
-	if($_GET['doc'] == 'stock')
-	{
 		if (isset($_POST['product']) && isset($_POST['header']) && isset($_POST['primarykey']) && isset($_POST['filename']))
 		{
 			if ($db->checkExists() != null) {
 				$db->replaceStock(date("Y-m-d"),$_POST['product'],$_POST['header'],$_POST['primarykey'],$_POST['desp'],$_POST['filename']);
-				echo json_encode(["stock" => "replace"]);
+				echo json_encode(["type" => "success", "msg" => "Replaced successfully!"]);
 			}
 			else{
 				$db->insertStock(date("Y-m-d"),$_POST['product'],$_POST['header'],$_POST['primarykey'],$_POST['desp'],$_POST['filename']);
-				echo json_encode(["stock" => "insert"]);
+				echo json_encode(["type" => "success", "msg" => "Insert successfully!"]);
 			}
 		}
-	}
-	if($_GET['doc'] == 'deletion')
-	{	
-		if($_POST['process'] == "replace"){
-			$db->replaceDeletion(date("Y-m-d"),$_POST['deletion']);
-			echo json_encode(["type" => "success", "msg" => "Replaced successfully!"]);
-		}
-		else {
-			$db->insertDeletion(date("Y-m-d"),$_POST['deletion']);
-			echo json_encode(["type" => "success", "msg" => "Insert successfully!"]);
-		}		
-	}
 ?>

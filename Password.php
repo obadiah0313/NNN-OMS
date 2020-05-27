@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['_id']) || $_SESSION['type']!='staff'||$_SESSION['type']!='admin')
+if(!isset($_SESSION['_id']))
 		header('Location:./index.php');
 ?>
 <!DOCTYPE html>

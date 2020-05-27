@@ -27,18 +27,7 @@
 					$temp = array_merge($temp, array('btnAdd' => '<div class="text-center"><button class="button allBtn mb-1" id="btnDetails" value="'.$v[$pk].'">Details <i class="fas fa-info-circle"></i></button> <button class="button allBtn item" id="btnAdd" value="'.$v[$pk].'">Add to Cart <i class="fas fa-cart-plus"></i></button></div>', 'id' => '<span style="display:none">'.$v[$pk].'</span>'));
 					$data[$k] = $temp;
 				}
-			}	
-		} else if ($_GET['stock'] === "no") {
-			foreach($db->fetchDeletion() as $cl) {
-				for($i = 0; $i < sizeof($cl['deletions']); $i++){
-					$datas = array(
-						"desp" => $cl['deletions'][$i]['__EMPTY'],
-						"datechange" => date("Y-m-d",($cl['deletions'][$i]['Date of Change']- (25567 + 2))*86400),
-						"comment" => $cl['deletions'][$i]['Comment (correct at time of removal)'],
-					);
-					array_push($data, $datas);
-				}
-			}	
+			}
 		}
 	} else if ($_GET['init'] == 'false') {
 		if(isset($_POST["action"])){
@@ -58,7 +47,7 @@
 					}
 					if($count == 0){ 
 						$temp = iterator_to_array($v);
-						$temp = array_merge($temp, array('btnAdd' => '<button class="button allBtn item" id="btnAdd" value="'.$v[$pk].'">Add to Cart <i class="fas fa-cart-plus"></i></button>', 'id' => '<span style="display:none">'.$v[$pk].'</span>'));
+						$temp = array_merge($temp, array('btnAdd' => '<div class="text-center"><button class="button allBtn mb-1" id="btnDetails" value="'.$v[$pk].'">Details <i class="fas fa-info-circle"></i></button> <button class="button allBtn item" id="btnAdd" value="'.$v[$pk].'">Add to Cart <i class="fas fa-cart-plus"></i></button></div>', 'id' => '<span style="display:none">'.$v[$pk].'</span>'));
 						array_push($data,$temp);						
 					}
 					
