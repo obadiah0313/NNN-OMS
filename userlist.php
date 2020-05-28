@@ -47,7 +47,7 @@ else if ($_SESSION['type'] == 'staff')
 						</div>
 						<div class="col-auto">
 							<b>User Type: </b>
-							<input type="radio" id="staffs" name="type" value="staffs">
+							<input type="radio" id="staffs" name="type" value="staffs" checked>
 							<label for="staffs">Staffs</label>
 							<input type="radio" id="customers" name="type" value="customers">
 							<label for="customers">Customers</label>

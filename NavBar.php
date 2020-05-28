@@ -38,7 +38,7 @@
 		<div class="page-container">
 			<div class="row">
 				<div class="col-auto mr-auto">
-					<a href="./index.php"><img src="img/neko.png" alt="logo" style="position:absolute; z-index:4;width:500%;"></a>
+					<a href="./index.php"><img src="img/neko.png" alt="logo" style="position:absolute; z-index:6;width:500%;"></a>
 				</div>
 				<div class="col-auto mb-0 mt-3">
 					<h1>
@@ -49,7 +49,7 @@
 			</div>
 		</div>
 	</div>
-	<nav style="z-index:3" class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark" role="navigation">
+	<nav style="z-index:5" class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark" role="navigation">
 		<div class="container-fluid" style="margin-left: 10%;
 	margin-right: 10%;">
 			<div class="d-none d-lg-block" style="width:100px"></div>
