@@ -51,6 +51,7 @@
 							</div>
 							<div class="form-group">
 								<p class="text-center">Don't have account? <a href="#" id="signup">Sign up here</a></p>
+								<p class="text-center mt-0"><a href="./forgotPwd.php">Forgot Password?</a></p>
 							</div>
 						</form>
 
@@ -104,16 +105,34 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			var exist = <?php echo $_GET['exist']; ?>;
+			var status = '<?php echo $_GET['status']?>';
 			if(exist == true){
-				$("body").overhang({
-					type: "error",
-					message: "Account Exists......"
-				});
+				if(status == ''){
+					$("body").overhang({
+						type: "error",
+						message: "Account Exists......",
+					callback: function(){
+						window.history.replaceState("object or string", "Title", "/"+window.location.href.substring(window.location.href.indexOf('/') + 1).split("?")[0]);
+					}
+					});
+				}
+				else if (status == 'false'){
+					$("body").overhang({
+						type: "warning",
+						message: "Account has been Deactivated. Contact the store to activated.",
+					callback: function(){
+						window.history.replaceState("object or string", "Title", "/"+window.location.href.substring(window.location.href.indexOf('/') + 1).split("?")[0]);
+					}
+					});
+				}				
 			}
 			else if(exist == false) {
 				$("body").overhang({
 					type: "error",
-					message: "No Account Registered Yet, Please Sign Up First."
+					message: "Wrong Password or No Registration",
+					callback: function(){
+						window.history.replaceState("object or string", "Title", "/"+window.location.href.substring(window.location.href.indexOf('/') + 1).split("?")[0]);
+					}
 				});
 			}
 		});

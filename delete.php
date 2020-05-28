@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['_id']) || ($_SESSION['type'] == "customer" || $_SESSION['partner']))
+if(!isset($_SESSION['_id']) || $_SESSION['type'] == "customer" || $_SESSION['type'] == "partner")
 {
 	header("Location:index.php");
 }

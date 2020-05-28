@@ -20,6 +20,7 @@ try {
     $phone = $row[0]->phone;
     $password = $row[0]->password;
     $type = $row[0]->type;
+	$status = $row[0]->status;
     
     $_SESSION['_id'] = $_id;
     $_SESSION['fullname'] = $fullname;
@@ -27,10 +28,17 @@ try {
     $_SESSION['email'] = $email;
     $_SESSION['password'] = $password;
     $_SESSION['type'] = $type;
-	if(isset($_SESSION['_id']))
+	$_SESSION['status'] = $status;
+	if(isset($_SESSION['_id']) && $_SESSION['status'] == true)
     	header("Location:./index.php");
-	else
+	else if(isset($_SESSION['_id']) && $_SESSION['status'] == false){
+		session_destroy();
+		header("Location:./Login.php?exist=true&status=false");
+	}
+	else{
+		session_destroy();
 		header("Location:./Login.php?exist=false");
+	}
 }
 catch (MongoDB\Driver\Exception\Exception $e){
     die("Error Encountered:".$e);
