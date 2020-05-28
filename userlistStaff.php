@@ -4,9 +4,9 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/overhang.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<title>Neko Neko Nyaa</title>
+	<link rel="icon" href="img/neko.png">
 </head>
 
 <body class="bg">
@@ -37,15 +37,15 @@
           <input type="radio" id="customers" name="type" value="customers">
           <label for="customers" style="margin-right:10px;">Customers</label> 
 
-        <button type="submit" style="margin-right:20px;" form="search" value="Submit" class="button btn-outline-warning tx-tfm">Search</button>
+        <button type="submit" style="margin-right:20px;" form="search" value="Submit" class="button allBtn tx-tfm">Search</button>
               
         </form>
 </div>
         <div class = "row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 <?php
 if(isset($_SESSION['type']) && $_SESSION['type']=="staff"){            
-$manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
-//$manager = new MongoDB\Driver\Manager('mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c?replicaSet=rs-ds239009&retryWrites=false');
+//$manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+$manager = new MongoDB\Driver\Manager('mongodb://admin:admin123@ds239009.mlab.com:39009/heroku_0g0g5g6c?replicaSet=rs-ds239009&retryWrites=false');
 if(isset($_POST['status'])){
     $fname = $_POST['fname'];
 }
@@ -80,12 +80,12 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
     $action = "Activate";
         if (isset($_POST['type']) && $_POST['type'] == 'customers'){
             if(isset($_POST['fname'])){
-                $rows = $manager->executeQuery("NNNdb.user",$queryCustomerDeSearch);
-                //$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerDeSearch);
+                //$rows = $manager->executeQuery("NNNdb.user",$queryCustomerDeSearch);
+                $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerDeSearch);
             }
             else{
-				$rows = $manager->executeQuery("NNNdb.user",$queryCustomerDe);
-				//$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerDe);
+				//$rows = $manager->executeQuery("NNNdb.user",$queryCustomerDe);
+				$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerDe);
                 }
                 echo "Deactive Customer";
                 foreach ($rows as $row){
@@ -101,12 +101,12 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
                 }
         else{
             if(isset($_POST['fname'])){
-                $rows = $manager->executeQuery("NNNdb.user",$queryPartnerDeSearch);
-                //$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerDeSearch);
+                //$rows = $manager->executeQuery("NNNdb.user",$queryPartnerDeSearch);
+                $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerDeSearch);
             }
             else{
-				$rows = $manager->executeQuery("NNNdb.user",$queryPartnerDe);
-				//$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerDe);
+				//$rows = $manager->executeQuery("NNNdb.user",$queryPartnerDe);
+				$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerDe);
                 }
                 echo "Deactive Partner";
                 foreach ($rows as $row){
@@ -125,12 +125,12 @@ else {
      $action = "Deactivate";
     if (isset($_POST['type']) && $_POST['type'] == 'customers') {
             if(isset($_POST['fname'])){
-            $rows = $manager->executeQuery("NNNdb.user",$queryCustomerAcSearch);  
-            //$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerAcSearch);  
+            //$rows = $manager->executeQuery("NNNdb.user",$queryCustomerAcSearch);  
+            $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerAcSearch);  
             }
             else{
-            $rows = $manager->executeQuery("NNNdb.user",$queryCustomerAc);
-            //$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerAc);
+            //$rows = $manager->executeQuery("NNNdb.user",$queryCustomerAc);
+            $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerAc);
             }
             echo "Active Customer";
                 foreach ($rows as $row){
@@ -147,12 +147,12 @@ else {
         }
             else{
             if(isset($_POST['fname'])){
-                $rows = $manager->executeQuery("NNNdb.user",$queryPartnerAcSearch);
-                //$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerAcSearch);
+                //$rows = $manager->executeQuery("NNNdb.user",$queryPartnerAcSearch);
+                $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerAcSearch);
             }
             else{
-				$rows = $manager->executeQuery("NNNdb.user",$queryPartnerAc);
-				//$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerAc);
+				//$rows = $manager->executeQuery("NNNdb.user",$queryPartnerAc);
+				$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerAc);
                 }
                 echo "Active Partner";
                 foreach ($rows as $row){
