@@ -11,7 +11,7 @@ else if ($_SESSION['type'] == 'staff')
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/overhang.min.css">
+	<link rel="stylesheet" href="css/jquery-ui.css">
 	<link rel="stylesheet" href="css/style.css">
 	<title>Neko Neko Nyaa</title>
 	<link rel="icon" href="img/neko.png">
@@ -273,6 +273,7 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
 	</div>
 	<?php include './Footer.php'?>
 	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery-ui.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
 </body>

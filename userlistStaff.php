@@ -9,7 +9,8 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style.css">	
+	<link rel="stylesheet" href="css/jquery-ui.css">
 	<title>Neko Neko Nyaa</title>
 	<link rel="icon" href="img/neko.png">
 </head>
@@ -182,7 +183,8 @@ else {echo" You shouldn't be here";}
 		</div>
 	</div>
 	<?php include './Footer.php'?>
-	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.min.js"></script>	
+	<script src="js/jquery-ui.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
 </body>
