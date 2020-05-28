@@ -10,11 +10,11 @@ else if ($_SESSION['type'] == 'staff')
 
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/jquery-ui.css">
-	<link rel="stylesheet" href="css/style.css">
 	<title>Neko Neko Nyaa</title>
 	<link rel="icon" href="img/neko.png">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/jquery-ui.css">
+	<link rel="stylesheet" href="css/style.css">	
 </head>
 
 <body class="bg">
@@ -55,7 +55,7 @@ else if ($_SESSION['type'] == 'staff')
 							<label for="partners">Partners</label>
 						</div>
 						<div class="col-auto">
-							<button type="submit" style="margin-right:20px;" form="search" value="Submit" class="button allBtn tx-tfm">Search</button>
+							<button id="btnSearch" type="submit" form="search" value="Submit" class="button allBtn tx-tfm">Search</button>
 						</div>
 					</div>
 
@@ -105,6 +105,18 @@ echo "<div class='table-responsive'><table class='table table-striped table-hove
 </tr>
 </thead>
 <tbody>";
+if(!isset($_POST['btnSearch'])){
+	$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryStaffAc);
+	echo "<caption style='caption-side:top' class='text-center'><h5>Active Staff(s)<h5></caption>";
+                foreach ($rows as $row){
+                echo "<tr>".
+                    "<td>".$row->fullname."</td>".
+                    "<td>".$row->phone."</td>".
+                    "<td>".$row->email."</td>".
+                    "<td>".$row->type."</td>".
+                    "<td><a id='btnDeactivate' class='button allBtn justify-content-between' href ='./delete.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>Deactivate</a><td>".
+                    "</tr>";}
+}
     
 if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
     $action = "Activate";
@@ -177,17 +189,15 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
 				//$rows = $manager->executeQuery("NNNdb.user",$queryNotActive);
 				$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryNotActive);
                 }
-            }
+            }echo "<caption style='caption-side:top' class='text-center'><h5>All Deactivated User(s)<h5></caption>";
     foreach ($rows as $row){
-                echo"<tbody>".
-                    "<tr>".
+                echo "<tr>".
                     "<td>".$row->fullname."</td>".
                     "<td>".$row->phone."</td>".
                     "<td>".$row->email."</td>".
                     "<td>".$row->type."</td>".
                     "<td><a id='btnActivate' class='button allBtn justify-content-between' href ='./activate.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>" .$action."</a><td>".
-                    "</tr>".
-                    "</tbody>";}*/
+                    "</tr>";}*/
 }else {
      $action = "Deactivate";
         if(isset($_POST['type']) && $_POST['type'] == 'staffs'){
@@ -248,7 +258,7 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
                     "</tr>";}
 			
         }
-        else{if(isset($_POST['fname'])){
+        /*else{if(isset($_POST['fname'])){
             //$rows = $manager->executeQuery("NNNdb.user",$queryActiveSearch); 
             $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryActiveSearch); 
             }
@@ -256,7 +266,7 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
             //$rows = $manager->executeQuery("NNNdb.user",$queryActive);
             $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryActive);
             }
-        }
+        }echo "<caption style='caption-side:top' class='text-center'><h5>All Active User(s)<h5></caption>";
     foreach ($rows as $row){
                 echo "<tr>".
                     "<td>".$row->fullname."</td>".
@@ -264,8 +274,9 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
                     "<td>".$row->email."</td>".
                     "<td>".$row->type."</td>".
                     "<td><a id='btnDeactivate' class='button allBtn justify-content-between' href ='./delete.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>" .$action."</a><td>".
-                    "</tr>";}
-        }
+                    "</tr>";
+	}*/
+}
 	echo "</tbody></table></div>"
 ?>
 			</div>
@@ -276,6 +287,11 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
 	<script src="js/jquery-ui.js"></script>
 	<script src="js/popper.min.js"></script>
 	<script src="js/bootstrap.bundle.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#btnSearch").one('click',function(event) {var a = true});
+		});
+	</script>
 </body>
 
 </html>

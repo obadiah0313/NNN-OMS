@@ -65,9 +65,7 @@
                     if (isset($_SESSION['fullname'])){
 						if ($_SESSION['type']=="admin" || $_SESSION['type']=="staff"){?>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Setting
-						</a>
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Setting</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 							<a class="dropdown-item" href="<?php if($_SESSION['type'] == "admin") echo "./userlist.php"; else echo "./userlistStaff.php";?>">User Management</a>
 							<a class="dropdown-item" href="./OrderManage.php">Order Management</a>
@@ -77,9 +75,7 @@
 					<?php }
 						if ($_SESSION['type']=="admin"){?>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Admin
-						</a>
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 							<a class="dropdown-item" href="./addStaff.php">Add Staff</a>
 							<a class="dropdown-item" href="./OrderSummary.php">Order Summary</a>
