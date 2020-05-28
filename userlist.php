@@ -1,7 +1,9 @@
 <?php
 session_start();
-if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=='partner'||$_SESSION['type']=='staff' )
-		header('Location:./index.php');
+if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=='partner')
+	header('Location:./index.php');
+else if ($_SESSION['type'] == 'staff')
+	header('Location:./userlistStaff.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
