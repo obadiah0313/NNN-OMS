@@ -30,7 +30,7 @@ else if ($_SESSION['type'] == 'staff')
 			</div>
 		</div>
 
-		<div class="row my-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
+		<div class="row py-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
 			<div class="col-12 text-center">
 				<form action="userlist.php" id="search" method="post">
 					<div class="row justify-content-center">
@@ -43,7 +43,7 @@ else if ($_SESSION['type'] == 'staff')
 							<input type="radio" id="active" name="status" value="active" checked="checked">
 							<label for="staffs">Active</label>
 							<input type="radio" id="deactive" name="status" value="deactive">
-							<label for="customers">Deactived</label>
+							<label for="deactive">Deactivated</label>
 						</div>
 						<div class="col-auto">
 							<b>User Type: </b>

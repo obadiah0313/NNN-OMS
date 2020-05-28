@@ -40,7 +40,7 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 							<input type="radio" id="active" name="status" value="active" checked="checked">
 							<label for="staffs">Active</label>
 							<input type="radio" id="deactive" name="status" value="deactive">
-							<label for="customers">Deactived</label>
+							<label for="deactive">Deactivated</label>
 						</div>
 						<div class="col-auto">
 							<b>User Type: </b>
