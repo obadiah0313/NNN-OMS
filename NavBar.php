@@ -69,7 +69,7 @@
 							Setting
 						</a>
 						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="./userlist.php">User Management</a>
+							<a class="dropdown-item" href="<?php if($_SESSION['type'] == "admin") echo "./userlist.php"; else echo "./userlistStaff.php";?>">User Management</a>
 							<a class="dropdown-item" href="./OrderManage.php">Order Management</a>
 							<a class="dropdown-item" href="./CatalogueManage.php">Catalogue Management</a>
 						</div>

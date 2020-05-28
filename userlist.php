@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=='partner')
+if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=='partner'||$_SESSION['type']=='staff' )
 		header('Location:./index.php');
 ?>
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 	<link rel="stylesheet" href="css/overhang.min.css">
 	<link rel="stylesheet" href="css/style.css">
 	<title>Neko Neko Nyaa</title>
-		<link rel="icon" href="img/neko.png">
+	<link rel="icon" href="img/neko.png">
 </head>
 
 <body class="bg">
@@ -62,10 +62,10 @@ else{
 }
         $regex = new MongoDB\BSON\Regex($fname, 'i');
     
-$queryActive = new MongoDB\Driver\Query(['status'=>true]);
+/*$queryActive = new MongoDB\Driver\Query(['status'=>true]);
 $queryActiveSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'status'=>true]);
 $queryNotActive = new MongoDB\Driver\Query(['status'=>false]);
-$queryNotActiveSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'status'=>false]);
+$queryNotActiveSearch = new MongoDB\Driver\Query(['fullname'=>$regex,'status'=>false]);*/
 			
 $queryStaffAc= new MongoDB\Driver\Query(['type'=>'staff','status'=>true]);
 $queryStaffAcSearch= new MongoDB\Driver\Query(['fullname'=>$regex,'type'=>'staff','status'=>true]);
@@ -106,6 +106,18 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
                 //$rows = $manager->executeQuery("NNNdb.user",$queryStaffDe);
                 $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryStaffDe);
                 }
+				echo "Deactive Staff";
+                foreach ($rows as $row){
+                echo"<tbody>".
+                    "<tr>".
+                    "<td>".$row->fullname."</td>".
+                    "<td>".$row->phone."</td>".
+                    "<td>".$row->email."</td>".
+                    "<td>".$row->type."</td>".
+                    "<td><a id='btnActivate' class='button allBtn justify-content-between' href ='./activate.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>" .$action."</a><td>".
+                    "</tr>".
+                    "</tbody>";
+				}
            }
         else if(isset($_POST['type']) && $_POST['type'] == 'customers'){
             if(isset($_POST['fname'])){
@@ -116,6 +128,18 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
 				//$rows = $manager->executeQuery("NNNdb.user",$queryCustomerDe);
 				$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerDe);
                 }
+				echo "Deactive Staff";
+                foreach ($rows as $row){
+                echo"<tbody>".
+                    "<tr>".
+                    "<td>".$row->fullname."</td>".
+                    "<td>".$row->phone."</td>".
+                    "<td>".$row->email."</td>".
+                   "<td><a id='btnChange' class='button allBtn justify-content-between' href ='./changeType.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."&status=".$row->status."'>Change To Partner</a></td>".
+                    "<td><a id='btnActivate' class='button allBtn justify-content-between' href ='./activate.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>" .$action."</a><td>".
+                    "</tr>".
+                    "</tbody>";
+				}
         }
         else if(isset($_POST['type']) && $_POST['type'] == 'partners'){
             if(isset($_POST['fname'])){
@@ -126,8 +150,20 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
 				//$rows = $manager->executeQuery("NNNdb.user",$queryCustomerDe);
 				$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerDe);
                 }
+				echo "Deactive Staff";
+                foreach ($rows as $row){
+                echo"<tbody>".
+                    "<tr>".
+                    "<td>".$row->fullname."</td>".
+                    "<td>".$row->phone."</td>".
+                    "<td>".$row->email."</td>".
+                    "<td><a id='btnChange' class='button allBtn justify-content-between' href ='./changeType.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."&status=".$row->status."'>Change To Customer</a></td>".
+                    "<td><a id='btnActivate' class='button allBtn justify-content-between' href ='./activate.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>" .$action."</a><td>".
+                    "</tr>".
+                    "</tbody>";
+				}
         }
-        else{
+        /*else{
             if(isset($_POST['fname'])){
                 //$rows = $manager->executeQuery("NNNdb.user",$queryNotActiveSearch);
                 $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryNotActiveSearch);
@@ -146,7 +182,7 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
                     "<td>".$row->type."</td>".
                     "<td><a id='btnActivate' class='button allBtn justify-content-between' href ='./activate.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>" .$action."</a><td>".
                     "</tr>".
-                    "</tbody>";}
+                    "</tbody>";}*/
 }else {
      $action = "Deactivate";
         if(isset($_POST['type']) && $_POST['type'] == 'staffs'){
@@ -158,6 +194,17 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
             //$rows = $manager->executeQuery("NNNdb.user",$queryStaffAc);  
             $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryStaffAc);  
             }
+			echo "Active Staff";
+                foreach ($rows as $row){
+                echo"<tbody>".
+                    "<tr>".
+                    "<td>".$row->fullname."</td>".
+                    "<td>".$row->phone."</td>".
+                    "<td>".$row->email."</td>".
+                    "<td>".$row->type."</td>".
+                    "<td><a id='btnDeactivate' class='button allBtn justify-content-between' href ='./delete.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>" .$action."</a><td>".
+                    "</tr>".
+                    "</tbody>";}
         }
         else if(isset($_POST['type']) && $_POST['type'] == 'customers'){
             if(isset($_POST['fname'])){
@@ -168,8 +215,19 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
             //$rows = $manager->executeQuery("NNNdb.user",$queryCustomerAc);
             $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryCustomerAc);
             }
+			echo "Active Customer";
+                foreach ($rows as $row){
+                    echo"<tbody>".
+                    "<tr>".
+                    "<td>".$row->fullname."</td>".
+                    "<td>".$row->phone."</td>".
+                    "<td>".$row->email."</td>".
+                    "<td><a id='btnChange' class='button allBtn justify-content-between' href ='./changeType.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."&status=".$row->status."'>Change To Customer</a></td>".
+                    "<td><a id='btnActivate' class='button allBtn justify-content-between' href ='./delete.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>" .$action."</a><td>".
+                    "</tr>".
+                    "</tbody>";}
         }
-        else if(isset($_POST['type']) && $_POST['type'] == 'customers'){
+        else if(isset($_POST['type']) && $_POST['type'] == 'partners'){
             if(isset($_POST['fname'])){
             //$rows = $manager->executeQuery("NNNdb.user",$queryCustomerAcSearch);  
             $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerAcSearch);  
@@ -178,6 +236,18 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
             //$rows = $manager->executeQuery("NNNdb.user",$queryCustomerAc);
             $rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryPartnerAc);
             }
+			echo "Active Partner";
+                foreach ($rows as $row){
+                    echo"<tbody>".
+                    "<tr>".
+                    "<td>".$row->fullname."</td>".
+                    "<td>".$row->phone."</td>".
+                    "<td>".$row->email."</td>".
+                    "<td><a id='btnChange' class='button allBtn justify-content-between' href ='./changeType.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."&status=".$row->status."'>Change To Customer</a></td>".
+                    "<td><a id='btnActivate' class='button allBtn justify-content-between' href ='./delete.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>" .$action."</a><td>".
+                    "</tr>".
+                    "</tbody>";}
+			
         }
         else{if(isset($_POST['fname'])){
             //$rows = $manager->executeQuery("NNNdb.user",$queryActiveSearch); 
@@ -199,13 +269,7 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
                     "</tr>".
                     "</tbody>";}
         }
-
-            
-            
-           
-
-
-echo "</table>"
+	echo "</table>"
 ?>
         </div></div>
 <?php include './Footer.php'?>
