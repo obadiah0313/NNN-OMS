@@ -70,15 +70,12 @@
 							<a class="dropdown-item" href="<?php if($_SESSION['type'] == "admin") echo "./userlist.php"; else echo "./userlistStaff.php";?>">User Management</a>
 							<a class="dropdown-item" href="./OrderManage.php">Order Management</a>
 							<a class="dropdown-item" href="./CatalogueManage.php">Catalogue Management</a>
-						</div>
-					</li>
-					<?php }
-						if ($_SESSION['type']=="admin"){?>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-							<a class="dropdown-item" href="./addStaff.php">Add Staff</a>
+							<?php 
+								if ($_SESSION['type']=="admin"){ ?>
+								<a class="dropdown-item" href="./addStaff.php">Register Staff</a>
 							<a class="dropdown-item" href="./OrderSummary.php">Order Summary</a>
+							<?php  }
+							?>
 						</div>
 					</li>
 					<?php } }
