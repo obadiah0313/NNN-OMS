@@ -122,9 +122,9 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 					<div class="col-auto">
 						<button class="button allBtn item" id="btnComplete" value="'.$order['oid'].'">Complete <i class="far fa-check-circle"></i></button>
 					</div>
-					<!--<div class="col-auto">
+					<div class="col-auto">
 						<button class="button allBtn item" id="btnNotify" type="button">Notify <i class="far fa-envelope"></i></button>
-					</div>-->
+					</div>
 					<div class="col-3 text-left">
 						<button class="button allBtn item" id="btnRemove" value="'.$order['oid'].'">Remove <i class="far fa-times-circle"></i></button>
 					</div>
