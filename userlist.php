@@ -54,7 +54,7 @@ else if ($_SESSION['type'] == 'staff')
 							<input type="radio" id="customers" name="type" value="partners">
 							<label for="partners">Partners</label>
 						</div>
-						<div class="col-auto">
+						<div class="col-auto mb-3">
 							<button id="btnSearch" type="submit" form="search" value="Submit" class="button allBtn tx-tfm">Search</button>
 						</div>
 					</div>
@@ -105,7 +105,7 @@ echo "<div class='table-responsive'><table class='table table-striped table-hove
 </tr>
 </thead>
 <tbody>";
-if(!isset($_POST['btnSearch'])){
+/*if(!isset($_POST['btnSearch'])){
 	$rows = $manager->executeQuery("heroku_0g0g5g6c.user",$queryStaffAc);
 	echo "<caption style='caption-side:top' class='text-center'><h5>Active Staff(s)<h5></caption>";
                 foreach ($rows as $row){
@@ -116,7 +116,7 @@ if(!isset($_POST['btnSearch'])){
                     "<td>".$row->type."</td>".
                     "<td><a id='btnDeactivate' class='button allBtn justify-content-between' href ='./delete.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>Deactivate</a><td>".
                     "</tr>";}
-}
+}*/
     
 if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
     $action = "Activate";
@@ -234,7 +234,7 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
                     "<td>".$row->fullname."</td>".
                     "<td>".$row->phone."</td>".
                     "<td>".$row->email."</td>".
-                    "<td><a id='btnChange' class='button allBtn justify-content-between' href ='./changeType.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."&status=".$row->status."'>Change To Customer</a></td>".
+                    "<td><a id='btnChange' class='button allBtn justify-content-between' href ='./changeType.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."&status=".$row->status."'>Change To Partner</a></td>".
                     "<td><a id='btnActivate' class='button allBtn justify-content-between' href ='./delete.php?oid=".$row->_id."&fullname=".$row->fullname."&phone=".$row->phone."&email=".$row->email."&password=".$row->password."&type=".$row->type."'>" .$action."</a><td>".
                     "</tr>";}
         }
@@ -286,12 +286,12 @@ if(isset($_POST['status']) && $_POST['status'] == 'deactive'){
 	<script src="js/jquery.min.js"></script>
 	<script src="js/jquery-ui.js"></script>
 	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.bundle.min.js"></script>
+	<script src="js/bootstrap.bundle.min.js"></script><!--
 	<script>
 		$(document).ready(function() {
 			$("#btnSearch").one('click',function(event) {var a = true});
 		});
-	</script>
+	</script>-->
 </body>
 
 </html>
