@@ -1,4 +1,4 @@
-<div class="text-warning bg-dark footer py-3">
+<div class="text-warning bg-dark footer py-3 d-none d-lg-block">
 	<p>© 2020.Neko Neko Nyaa SDN. BHD. All Rights Reserved.</p>
 
 

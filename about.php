@@ -15,26 +15,26 @@
 	<?php include 'NavBar.php';?>
 	<div class="page-container">
 		<div class="row my-3 py-3" style="border: 1px solid #E1E1E1;border-radius: 5px;background-color: white;">
-			<div class="col-9 text-center my-4">
+			<div class="col-lg-9 text-center my-4">
 				<h3 class="mb-4">~Our Story~</h3>
 				<h5 class="text-warning font-weight-bolder font-italic">Neko Neko Nyaa~</h5>
 				<p>Trading Card Game (TCG) , Boardgame, Table Top (Warhammer) and Cosplay specialist store in Kuching!</p>
-				<p>A Place where u pick up new hobbies and gather with people from all walks of life</p>
-				<h3 class="mb-4">~Founding Date~</h3>
-				<p>~~January 13, 2012~~</p>
+				<p class="mb-3">A Place where u pick up new hobbies and gather with people from all walks of life.</p><br><br>
+				<h3>~Founding Date~</h3>
+				<p>~~January 13, 2012~~</p><br><br>
 				<h3 class="mb-4">~Mission~</h3>
-				<p>The spread the greatness that is Neko to kuching and soon the world</p>
+				<p>The spread the greatness that is Neko to kuching and soon the world</p><br><br>
 				<h3 class="mb-4">~Products~</h3>
 				<dl>
 					<dt>Trading Card Game (TCG)</dt>
-					<dd>- Vanguard, Weiss Schwars, Magic the Gathering, Pokemon, Buddyfight, Battle spirits, Force of Will and etc.</dd>
+					<dd>- Vanguard, Weiss Schwars, Magic the Gathering, Pokemon, Buddyfight, Battle spirits, Force of Will and etc.</dd><br>
 					<dt>Cosplay</dt>
 					<dd>- Costume and accessories ( we accept tailoring service and prop comissioning ) </dd>
-					<dd>- Fashion. Lolita, Maid, Visual Kei</dd>
+					<dd>- Fashion. Lolita, Maid, Visual Kei</dd><br>
 					<dt>Figures</dt>
 					<dd>- Goodsmiles</dd>
 					<dd>- Banpresto</dd>
-					<dd>- Gundams on request</dd>
+					<dd>- Gundams on request</dd><br>
 					<dt>Tabletop & Boardgames</dt>
 					<dd>- Warhammer 40k</dd>
 					<dd>- Warhammer age of sigma</dd>
@@ -42,7 +42,7 @@
 					<dd>- Catan and etc.</dd>
 				</dl>
 			</div>
-			<div class="col-3 text-center my-4 ">
+			<div class="col-lg-3 text-center my-4 ">
 				<div class="card border-warning filter">
 					<h4 class="card-header" style="background:#ffff99">Contact Us</h4>
 					<div class="card-body">
