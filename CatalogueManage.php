@@ -17,7 +17,7 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="img/neko.png">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/overhang.min.css">
@@ -175,6 +175,7 @@
 			</div>
 		</div>
 	</div>
+	<div class="loader"></div>
 	<?php include './Footer.php' ?>
 </body>
 <script src="js/jquery.min.js"></script>
@@ -193,6 +194,7 @@
 </script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$('.loader').hide();
 		$('#setPrimary').hide();
 		var excelfile = "";
 		$("body").on("click", "#upload", function() {
@@ -357,6 +359,7 @@
 				duration: 2,
 				overlay: true
 			});
+			$('.loader').show();
 			var pk = $('#primaryKey').find(":selected").val();
 			var desp = $('#desp').find(":selected").val();
 			$.ajax({
