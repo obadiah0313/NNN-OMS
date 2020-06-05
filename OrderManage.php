@@ -74,7 +74,7 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 										<label><input type="radio" name="status" class="filter_selector status" value="any" checked> Any</label><br>
 										<label><input type="radio" name="status" class="filter_selector status" value="pending"> Pending</label><br>
 										<label><input type="radio" name="status" class="filter_selector status" value="confirmed"> Confirmed</label><br>
-										<label><input type="radio" name="status" class="filter_selector status" value="processing"> Shipping</label><br>
+										<label><input type="radio" name="status" class="filter_selector status" value="shipping"> Shipping</label><br>
 										<label><input type="radio" name="status" class="filter_selector status" value="received"> Received</label><br>
 										<label><input type="radio" name="status" class="filter_selector status" value="completed"> Completed</label><br>
 									</div>
@@ -98,7 +98,7 @@ if(!isset($_SESSION['_id']) || $_SESSION['type']=='customer'||$_SESSION['type']=
 									<label><input type="radio" name="status" class="filter_selector status" value="any" checked> Any</label><br>
 									<label><input type="radio" name="status" class="filter_selector status" value="pending"> Pending</label><br>
 									<label><input type="radio" name="status" class="filter_selector status" value="confirmed"> Confirmed</label><br>
-									<label><input type="radio" name="status" class="filter_selector status" value="processing"> Shipping</label><br>
+									<label><input type="radio" name="status" class="filter_selector status" value="shipping"> Shipping</label><br>
 									<label><input type="radio" name="status" class="filter_selector status" value="received"> Received</label><br>
 									<label><input type="radio" name="status" class="filter_selector status" value="completed"> Completed</label><br>
 								</div>
