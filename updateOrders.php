@@ -11,7 +11,7 @@
 					$db->updateOrder($o,"received", "completed");
 				break;
 			case "confirm":
-				foreach($_POST['orders'] as $o){
+				foreach($_POST['orders'] as $o)
 					$db->updateOrder($o,"pending", "confirmed");
 				break;
 			case "remove":
