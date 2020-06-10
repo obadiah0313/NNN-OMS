@@ -54,11 +54,11 @@
 						<form method="GET" action="">
 							<div class="mb-3">
 								<label for="primaryKey">ID/Code Key of Products</label>
-									<select id="primaryKey" name="primaryKey"></select>
+									<select id="primaryKey" name="primaryKey" class="form-control"></select>
 							</div>
 							<div>
 								<label for="desp">Description Key of Products</label>
-									<select name="desp" id="desp"></select>
+									<select name="desp" id="desp" class="form-control"></select>
 							</div>
 						</form>
 						<button class="button allBtn my-3 text-center" id="btnConfirm">Save</button>
