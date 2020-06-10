@@ -198,6 +198,7 @@
 		$('#setPrimary').hide();
 		var excelfile = "";
 		$("body").on("click", "#upload", function() {
+			$('.loader').show();
 			//Reference the FileUpload element.
 			var fileUpload = $("#fileUpload")[0];
 
@@ -311,6 +312,7 @@
 						var op = $('<option value="' + response.header[j] + '">' + response.header[j] + '</option>');
 						$('#desp').append(op);
 					};
+					$('.loader').hide();
 					$('#setPrimary').css("display", "block");
 					$('#setHeaders').css("display", "none");;
 					product = response.product;
