@@ -1,6 +1,5 @@
 <?php
 require './vendor/autoload.php';
-// this will simply read AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY from env vars
 $s3 = new Aws\S3\S3Client([
 	'version' => 'latest',
     'region'   => 'ap-southeast-1',
@@ -18,7 +17,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
         $upload = $s3->upload($bucket, $_FILES['userfile']['name'], fopen($_FILES['userfile']['tmp_name'], 'rb'), 'public-read-write');
 ?>
-        <p>Upload <a href="<?=htmlspecialchars($upload->get('ObjectURL'))?>">successful</a> :)</p>
+        <p>Upload <a href="<? echo htmlspecialchars($upload->get('ObjectURL'));?>">successful</a> :)</p>
 <?php } catch(Exception $e) { ?>
         <p>Upload error :(</p>
 <?php } } ?>
